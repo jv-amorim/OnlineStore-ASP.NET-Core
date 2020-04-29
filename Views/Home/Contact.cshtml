@@ -1,0 +1,89 @@
+@{
+    ViewData["Title"] = "Contact";
+    OnlineStore.Models.Contact contact = (OnlineStore.Models.Contact) ViewData["CONTACT"];
+}
+
+<main role="main">
+    <br />
+    <br />
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-6">
+                <h4 class="subtitle-doc">
+                    Other contacts
+                </h4>
+                <div id="code_desc_simple">
+                    <div class="box">
+                        <dl>
+                            <dt>Devolution/Warranty: </dt>
+                            <dd>devolution@onlinestore.com</dd>
+                        </dl>
+                        <dl>
+                            <dt>Contact:</dt>
+                            <dd style="margin-bottom: 0;">(00) 1234-5678</dd>
+                            <dd>sac@onlinestore.com</dd>
+                        </dl>
+                    </div> <!-- box.// -->
+                </div> <!-- code-wrap.// -->
+            </aside>
+            <aside class="col-sm-6">
+
+                <h4 class="subtitle-doc">
+                    Contact
+                </h4>
+                <div>
+                    <article class="card">
+                        <div class="card-body p-5">
+                            @if(ViewData["MSG_OK"] != null)
+                            {
+                                <p class="alert alert-success">@Html.Raw(ViewData["MSG_OK"])</p>
+                            }
+
+                            @if(ViewData["MSG_ERROR"] != null)
+                            {
+                                <p class="alert alert-danger">@Html.Raw(ViewData["MSG_ERROR"])</p>
+                            }
+                            
+                            <form role="form" method="post" action="/Home/ContactAction">
+                                <div class="form-group">
+                                    <label for="username">Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                        </div>
+                                        <input type="text" id="username" class="form-control" name="username" placeholder=""
+                                            required="" value="@(contact != null ? contact.Name : "")">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">E-mail</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-at"></i></span>
+                                        </div>
+                                        <input type="text" id="email" class="form-control" name="email" placeholder=""
+                                            required="" value="@(contact != null ? contact.Email : "")">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="text"><span class="hidden-xs">Text</span> </label>
+                                            <div class="form-inline">
+                                                <textarea name="text" id="text" class="form-control" 
+                                                    style="width:100%; resize:none;" required="">@(contact != null ? contact.Text : "")</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="subscribe btn btn-primary btn-block" type="submit"> Send message </button>
+                            </form>
+                        </div>
+                    </article>
+                </div>
+            </aside>
+        </div>
+    </div>
+</main>

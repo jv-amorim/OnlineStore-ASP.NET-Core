@@ -1,0 +1,17 @@
+@model OnlineStore.Models.Product
+
+<h3>OnlineStore</h3>
+
+<h2>Product</h2>
+
+<b>Code: </b>
+@Model.Id <br/>
+
+<b>Name: </b>
+@Model.Name <br/>
+
+<b>Description: </b>
+@Model.Description <br/>
+
+<b>Value: </b>
+@Model.Value.ToString("C") <br/>
