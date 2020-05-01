@@ -32,8 +32,8 @@ namespace OnlineStore.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            else
-                return View();
+
+            return View();
         }
 
         public IActionResult Contact() => View();
@@ -82,7 +82,25 @@ namespace OnlineStore.Controllers
 
         public IActionResult Login() => View();
 
+        [HttpGet]
         public IActionResult SignUp() => View();
+
+        [HttpPost]
+        public IActionResult SignUp([FromForm] Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                _database.Add(customer);
+                _database.SaveChanges();
+
+                TempData["MSG_OK"] = "Successful registration!";
+
+                // TODO - Redirect to other pages, depending on the situation (Login, Panel, Cart, etc.).
+                return RedirectToAction(nameof(SignUp));
+            }
+
+            return View();
+        }
 
         public IActionResult Cart() => View();
     }
