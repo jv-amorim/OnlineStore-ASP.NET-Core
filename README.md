@@ -37,9 +37,9 @@ Online store created with ASP.NET Core.
 
 ## How to Use
 
-To run this project, follow the below steps:
+To run this project, follow the steps below:
 
-1- Before running this project, will MUST install .NET Core, ASP.NET Core, Entity Framework and SQL Server. Create a database in SQL Server with "OnlineStore" name.
+1- Before running this project, you MUST install .NET Core, ASP.NET Core, Entity Framework and SQL Server. Create a database in SQL Server with "OnlineStore" name.
 
 2- Clone or download this project;
 
