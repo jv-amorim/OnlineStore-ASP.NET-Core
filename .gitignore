@@ -344,9 +344,8 @@ healthchecksdb
 MigrationBackup/
 
 ##
-## Visual studio for Mac
+## Visual Studio for Mac
 ##
-
 
 # globs
 Makefile.in
@@ -365,7 +364,7 @@ test-results/
 *.dmg
 *.app
 
-# content below from: https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
+# Content below from: https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
 # General
 .DS_Store
 .AppleDouble
@@ -373,7 +372,6 @@ test-results/
 
 # Icon must end with two \r
 Icon
-
 
 # Thumbnails
 ._*
