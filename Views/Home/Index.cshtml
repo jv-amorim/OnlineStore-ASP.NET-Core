@@ -1,3 +1,4 @@
+@model OnlineStore.Models.NewsletterEmail
 @{
     ViewData["Title"] = "Index";
 }
@@ -153,4 +154,38 @@
             </div> <!-- col // -->
         </div> <!-- row.// -->
     </div>
-    </main>
+</main>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, 
+    new { @action = @Url.Action("index", "home") + "#newsletter-form", style="margin-top:60px" }))
+{
+<div class="container" id="newsletter-form">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-2">
+            @if(TempData["MSG_OK"] != null)
+            {
+                <p class="alert alert-success">@Html.Raw(TempData["MSG_OK"])</p>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 offset-sm-2">
+            <div class="form-group">
+                <label for="email">Subscribe to our newsletter and receive exclusive discounts!</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                    </div>
+                    @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class="form-control" } })
+                </div>
+                <span style="color: red">@Html.ValidationMessageFor(m => m.Email)</span>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <button class="subscribe btn btn-primary btn-block" type="submit" style="margin-top:30px">
+                Subscribe
+            </button>
+        </div>
+    </div>
+</div>
+}

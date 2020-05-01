@@ -1,35 +1,53 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Models;
 using OnlineStore.Libraries.Email;
+using OnlineStore.Libraries.LogSystem;
+using OnlineStore.Database;
 
 namespace OnlineStore.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private OnlineStoreContext _database;
+
+        public HomeController(OnlineStoreContext database) => _database = database;
+
+        [HttpGet]
+        public IActionResult Index() => View();
+
+        [HttpPost]
+        public IActionResult Index([FromForm]NewsletterEmail newsletter)
         {
-            return View();
+            if( ModelState.IsValid)
+            {
+                _database.NewsletterEmails.Add(newsletter);
+                _database.SaveChanges();
+
+                TempData["MSG_OK"] = 
+                    "Your email has been successfully registered to the newsletter!";
+
+                return RedirectToAction(nameof(Index));
+            }
+            else
+                return View();
         }
 
-        public IActionResult Contact()
-        {
-            return View();
-        }
+        public IActionResult Contact() => View();
 
         public IActionResult ContactAction()
         {
             try
             {
-                Contact newContact = new Contact();
-                newContact.Name = HttpContext.Request.Form["username"];
-                newContact.Email = HttpContext.Request.Form["email"];
-                newContact.Text = HttpContext.Request.Form["text"];
+                Contact newContact = new Contact()
+                {
+                    Name = HttpContext.Request.Form["username"],
+                    Email = HttpContext.Request.Form["email"],
+                    Text = HttpContext.Request.Form["text"]
+                };
                 
                 var listOfMessages = new List<ValidationResult>();
                 var context = new ValidationContext(newContact);
@@ -56,25 +74,16 @@ namespace OnlineStore.Controllers
             {
                 ViewData["MSG_ERROR"] = "Oops, something went wrong. Try again!";
             
-                OnlineStore.Libraries.LogSystem.LogWriter.WriteNewDataInLogFile("./Logs/ContactErrorLog.log", e.Message);
+                LogWriter.WriteNewDataInLogFile("./Logs/ContactErrorLog.log", e.Message);
             }
             
             return View("Contact");
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
+        public IActionResult Login() => View();
 
-        public IActionResult SignUp()
-        {
-            return View();
-        }
+        public IActionResult SignUp() => View();
 
-        public IActionResult Cart()
-        {
-            return View();
-        }
+        public IActionResult Cart() => View();
     }
 }

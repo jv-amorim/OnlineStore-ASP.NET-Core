@@ -52,9 +52,8 @@ To run this project, follow the below steps:
     <Contact_Email></Contact_Email>
     <Contact_Password></Contact_Password>
     
-    <!-- Your username and password of the SQL Server. -->
-    <Database_User></Database_User>
-    <Database_Password></Database_Password>
+    <!-- The connection string of your SQL Server database. -->
+    <Database_Connection_String></Database_Connection_String>
 </root>
 ```
 In the email account data, your email account must have permission to access less secure apps.

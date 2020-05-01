@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using OnlineStore.Database;
+using OnlineStore.Libraries.XML;
 
 namespace OnlineStore
 {
@@ -29,16 +30,10 @@ namespace OnlineStore
             services
                 .AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
-            
-            /*
-            string connectionString = 
-                "Data Source=localhost;" + 
-                "Initial Catalog=OnlineStore;" + 
-                "User ID=SA;" + 
-                "Password=";
 
+            string connectionString = 
+                XMLReader.GetDataFromXMLFile("./Private/PrivateData.xml", "Database_Connection_String");
             services.AddDbContext<OnlineStoreContext>(options => options.UseSqlServer(connectionString));
-            */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
