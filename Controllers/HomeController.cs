@@ -6,15 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Models;
 using OnlineStore.Libraries.Email;
 using OnlineStore.Libraries.LogSystem;
-using OnlineStore.Database;
+using OnlineStore.Repositories.Interfaces;
 
 namespace OnlineStore.Controllers
 {
     public class HomeController : Controller
     {
-        private OnlineStoreContext _database;
+        private ICustomerRepository customerRepository;
+        private INewsletterRepository newsletterRepository;
 
-        public HomeController(OnlineStoreContext database) => _database = database;
+        public HomeController(ICustomerRepository customerRepository, INewsletterRepository newsletterRepository)
+        {
+            this.customerRepository = customerRepository;
+            this.newsletterRepository = newsletterRepository;
+        }
 
         [HttpGet]
         public IActionResult Index() => View();
@@ -24,8 +29,7 @@ namespace OnlineStore.Controllers
         {
             if( ModelState.IsValid)
             {
-                _database.NewsletterEmails.Add(newsletter);
-                _database.SaveChanges();
+                newsletterRepository.Subscribe(newsletter);
 
                 TempData["MSG_OK"] = 
                     "Your email has been successfully registered to the newsletter!";
@@ -90,8 +94,7 @@ namespace OnlineStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _database.Add(customer);
-                _database.SaveChanges();
+                customerRepository.SignUp(customer);
 
                 TempData["MSG_OK"] = "Successful registration!";
 

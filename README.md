@@ -39,11 +39,13 @@ Online store created with ASP.NET Core.
 
 To run this project, follow the steps below:
 
-1- Before running this project, you MUST install .NET Core, ASP.NET Core, Entity Framework and SQL Server. Create a database in SQL Server with "OnlineStore" name.
+1- Before running this project, you MUST install .NET Core, ASP.NET Core, Entity Framework and SQL Server (you can find tutorials in [Microsoft Docs](https://docs.microsoft.com/en-us/)). 
 
-2- Clone or download this project;
+2- Create a database in SQL Server with "OnlineStore" name.
 
-3- Create a XML file in the path: `<Project-Folder>/Private/PrivateData.xml`. Write the following template inside of the XML file and fill with your data:
+3- Clone or download this project;
+
+4- Create a XML file in the path: `<Project-Folder>/Private/PrivateData.xml`. Write the following template inside of the XML file and fill with your data:
 
 ```
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
@@ -58,13 +60,15 @@ To run this project, follow the steps below:
 ```
 In the email account data, your email account must have permission to access less secure apps.
 
-4- Open the folder in your terminal;
+5- Open the folder in your terminal;
 
-5- Run `dotnet restore`;
+6- Run `dotnef ef database update`;
 
-6- Run `dotnet run`;
+7- Run `dotnet restore`;
 
-7- Open the browser and go to `localhost:5000`.
+8- Run `dotnet run`;
+
+9- Open the browser and go to `localhost:5000`.
 
 That's all!
 
