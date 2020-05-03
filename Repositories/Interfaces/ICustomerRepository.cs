@@ -7,7 +7,7 @@ namespace OnlineStore.Repositories.Interfaces
     {
         Customer Login(string email, string password);
 
-        void SignUp(Customer customer);
+        void Register(Customer customer);
         void Update(Customer customer);
         void Delete(int id);
         Customer GetCustomer(int id);

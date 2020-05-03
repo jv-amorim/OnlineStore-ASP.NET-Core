@@ -8,6 +8,7 @@ using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.Email;
 using OnlineStore.Libraries.LogResources;
 using OnlineStore.Libraries.Session;
+using OnlineStore.Libraries.Filters;
 
 namespace OnlineStore.Controllers
 {
@@ -106,15 +107,8 @@ namespace OnlineStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult CustomerPanel()
-        {
-            Customer customerFromSession = customerSession.GetLoggedInCustomer();
-
-            if (customerFromSession == null)
-                return new ContentResult() { Content="Access denied!" };
-            
-            return new ContentResult() { Content = $"Hello, {customerFromSession.Name}!" };
-        }
+        [CustomerAuthorization]
+        public IActionResult CustomerPanel() => new ContentResult() { Content = "Customer Panel." };
 
         [HttpGet]
         public IActionResult SignUp() => View();
@@ -124,7 +118,7 @@ namespace OnlineStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                customerRepository.SignUp(customer);
+                customerRepository.Register(customer);
 
                 TempData["MSG_OK"] = "Successful registration!";
 

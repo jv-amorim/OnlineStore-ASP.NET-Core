@@ -12,7 +12,7 @@ namespace OnlineStore.Repositories
 
         public CustomerRepository(OnlineStoreContext database) => this.database = database;
 
-        public void SignUp(Customer customer)
+        public void Register(Customer customer)
         {
             database.Add(customer);
             database.SaveChanges();
