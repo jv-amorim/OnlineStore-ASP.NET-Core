@@ -40,7 +40,7 @@ namespace OnlineStore.Repositories
             return 
                 database.Customers
                 .Where(item => item.Email == email && item.Password == password)
-                .First();
+                .FirstOrDefault();
         }
     }
 }

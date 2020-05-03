@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Models;
-using OnlineStore.Libraries.Email;
-using OnlineStore.Libraries.LogSystem;
 using OnlineStore.Repositories.Interfaces;
+using OnlineStore.Libraries.Email;
+using OnlineStore.Libraries.LogResources;
+using OnlineStore.Libraries.Session;
 
 namespace OnlineStore.Controllers
 {
@@ -14,11 +15,13 @@ namespace OnlineStore.Controllers
     {
         private ICustomerRepository customerRepository;
         private INewsletterRepository newsletterRepository;
+        private CustomerSession customerSession;
 
-        public HomeController(ICustomerRepository customerRepository, INewsletterRepository newsletterRepository)
+        public HomeController(ICustomerRepository customerRepository, INewsletterRepository newsletterRepository, CustomerSession customerSession)
         {
             this.customerRepository = customerRepository;
             this.newsletterRepository = newsletterRepository;
+            this.customerSession = customerSession;
         }
 
         [HttpGet]
@@ -84,7 +87,34 @@ namespace OnlineStore.Controllers
             return View("Contact");
         }
 
+        [HttpGet]
         public IActionResult Login() => View();
+
+        [HttpPost]
+        public IActionResult Login([FromForm] Customer customer)
+        {
+            Customer customerFromDB = customerRepository.Login(customer.Email, customer.Password);
+
+            if (customerFromDB == null)
+            {
+                ViewData["MSG_ERROR"] = "No account found. Your email or password may be incorrect.";
+                return View();
+            }
+            
+            customerSession.Login(customerFromDB);
+            return RedirectToAction(nameof(CustomerPanel));
+        }
+
+        [HttpGet]
+        public IActionResult CustomerPanel()
+        {
+            Customer customerFromSession = customerSession.GetLoggedInCustomer();
+
+            if (customerFromSession == null)
+                return new ContentResult() { Content="Access denied!" };
+            
+            return new ContentResult() { Content = $"Hello, {customerFromSession.Name}!" };
+        }
 
         [HttpGet]
         public IActionResult SignUp() => View();

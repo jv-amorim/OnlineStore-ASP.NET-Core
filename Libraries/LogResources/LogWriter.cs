@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace OnlineStore.Libraries.LogSystem
+namespace OnlineStore.Libraries.LogResources
 {
     public class LogWriter
     {

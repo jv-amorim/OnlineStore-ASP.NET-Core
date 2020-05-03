@@ -1,3 +1,4 @@
+@model Customer
 @{
     ViewData["Title"] = "Login";
 }
@@ -7,31 +8,30 @@
     <br />
     <section class="container">
         <aside class="col-sm-4">
-            <h3 class="subtitle-doc">
-                <a href="#" data-html="code_login_1" class="showcode">[code]</a>
-            </h3>
             <div id="code_login_1">
                 <div class="card">
                     <article class="card-body">
-                        <a href="/Home/SignUp" class="float-right btn btn-outline-primary">Sign up</a>
+                        @if(ViewData["MSG_ERROR"] != null)
+                        {
+                            <p class="alert alert-danger">@Html.Raw(ViewData["MSG_ERROR"])</p>
+                        }
+                        
+                        <a asp-action="SignUp" asp-controller="Home" class="float-right btn btn-outline-primary">
+                            Sign up
+                        </a>
                         <h4 class="card-title mb-4 mt-1">Sign in</h4>
-                        <form>
+                        <form method="post">
                             <div class="form-group">
-                                <label>Your email</label>
-                                <input name="" class="form-control" placeholder="Email" type="email">
+                                <label>Email</label>
+                                <input asp-for="Email" class="form-control" placeholder="Email" type="email">
                             </div>
                             <div class="form-group">
                                 <a class="float-right" href="#">Forgot?</a>
-                                <label>Your password</label>
-                                <input class="form-control" placeholder="******" type="password">
+                                <label>Password</label>
+                                <input asp-for="Password" class="form-control" placeholder="******" type="password">
                             </div>
                             <div class="form-group">
-                                <div class="checkbox">
-                                    <label> <input type="checkbox"> Save password </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block"> Login </button>
+                                <button type="submit" class="btn btn-primary btn-block">Login</button>
                             </div>
                         </form>
                     </article>

@@ -9,10 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using OnlineStore.Libraries.XML;
 using OnlineStore.Database;
 using OnlineStore.Repositories;
 using OnlineStore.Repositories.Interfaces;
+using OnlineStore.Libraries.XML;
+using OnlineStore.Libraries.Session;
 
 namespace OnlineStore
 {
@@ -30,7 +31,13 @@ namespace OnlineStore
         {
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<INewsletterRepository, NewsletterRepository>();
-            
+
+            services.AddHttpContextAccessor();
+            services.AddMemoryCache();
+            services.AddSession(options => { });
+            services.AddScoped<SessionManager>();
+            services.AddScoped<CustomerSession>();
+
             services
                 .AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
@@ -54,12 +61,14 @@ namespace OnlineStore
                 see https://aka.ms/aspnetcore-hsts. */
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            
+            app.UseSession();
 
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
