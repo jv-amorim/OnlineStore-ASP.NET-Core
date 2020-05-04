@@ -89,6 +89,25 @@ namespace OnlineStore.Controllers
         }
 
         [HttpGet]
+        public IActionResult SignUp() => View();
+
+        [HttpPost]
+        public IActionResult SignUp([FromForm] Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                customerRepository.Register(customer);
+
+                TempData["MSG_OK"] = "Successful registration!";
+
+                // TODO - Redirect to other pages, depending on the situation (Login, Panel, Cart, etc.).
+                return RedirectToAction(nameof(SignUp));
+            }
+
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult Login() => View();
 
         [HttpPost]
@@ -109,25 +128,6 @@ namespace OnlineStore.Controllers
         [HttpGet]
         [CustomerAuthorization]
         public IActionResult CustomerPanel() => new ContentResult() { Content = "Customer Panel." };
-
-        [HttpGet]
-        public IActionResult SignUp() => View();
-
-        [HttpPost]
-        public IActionResult SignUp([FromForm] Customer customer)
-        {
-            if (ModelState.IsValid)
-            {
-                customerRepository.Register(customer);
-
-                TempData["MSG_OK"] = "Successful registration!";
-
-                // TODO - Redirect to other pages, depending on the situation (Login, Panel, Cart, etc.).
-                return RedirectToAction(nameof(SignUp));
-            }
-
-            return View();
-        }
 
         public IActionResult Cart() => View();
     }

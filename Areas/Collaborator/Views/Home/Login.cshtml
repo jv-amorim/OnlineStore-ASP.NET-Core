@@ -1,0 +1,38 @@
+@model Collaborator
+@{
+    ViewData["Title"] = "Login";
+}
+
+<main role="main">
+    <br />
+    <br />
+    <section class="container">
+        <aside class="col-sm-4">
+            <div id="code_login_1">
+                <div class="card">
+                    <article class="card-body">
+                        @if(ViewData["MSG_ERROR"] != null)
+                        {
+                            <p class="alert alert-danger">@Html.Raw(ViewData["MSG_ERROR"])</p>
+                        }
+                        <h4 class="card-title mb-4 mt-1">Collaborator Login</h4>
+                        <form method="post">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input asp-for="Email" class="form-control" placeholder="Email" type="email">
+                            </div>
+                            <div class="form-group">
+                                <a class="float-right" href="#">Forgot?</a>
+                                <label>Password</label>
+                                <input asp-for="Password" class="form-control" placeholder="******" type="password">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            </div>
+                        </form>
+                    </article>
+                </div>
+            </div>
+        </aside>
+    </section>
+</main>

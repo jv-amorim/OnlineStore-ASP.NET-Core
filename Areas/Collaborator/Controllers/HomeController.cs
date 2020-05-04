@@ -1,23 +1,46 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using OnlineStore.Repositories.Interfaces;
+using OnlineStore.Libraries.Session;
 
 namespace OnlineStore.Areas.Collaborator.Controllers
 {
+    [Area("Collaborator")]
     public class HomeController : Controller
     {
-        public IActionResult Login()
+        private ICollaboratorRepository collaboratorRepository;
+        private CollaboratorSession collaboratorSession;
+
+        public HomeController(ICollaboratorRepository collaboratorRepository, CollaboratorSession collaboratorSession)
         {
-            return View();
+            this.collaboratorRepository = collaboratorRepository;
+            this.collaboratorSession = collaboratorSession;
         }
 
-        public IActionResult RecoverPassword()
+        [HttpGet]
+        public IActionResult Login() => View();
+
+        [HttpPost]
+        public IActionResult Login([FromForm] Models.Collaborator collaborator)
         {
-            return View();
+            Models.Collaborator collaboratorFromDB = 
+                collaboratorRepository.Login(collaborator.Email, collaborator.Password);
+
+            if (collaboratorFromDB == null)
+            {
+                ViewData["MSG_ERROR"] = "No account found. Your email or password may be incorrect.";
+                return View();
+            }
+            
+            collaboratorSession.Login(collaboratorFromDB);
+            return RedirectToAction(nameof(CollaboratorPanel));
         }
 
-        public IActionResult RegisterNewPassword()
-        {
-            return View();
-        }
+        public IActionResult RecoverPassword() => View();
+
+        public IActionResult RegisterNewPassword() => View();
+
+        [HttpGet]
+        public IActionResult CollaboratorPanel() => new ContentResult() { Content = "Collaborator Panel." };
     }
 }
