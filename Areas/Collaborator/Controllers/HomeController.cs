@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.Session;
+using OnlineStore.Libraries.Filters;
 
 namespace OnlineStore.Areas.Collaborator.Controllers
 {
@@ -33,14 +34,21 @@ namespace OnlineStore.Areas.Collaborator.Controllers
             }
             
             collaboratorSession.Login(collaboratorFromDB);
-            return RedirectToAction(nameof(CollaboratorPanel));
+            return RedirectToAction(nameof(CollaboratorDashboard));
+        }
+
+        [CollaboratorAuthorization]
+        public IActionResult Logout()
+        {
+            collaboratorSession.Logout();
+            return RedirectToAction(nameof(Login));
         }
 
         public IActionResult RecoverPassword() => View();
 
         public IActionResult RegisterNewPassword() => View();
 
-        [HttpGet]
-        public IActionResult CollaboratorPanel() => new ContentResult() { Content = "Collaborator Panel." };
+        [CollaboratorAuthorization]
+        public IActionResult CollaboratorDashboard() => View();
     }
 }
