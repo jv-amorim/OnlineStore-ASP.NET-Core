@@ -32,6 +32,7 @@ namespace OnlineStore
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<INewsletterRepository, NewsletterRepository>();
             services.AddScoped<ICollaboratorRepository, CollaboratorRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
