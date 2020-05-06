@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using OnlineStore.Models;
+using X.PagedList;
 
 namespace OnlineStore.Repositories.Interfaces
 {
@@ -9,6 +10,6 @@ namespace OnlineStore.Repositories.Interfaces
         void Update(Category category);
         void Delete(int id);
         Category GetCategory(int id);
-        IEnumerable<Category> GetAllCategories();
+        IPagedList<Category> GetAllCategories(int? page, int pageSize);
     }
 }

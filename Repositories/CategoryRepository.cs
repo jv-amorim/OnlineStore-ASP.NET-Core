@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using OnlineStore.Models;
 using OnlineStore.Database;
 using OnlineStore.Repositories.Interfaces;
+using X.PagedList;
 
 namespace OnlineStore.Repositories
 {
@@ -25,7 +25,8 @@ namespace OnlineStore.Repositories
 
         public Category GetCategory(int id) => database.Categories.Find(id);
 
-        public IEnumerable<Category> GetAllCategories() => database.Categories;
+        public IPagedList<Category> GetAllCategories(int? page, int pageSize) => 
+            database.Categories.ToPagedList<Category>(page ?? 1, pageSize);
 
         public void Delete(int id)
         {
