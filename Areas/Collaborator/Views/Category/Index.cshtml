@@ -5,6 +5,15 @@
 
 <h1 style="margin-top: 20px;">Categories</h1>
 
+@if(TempData["MSG_OK"] != null)
+{
+    <p class="alert alert-success">@Html.Raw(TempData["MSG_OK"])</p>
+}
+@if(TempData["MSG_ERROR"] != null)
+{
+    <p class="alert alert-danger">@Html.Raw(TempData["MSG_ERROR"])</p>
+}
+
 <a asp-action="Register" class="btn btn-primary" style="margin: 25px 0px 20px 0px;">
     Register
 </a>
@@ -38,11 +47,11 @@ else
                         </td>
                         <td>
                             <a asp-action="Update" asp-route-id="@category.Id" 
-                            class="btn btn-secondary custom-btn">
+                            class="btn btn-secondary btn-custom">
                                 Update
                             </a>
                             <a asp-action="Delete" asp-route-id="@category.Id" 
-                            class="btn btn-danger custom-btn">
+                            class="btn btn-danger btn-custom btn-delete">
                                 Delete
                             </a>
                         </td>

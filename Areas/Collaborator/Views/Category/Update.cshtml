@@ -1,0 +1,33 @@
+@model Category
+@{
+    ViewData["Title"] = "Category Update";
+}
+
+<h1 style="margin-top: 20px;">Category Update</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Id">
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" placeholder="Type the category name...">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Slug">Slug</label>
+        <input asp-for="Slug" class="form-control" placeholder="Type the category slug...">
+        <span asp-validation-for="Slug" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ParentCategoryId">Parent Category ID</label>
+        <select asp-for="ParentCategoryId" asp-items="@ViewBag.Categories" class="form-control">
+            <option value="">Select</option>
+        </select>
+        <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
+    </div>
+    <div>
+        <a asp-action="Index">Return</a>
+        <button type="submit" class="btn btn-primary" style="float: right;">
+            Submit
+        </button>
+    </div>
+</form>
