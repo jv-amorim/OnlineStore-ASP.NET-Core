@@ -76,5 +76,53 @@ namespace OnlineStore.Libraries.Language
                 return ResourceManager.GetString("MSG_ERROR_004", resourceCulture);
             }
         }
+
+        public static string MSG_ERROR_005
+        {
+            get
+            {
+                return ResourceManager.GetString("MSG_ERROR_005", resourceCulture);
+            }
+        }
+
+        public static string MSG_ERROR_006
+        {
+            get
+            {
+                return ResourceManager.GetString("MSG_ERROR_006", resourceCulture);
+            }
+        }
+
+        public static string MSG_ERROR_007
+        {
+            get
+            {
+                return ResourceManager.GetString("MSG_ERROR_007", resourceCulture);
+            }
+        }
+
+        public static string MSG_OK_001
+        {
+            get
+            {
+                return ResourceManager.GetString("MSG_OK_001", resourceCulture);
+            }
+        }
+
+        public static string MSG_OK_002
+        {
+            get
+            {
+                return ResourceManager.GetString("MSG_OK_002", resourceCulture);
+            }
+        }
+
+        public static string MSG_OK_003
+        {
+            get
+            {
+                return ResourceManager.GetString("MSG_OK_003", resourceCulture);
+            }
+        }
     }
 }

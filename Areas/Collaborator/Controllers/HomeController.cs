@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Repositories.Interfaces;
+using OnlineStore.Libraries.Language;
 using OnlineStore.Libraries.Session;
 using OnlineStore.Libraries.Filters;
 
@@ -28,7 +29,7 @@ namespace OnlineStore.Areas.Collaborator.Controllers
 
             if (collaboratorFromDB == null)
             {
-                ViewData["MSG_ERROR"] = "No account found. Your email or password may be incorrect.";
+                ViewData["MSG_ERROR"] = Message.MSG_ERROR_006;
                 return View();
             }
             

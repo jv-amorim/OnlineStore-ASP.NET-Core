@@ -7,6 +7,7 @@ using OnlineStore.Models;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.Email;
 using OnlineStore.Libraries.LogResources;
+using OnlineStore.Libraries.Language;
 using OnlineStore.Libraries.Session;
 using OnlineStore.Libraries.Filters;
 
@@ -80,7 +81,7 @@ namespace OnlineStore.Controllers
             }
             catch (Exception e)
             {
-                ViewData["MSG_ERROR"] = "Oops, something went wrong. Try again!";
+                ViewData["MSG_ERROR"] = Message.MSG_ERROR_007;
             
                 LogWriter.WriteNewDataInLogFile("./Logs/ContactErrorLog.log", e.Message);
             }
@@ -98,7 +99,7 @@ namespace OnlineStore.Controllers
             {
                 customerRepository.Register(customer);
 
-                TempData["MSG_OK"] = "Successful registration!";
+                TempData["MSG_OK"] = Message.MSG_OK_001;
 
                 // TODO - Redirect to other pages, depending on the situation (Login, Panel, Cart, etc.).
                 return RedirectToAction(nameof(SignUp));
@@ -117,7 +118,7 @@ namespace OnlineStore.Controllers
 
             if (customerFromDB == null)
             {
-                ViewData["MSG_ERROR"] = "No account found. Your email or password may be incorrect.";
+                ViewData["MSG_ERROR"] = Message.MSG_ERROR_006;
                 return View();
             }
             

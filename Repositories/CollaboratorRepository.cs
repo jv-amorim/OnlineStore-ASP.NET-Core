@@ -1,8 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
 using OnlineStore.Models;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Database;
+using X.PagedList;
 
 namespace OnlineStore.Repositories
 {
@@ -26,8 +26,11 @@ namespace OnlineStore.Repositories
 
         public Collaborator GetCollaborator(int id) => database.Collaborators.Find(id);
 
-        public IEnumerable<Collaborator> GetCollaborators() => database.Collaborators;
-
+        public IPagedList<Collaborator> GetAllCollaborators(int? page, int pageSize) =>
+            database.Collaborators
+            .Where(c => c.IsAdministrator == false)
+            .ToPagedList<Collaborator>(page ?? 1, pageSize);
+        
         public void Delete(int id)
         {
             Collaborator item = GetCollaborator(id);

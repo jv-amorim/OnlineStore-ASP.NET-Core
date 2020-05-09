@@ -6,6 +6,7 @@ namespace OnlineStore.Models
 {
     public class Category
     {
+        [Display(Name = "ID")]
         public int Id { get; set; }
 
         // TODO - Create validation to ensure that there are no repeated category names in the DB.
@@ -17,6 +18,7 @@ namespace OnlineStore.Models
         [MinLength(4, ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_002")]
         public string Slug { get; set; }
 
+        [Display(Name = "Parent Category")]
         public int? ParentCategoryId { get; set; }
 
         [ForeignKey("ParentCategoryId")]

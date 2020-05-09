@@ -18,7 +18,7 @@ namespace OnlineStore.Libraries.Filters
             Customer customerFromSession = customerSession.GetLoggedInCustomer();
 
             if (customerFromSession == null)
-                context.Result = new ContentResult() { Content="Access denied!" };
+                context.Result = new RedirectToActionResult("Login", "Home", null);
         }
     }
 }

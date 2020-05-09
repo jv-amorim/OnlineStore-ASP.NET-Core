@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using OnlineStore.Models;
+using X.PagedList;
 
 namespace OnlineStore.Repositories.Interfaces
 {
@@ -11,6 +11,6 @@ namespace OnlineStore.Repositories.Interfaces
         void Update(Collaborator collaborator);
         void Delete(int id);
         Collaborator GetCollaborator(int id);
-        IEnumerable<Collaborator> GetCollaborators();
+        IPagedList<Collaborator> GetAllCollaborators(int? page, int pageSize);
     }
 }

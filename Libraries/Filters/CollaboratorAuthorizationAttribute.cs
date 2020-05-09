@@ -18,7 +18,7 @@ namespace OnlineStore.Libraries.Filters
             Collaborator collaboratorFromSession = collaboratorSession.GetLoggedInCollaborator();
 
             if (collaboratorFromSession == null)
-                context.Result = new ContentResult() { Content="Access denied!" };
+                context.Result = new RedirectToActionResult("Login", "Home", null);
         }
     }
 }

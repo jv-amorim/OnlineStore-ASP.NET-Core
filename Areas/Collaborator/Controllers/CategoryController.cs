@@ -3,8 +3,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Models;
 using OnlineStore.Repositories.Interfaces;
-using OnlineStore.Libraries.Filters;
+using OnlineStore.Libraries.Language;
 using OnlineStore.Libraries.RazorUtils;
+using OnlineStore.Libraries.Filters;
 using X.PagedList;
 
 namespace OnlineStore.Areas.Collaborator.Controllers
@@ -16,7 +17,8 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         private ICategoryRepository categoryRepository;
         private const int NumberOfItemsPerPage = 10;
         
-        public CategoryController(ICategoryRepository categoryRepository) => this.categoryRepository = categoryRepository;
+        public CategoryController(ICategoryRepository categoryRepository) => 
+            this.categoryRepository = categoryRepository;
 
         public IActionResult Index(int? page)
         {
@@ -34,12 +36,12 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register([FromForm]Category category)
+        public IActionResult Register([FromForm] Category category)
         {
             if (ModelState.IsValid)
             {
                 categoryRepository.Register(category);
-                TempData["MSG_OK"] = "Successful registration!";
+                TempData["MSG_OK"] = Message.MSG_OK_001;
                 return RedirectToAction(nameof(Register));
             }
             
@@ -61,12 +63,12 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update([FromForm]Category category)
+        public IActionResult Update([FromForm] Category category)
         {
             if (ModelState.IsValid)
             {
                 categoryRepository.Update(category);
-                TempData["MSG_OK"] = "Successfully updated!";
+                TempData["MSG_OK"] = Message.MSG_OK_002;
                 return RedirectToAction(nameof(Index));
             }
             
@@ -95,7 +97,7 @@ namespace OnlineStore.Areas.Collaborator.Controllers
             else
             {
                 categoryRepository.Delete(id);
-                TempData["MSG_OK"] = "Successfully deleted!";
+                TempData["MSG_OK"] = Message.MSG_OK_003;
             }
             
             return RedirectToAction(nameof(Index));

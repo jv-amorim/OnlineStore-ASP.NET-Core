@@ -128,4 +128,22 @@
   <data name="MSG_ERROR_004" xml:space="preserve">
     <value>The {0} field is not valid!</value>
   </data>
+  <data name="MSG_ERROR_005" xml:space="preserve">
+    <value>The {0} field value does not match the {1} field value!</value>
+  </data>
+  <data name="MSG_ERROR_006" xml:space="preserve">
+    <value>No account found. Your email or password may be incorrect.</value>
+  </data>
+  <data name="MSG_ERROR_007" xml:space="preserve">
+    <value>Oops, something went wrong. Try again!</value>
+  </data>
+  <data name="MSG_OK_001" xml:space="preserve">
+    <value>Successful registration!</value>
+  </data>
+  <data name="MSG_OK_002" xml:space="preserve">
+    <value>Successfully updated!</value>
+  </data>
+  <data name="MSG_OK_003" xml:space="preserve">
+    <value>Successfully deleted!</value>
+  </data>
 </root>

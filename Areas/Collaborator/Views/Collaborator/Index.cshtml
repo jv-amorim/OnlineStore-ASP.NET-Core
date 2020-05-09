@@ -1,9 +1,9 @@
-@model IPagedList<Category>
+@model IPagedList<Collaborator>
 @{
-    ViewData["Title"] = "Categories";
+    ViewData["Title"] = "Collaborators";
 }
 
-<h1 style="margin-top: 20px;">Categories</h1>
+<h1 style="margin-top: 20px;">Collaborators</h1>
 
 @if(TempData["MSG_OK"] != null)
 {
@@ -20,7 +20,8 @@
 
 @if(Model.Count == 0)
 {
-    <span>There are no registered categories.</span>
+    <br />
+    <span>There are no registered collaborators.</span>
 }
 else
 {
@@ -30,27 +31,23 @@ else
                 <tr>
                 <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
                 <th scope="col">@Html.DisplayNameFor(model => model.First().Name)</th>
-                <th scope="col">@Html.DisplayNameFor(model => model.First().ParentCategoryId)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.First().Email)</th>
                 <th scope="col">Options</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (Category category in Model)
+                @foreach (Collaborator collaborator in Model)
                 {
                     <tr>
-                        <th scope="row">@category.Id</th>
-                        <td>@category.Name</td>
+                        <th scope="row">@collaborator.Id</th>
+                        <td>@collaborator.Name</td>
+                        <td>@collaborator.Email</td>
                         <td>
-                            @Html.DisplayFor(model => category.ParentCategory.Id)
-                            -
-                            @Html.DisplayFor(model => category.ParentCategory.Name)
-                        </td>
-                        <td>
-                            <a asp-action="Update" asp-route-id="@category.Id" 
+                            <a asp-action="Update" asp-route-id="@collaborator.Id" 
                             class="btn btn-secondary btn-custom">
                                 Update
                             </a>
-                            <a asp-action="Delete" asp-route-id="@category.Id" 
+                            <a asp-action="Delete" asp-route-id="@collaborator.Id" 
                             class="btn btn-danger btn-custom btn-delete">
                                 Delete
                             </a>

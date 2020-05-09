@@ -1,0 +1,35 @@
+@model Collaborator
+@{
+    ViewData["Title"] = "Collaborator Registration";
+}
+
+<h1 style="margin-top: 20px;">Collaborator Registration</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" placeholder="Type the name...">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" placeholder="Type the email...">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input type="password" asp-for="Password" class="form-control" placeholder="Type the password...">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PasswordConfirmation"></label>
+        <input type="password" asp-for="PasswordConfirmation" class="form-control" placeholder="Type the password again...">
+        <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
+    </div>
+    <div>
+        <a asp-action="Index">Return</a>
+        <button type="submit" class="btn btn-primary" style="float: right;">
+            Submit
+        </button>
+    </div>
+</form>
