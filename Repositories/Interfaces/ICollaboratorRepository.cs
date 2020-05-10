@@ -12,5 +12,6 @@ namespace OnlineStore.Repositories.Interfaces
         void Delete(int id);
         Collaborator GetCollaborator(int id);
         IPagedList<Collaborator> GetAllCollaborators(int? page, int pageSize);
+        Collaborator GetCollaboratorByEmail(string emailAddress);
     }
 }

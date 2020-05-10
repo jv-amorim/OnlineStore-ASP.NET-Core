@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using OnlineStore.Libraries.Language;
+using OnlineStore.Libraries.Validation.Collaborator;
 
 namespace OnlineStore.Models
 {
@@ -15,6 +16,7 @@ namespace OnlineStore.Models
 
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]
         [EmailAddress(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_004")]
+        [UniqueEmailAddress]
         public string Email { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]

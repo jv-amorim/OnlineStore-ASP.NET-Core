@@ -1,4 +1,5 @@
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using OnlineStore.Models;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Database;
@@ -29,6 +30,15 @@ namespace OnlineStore.Repositories
         public IPagedList<Collaborator> GetAllCollaborators(int? page, int pageSize) =>
             database.Collaborators.ToPagedList<Collaborator>(page ?? 1, pageSize);
         
+        public Collaborator GetCollaboratorByEmail(string emailAddress)
+        {
+            return
+                database.Collaborators
+                .Where(c => c.Email == emailAddress)
+                .AsNoTracking()
+                .FirstOrDefault();
+        }
+
         public void Delete(int id)
         {
             Collaborator item = GetCollaborator(id);

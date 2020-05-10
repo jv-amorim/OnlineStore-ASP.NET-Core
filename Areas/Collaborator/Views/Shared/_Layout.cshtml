@@ -1,3 +1,5 @@
+@inject OnlineStore.Libraries.Session.CollaboratorSession collaboratorSession
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,11 +48,20 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" asp-action="CollaboratorPanel">
+                            <a class="nav-link active" asp-action="CollaboratorDashboard" asp-controller="Home">
                                 <span data-feather="home"></span>
                                 Dashboard
                             </a>
                         </li>
+                        @if (collaboratorSession.GetLoggedInCollaborator().IsAdministrator)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-action="Index" asp-controller="Collaborator">
+                                    <span data-feather="user"></span>
+                                    Collaborators
+                                </a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link" asp-action="Index" asp-controller="Category">
                                 <span data-feather="file"></span>
