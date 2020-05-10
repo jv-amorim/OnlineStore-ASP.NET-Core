@@ -101,6 +101,14 @@ namespace OnlineStore.Libraries.Language
             }
         }
 
+        public static string MSG_ERROR_008
+        {
+            get
+            {
+                return ResourceManager.GetString("MSG_ERROR_008", resourceCulture);
+            }
+        }
+
         public static string MSG_OK_001
         {
             get

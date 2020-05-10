@@ -137,6 +137,9 @@
   <data name="MSG_ERROR_007" xml:space="preserve">
     <value>Oops, something went wrong. Try again!</value>
   </data>
+  <data name="MSG_ERROR_008" xml:space="preserve">
+    <value>You cannot perform this action on your own account!</value>
+  </data>
   <data name="MSG_OK_001" xml:space="preserve">
     <value>Successful registration!</value>
   </data>

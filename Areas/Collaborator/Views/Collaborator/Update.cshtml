@@ -8,23 +8,23 @@
 <form method="post">
     <input type="hidden" asp-for="Id">
     <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" placeholder="Type the name...">
+        <label asp-for="Name">New Name</label>
+        <input asp-for="Name" class="form-control" placeholder="Type the new name...">
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" placeholder="Type the email...">
+        <label asp-for="Email">New Email</label>
+        <input asp-for="Email" class="form-control" placeholder="Type the new email...">
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Password"></label>
-        <input type="password" asp-for="Password" class="form-control" placeholder="Type the password...">
+        <label asp-for="Password">New Password</label>
+        <input type="password" asp-for="Password" class="form-control" placeholder="Type the new password...">
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="PasswordConfirmation"></label>
-        <input type="password" asp-for="PasswordConfirmation" class="form-control" placeholder="Type the password again...">
+        <label asp-for="PasswordConfirmation">New Password Confirmation</label>
+        <input type="password" asp-for="PasswordConfirmation" class="form-control" placeholder="Type the new password again...">
         <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
     </div>
     <div>
