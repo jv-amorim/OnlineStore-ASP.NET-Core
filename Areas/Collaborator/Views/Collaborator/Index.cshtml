@@ -1,6 +1,8 @@
 @model IPagedList<Collaborator>
 @{
     ViewData["Title"] = "Collaborators";
+    bool isTheLoggedInCollaboratorAnAdmin = (bool)ViewData["IsTheLoggedInCollaboratorAnAdmin"];
+    int loggedInCollaboratorID = (int)ViewData["LoggedInCollaboratorID"];
 }
 
 <h1 style="margin-top: 20px;">Collaborators</h1>
@@ -43,14 +45,20 @@ else
                         <td>@collaborator.Name</td>
                         <td>@collaborator.Email</td>
                         <td>
-                            <a asp-action="Update" asp-route-id="@collaborator.Id" 
-                            class="btn btn-secondary btn-custom">
-                                Update
-                            </a>
-                            <a asp-action="Delete" asp-route-id="@collaborator.Id" 
-                            class="btn btn-danger btn-custom btn-delete">
-                                Delete
-                            </a>
+                            @if (isTheLoggedInCollaboratorAnAdmin || collaborator.Id == loggedInCollaboratorID)
+                            {
+                                <a asp-action="Update" asp-route-id="@collaborator.Id" 
+                                class="btn btn-secondary btn-custom">
+                                    Update
+                                </a>
+                            }
+                            @if (isTheLoggedInCollaboratorAnAdmin && collaborator.Id != loggedInCollaboratorID)
+                            {
+                                <a asp-action="Delete" asp-route-id="@collaborator.Id" 
+                                class="btn btn-danger btn-custom btn-delete">
+                                    Delete
+                                </a>
+                            }
                         </td>
                     </tr>
                 }

@@ -27,9 +27,7 @@ namespace OnlineStore.Repositories
         public Collaborator GetCollaborator(int id) => database.Collaborators.Find(id);
 
         public IPagedList<Collaborator> GetAllCollaborators(int? page, int pageSize) =>
-            database.Collaborators
-            .Where(c => c.IsAdministrator == false)
-            .ToPagedList<Collaborator>(page ?? 1, pageSize);
+            database.Collaborators.ToPagedList<Collaborator>(page ?? 1, pageSize);
         
         public void Delete(int id)
         {

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Models;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.Language;
+using OnlineStore.Libraries.Session;
 using OnlineStore.Libraries.Filters;
 using X.PagedList;
 
@@ -12,15 +13,24 @@ namespace OnlineStore.Areas.Collaborator.Controllers
     public class CollaboratorController : Controller
     {
         private ICollaboratorRepository collaboratorRepository;
+        private  CollaboratorSession collaboratorSession;
         private const int NumberOfItemsPerPage = 10;
         
-        public CollaboratorController(ICollaboratorRepository collaboratorRepository) => 
+        public CollaboratorController(ICollaboratorRepository collaboratorRepository, CollaboratorSession collaboratorSession)
+        {
             this.collaboratorRepository = collaboratorRepository;
+            this.collaboratorSession = collaboratorSession;
+        }
 
         public IActionResult Index(int? page)
         {
+            Models.Collaborator loggedInCollaborator = collaboratorSession.GetLoggedInCollaborator();
+            ViewData["IsTheLoggedInCollaboratorAnAdmin"] = loggedInCollaborator.IsAdministrator;
+            ViewData["LoggedInCollaboratorID"] = loggedInCollaborator.Id;
+
             IPagedList<Models.Collaborator> collaborators = 
                 collaboratorRepository.GetAllCollaborators(page, NumberOfItemsPerPage);
+
             return View(collaborators);
         }
 
@@ -44,9 +54,18 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            Models.Collaborator collaboratorToUpdate = collaboratorRepository.GetCollaborator(id);
-            collaboratorToUpdate.Password = null;
-            return View(collaboratorToUpdate);
+            Models.Collaborator loggedInCollaborator = collaboratorSession.GetLoggedInCollaborator();
+            bool isTheLoggedInCollaboratorAnAdmin = loggedInCollaborator.IsAdministrator == true;
+            bool isTheLoggedInCollaboratorTheSameToUpdate = loggedInCollaborator.Id == id;
+
+            if (isTheLoggedInCollaboratorAnAdmin || isTheLoggedInCollaboratorTheSameToUpdate)
+            {
+                Models.Collaborator collaboratorToUpdate = collaboratorRepository.GetCollaborator(id);
+                collaboratorToUpdate.Password = null;
+                return View(collaboratorToUpdate);
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
@@ -64,8 +83,16 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            collaboratorRepository.Delete(id);
-            TempData["MSG_OK"] = Message.MSG_OK_003;
+            Models.Collaborator loggedInCollaborator = collaboratorSession.GetLoggedInCollaborator();
+            bool isTheLoggedInCollaboratorAnAdmin = loggedInCollaborator.IsAdministrator == true;
+            bool isTheLoggedInCollaboratorTheSameToDelete = loggedInCollaborator.Id == id;
+            
+            if (isTheLoggedInCollaboratorAnAdmin && !isTheLoggedInCollaboratorTheSameToDelete)
+            {
+                collaboratorRepository.Delete(id);
+                TempData["MSG_OK"] = Message.MSG_OK_003;
+            }
+
             return RedirectToAction(nameof(Index));
         }
     }
