@@ -13,7 +13,9 @@
                         <div class="card">
                             <header class="card-header">
                                 <!-- TODO - This link will be changed to attend a new Controller. -->
-                                <a asp-controller="Home" asp-action="Login" class="float-right btn btn-outline-primary mt-1">Log in</a>
+                                <a asp-controller="Home" asp-action="Login" class="float-right btn btn-outline-primary mt-1">
+                                    Log in
+                                </a>
                                 <h4 class="card-title mt-2">Sign Up</h4>
                             </header>
                             <article class="card-body">
@@ -23,12 +25,12 @@
                                 }
                                 <div class="form-row">
                                     <div class="col form-group">
-                                        <label asp-for="Name">Name</label>
+                                        <label asp-for="Name"></label>
                                         <input type="text" asp-for="Name" class="form-control" placeholder="">
                                         <span asp-validation-for="Name"></span>
                                     </div>
                                     <div class="col form-group">
-                                        <label asp-for="DateOfBirth">Date of Birth</label>
+                                        <label asp-for="DateOfBirth"></label>
                                         <input type="date" asp-for="DateOfBirth" class="form-control" placeholder="">
                                         <span asp-validation-for="DateOfBirth"></span>
                                     </div>
@@ -45,26 +47,31 @@
                                     <span asp-validation-for="Sex"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="CPF">CPF</label>
+                                    <label asp-for="CPF"></label>
                                     <input type="number" asp-for="CPF" class="form-control" placeholder="">
                                     <span asp-validation-for="CPF"></span>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label asp-for="Phone">Phone Number</label>
+                                        <label asp-for="Phone"></label>
                                         <input type="number" asp-for="Phone" class="form-control">
                                         <span asp-validation-for="Phone"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Email">Email</label>
+                                    <label asp-for="Email"></label>
                                     <input type="email" asp-for="Email" class="form-control" placeholder="">
                                     <span asp-validation-for="Email"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Password">Password</label>
+                                    <label asp-for="Password"></label>
                                     <input asp-for="Password" class="form-control" type="password">
                                     <span asp-validation-for="Password"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="PasswordConfirmation"></label>
+                                    <input asp-for="PasswordConfirmation" class="form-control" type="password">
+                                    <span asp-validation-for="PasswordConfirmation"></span>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-block"> Sign Up </button>

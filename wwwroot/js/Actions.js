@@ -1,8 +1,8 @@
 $(document).ready(function() 
 {
-    $(".btn-delete").click(function(e) 
+    $(".btn-danger").click(function(e) 
     {
-        var result = confirm("Do you really want to delete this item?");
+        var result = confirm("Do you really want to do this action?");
 
         if (!result)
         {

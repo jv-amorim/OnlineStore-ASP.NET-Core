@@ -14,6 +14,7 @@ namespace OnlineStore.Repositories
 
         public void Register(Customer customer)
         {
+            customer.IsTheAccountActive = true;
             database.Add(customer);
             database.SaveChanges();
         }

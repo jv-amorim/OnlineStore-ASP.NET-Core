@@ -16,12 +16,14 @@ namespace OnlineStore.Models
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]
         public string Sex { get; set; }
 
+        [Display(Name = "Date of Birth")]
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]
         public DateTime DateOfBirth { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]
         public string CPF { get; set; }
 
+        [Display(Name = "Phone Number")]
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]
         public string Phone { get; set; }
         
