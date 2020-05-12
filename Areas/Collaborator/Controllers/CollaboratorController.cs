@@ -66,15 +66,14 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         }
 
         [HttpGet]
+        [ValidateHttpReferer]
         public IActionResult Delete(int id)
         {
             Models.Collaborator loggedInCollaborator = collaboratorSession.GetLoggedInCollaborator();
             bool isTheLoggedInCollaboratorTheSameToDelete = loggedInCollaborator.Id == id;
             
             if (isTheLoggedInCollaboratorTheSameToDelete)
-            {
                 TempData["MSG_ERROR"] = Message.MSG_ERROR_008;
-            }
             else
             {
                 collaboratorRepository.Delete(id);

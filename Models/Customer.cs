@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using OnlineStore.Libraries.Language;
 
 namespace OnlineStore.Models
@@ -31,5 +32,13 @@ namespace OnlineStore.Models
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]
         [MinLength(6, ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_002")]
         public string Password { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Password Confirmation")]
+        [Compare("Password", ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_005")]
+        public string PasswordConfirmation { get; set; }
+
+        [Display(Name = "Is the account active?")]
+        public bool IsTheAccountActive { get; set; }
     }
 }

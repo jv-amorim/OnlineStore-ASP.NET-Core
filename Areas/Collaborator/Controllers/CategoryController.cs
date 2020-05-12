@@ -80,6 +80,7 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         }
 
         [HttpGet]
+        [ValidateHttpReferer]
         public IActionResult Delete(int id)
         {
             IEnumerable<Category> childCategory = 

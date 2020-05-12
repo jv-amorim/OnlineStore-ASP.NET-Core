@@ -38,6 +38,7 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         }
 
         [CollaboratorAuthorization]
+        [ValidateHttpReferer]
         public IActionResult Logout()
         {
             collaboratorSession.Logout();

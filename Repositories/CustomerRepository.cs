@@ -1,8 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
 using OnlineStore.Models;
 using OnlineStore.Database;
 using OnlineStore.Repositories.Interfaces;
+using X.PagedList;
 
 namespace OnlineStore.Repositories
 {
@@ -26,7 +26,8 @@ namespace OnlineStore.Repositories
 
         public Customer GetCustomer(int id) => database.Customers.Find(id);
 
-        public IEnumerable<Customer> GetAllCustomers() => database.Customers;
+        public IPagedList<Customer> GetAllCustomers(int? page, int pageSize) =>
+            database.Customers.ToPagedList<Customer>(page ?? 1, pageSize);
 
         public void Delete(int id)
         {

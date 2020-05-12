@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using OnlineStore.Models;
+using X.PagedList;
 
 namespace OnlineStore.Repositories.Interfaces
 {
@@ -11,6 +11,6 @@ namespace OnlineStore.Repositories.Interfaces
         void Update(Customer customer);
         void Delete(int id);
         Customer GetCustomer(int id);
-        IEnumerable<Customer> GetAllCustomers();
+        IPagedList<Customer> GetAllCustomers(int? page, int pageSize);
     }
 }
