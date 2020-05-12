@@ -14,6 +14,7 @@ using OnlineStore.Repositories;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.XML;
 using OnlineStore.Libraries.Session;
+using OnlineStore.Libraries.Middlewares;
 
 namespace OnlineStore
 {
@@ -71,6 +72,7 @@ namespace OnlineStore
             app.UseStaticFiles();
             
             app.UseSession();
+            app.UseMiddleware<ValidateAntiForgeryTokenMiddleware>();
 
             app.UseRouting();
             app.UseAuthorization();
