@@ -11,5 +11,7 @@ namespace OnlineStore.Database
         public DbSet<NewsletterEmail> NewsletterEmails { get; set; }
         public DbSet<Collaborator> Collaborators { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Image> Images { get; set; }
     }
 }
