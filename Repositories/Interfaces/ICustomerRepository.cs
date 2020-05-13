@@ -11,6 +11,6 @@ namespace OnlineStore.Repositories.Interfaces
         void Update(Customer customer);
         void Delete(int id);
         Customer GetCustomer(int id);
-        IPagedList<Customer> GetAllCustomers(int? page, int pageSize);
+        IPagedList<Customer> GetAllCustomers(int? page, int pageSize, string searchParameter);
     }
 }

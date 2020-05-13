@@ -27,8 +27,21 @@ namespace OnlineStore.Repositories
 
         public Customer GetCustomer(int id) => database.Customers.Find(id);
 
-        public IPagedList<Customer> GetAllCustomers(int? page, int pageSize) =>
-            database.Customers.ToPagedList<Customer>(page ?? 1, pageSize);
+        public IPagedList<Customer> GetAllCustomers(int? page, int pageSize, string searchParameter)
+        {
+            var customersFromDB = database.Customers.AsQueryable();
+            
+            if (!string.IsNullOrEmpty(searchParameter))
+            {
+                searchParameter = searchParameter.Trim();
+                customersFromDB = 
+                    customersFromDB
+                    .Where(c => c.Name.Contains(searchParameter) 
+                    || c.Email.Contains(searchParameter));
+            }
+
+            return customersFromDB.ToPagedList<Customer>(page ?? 1, pageSize);
+        }
 
         public void Delete(int id)
         {

@@ -17,10 +17,10 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         public CustomerController(ICustomerRepository customerRepository) => 
             this.customerRepository = customerRepository;
         
-        public IActionResult Index(int? page)
+        public IActionResult Index(int? page, string searchParameter)
         {
             IPagedList<Customer> customers = 
-                customerRepository.GetAllCustomers(page, NumberOfItemsPerPage);
+                customerRepository.GetAllCustomers(page, NumberOfItemsPerPage, searchParameter);
             return View(customers);
         }
 
