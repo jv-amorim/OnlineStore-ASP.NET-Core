@@ -1,10 +1,10 @@
-@model IPagedList<Customer>
+@model IPagedList<Product>
 @{
-    ViewData["Title"] = "Customers";
+    ViewData["Title"] = "Products";
     var searchParameter = Context.Request.Query["searchParameter"];
 }
 
-<h1 style="margin-top: 20px;">Customers</h1>
+<h1 style="margin-top: 20px;">Products</h1>
 
 @if(TempData["MSG_OK"] != null)
 {
@@ -18,7 +18,7 @@
 <form method="get" style="margin-top: 25px;">
     <div class="input-group mb-3">
         <input type="text" name="searchParameter" id="searchParameter" class="form-control" 
-            value="@searchParameter" placeholder="Find a customer by name or email...">
+            value="@searchParameter" placeholder="Find a product by name...">
         <div class="input-group-append">
             <button type="submit" class="btn btn-primary">
                 <span data-feather="search"></span>
@@ -27,10 +27,14 @@
     </div>
 </form>
 
+<a asp-action="Register" class="btn btn-primary" style="margin: 25px 0px 20px 0px;">
+    Register
+</a>
+
 @if(Model.Count == 0)
 {
     <br />
-    <span>No customers found.</span>
+    <span>No products found.</span>
 }
 else
 {
@@ -40,32 +44,30 @@ else
                 <tr>
                 <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
                 <th scope="col">@Html.DisplayNameFor(model => model.First().Name)</th>
-                <th scope="col">@Html.DisplayNameFor(model => model.First().Email)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.First().Category)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.First().UnitPrice)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.First().UnitsInStock)</th>
                 <th scope="col">Options</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (Customer customer in Model)
+                @foreach (Product product in Model)
                 {
                     <tr>
-                        <th scope="row">@customer.Id</th>
-                        <td>@customer.Name</td>
-                        <td>@customer.Email</td>
+                        <th scope="row">@product.Id</th>
+                        <td>@product.Name</td>
+                        <td>@product.CategoryId</td>
+                        <td>@product.UnitPrice</td>
+                        <td>@product.UnitsInStock</td>
                         <td>
-                            @if (customer.IsTheAccountActive)
-                            {
-                                <a asp-action="ActivateOrDeactivateTheCustomerAccount" asp-route-id="@customer.Id" 
-                                class="btn btn-danger btn-custom">
-                                    Deactivate
-                                </a>
-                            }
-                            else
-                            {
-                                <a asp-action="ActivateOrDeactivateTheCustomerAccount" asp-route-id="@customer.Id" 
-                                class="btn btn-secondary btn-custom">
-                                    Activate
-                                </a>
-                            }
+                             <a asp-action="Update" asp-route-id="@product.Id" 
+                            class="btn btn-secondary btn-custom">
+                                <span data-feather="edit"></span>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@product.Id" 
+                            class="btn btn-danger btn-custom">
+                                <span data-feather="trash"></span>
+                            </a>
                         </td>
                     </tr>
                 }

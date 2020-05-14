@@ -18,8 +18,7 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         // TODO - Add selector in the View to change the number of items displayed per page.
         private const int NumberOfItemsPerPage = 10;
         
-        public CategoryController(ICategoryRepository categoryRepository) => 
-            this.categoryRepository = categoryRepository;
+        public CategoryController(ICategoryRepository categoryRepository) => this.categoryRepository = categoryRepository;
 
         public IActionResult Index(int? page)
         {

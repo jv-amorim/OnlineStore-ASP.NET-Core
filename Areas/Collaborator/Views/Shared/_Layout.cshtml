@@ -48,7 +48,7 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" asp-action="CollaboratorDashboard" asp-controller="Home">
+                            <a class="nav-link active" asp-controller="Home" asp-action="CollaboratorDashboard">
                                 <span data-feather="home"></span>
                                 Dashboard
                             </a>
@@ -56,26 +56,26 @@
                         @if (collaboratorSession.GetLoggedInCollaborator().IsAdministrator)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-action="Index" asp-controller="Collaborator">
+                                <a class="nav-link" asp-controller="Collaborator" asp-action="Index">
                                     <span data-feather="user"></span>
                                     Collaborators
                                 </a>
                             </li>
                         }
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="Index" asp-controller="Category">
+                            <a class="nav-link" asp-controller="Category" asp-action="Index">
                                 <span data-feather="file"></span>
                                 Categories
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-controller="Product" asp-action="Index">
                                 <span data-feather="shopping-cart"></span>
                                 Products
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="Index" asp-controller="Customer">
+                            <a class="nav-link" asp-controller="Customer" asp-action="Index">
                                 <span data-feather="users"></span>
                                 Customers
                             </a>

@@ -9,11 +9,16 @@ namespace OnlineStore.Models
     public class Product
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
+        
         public string Description { get; set; }
         
+        [Display(Name = "Unit Price")]
         [Column(TypeName = "decimal(18,4)")]
         public decimal UnitPrice { get; set; }
+
+        [Display(Name = "Units In Stock")]
         public int UnitsInStock { get; set; }
 
         public double Weight { get; set; }
