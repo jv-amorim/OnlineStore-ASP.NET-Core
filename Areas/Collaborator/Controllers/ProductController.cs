@@ -53,5 +53,31 @@ namespace OnlineStore.Areas.Collaborator.Controllers
             ViewBag.Categories = ListOfCategoryItems.CreateNewListOfCategoryItems(categories);
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            Product productToUpdate  = productRepository.GetProduct(id);
+
+            IEnumerable<Category> categories = categoryRepository.GetAllCategories();
+            ViewBag.Categories = ListOfCategoryItems.CreateNewListOfCategoryItems(categories);
+
+            return View(productToUpdate);
+        }
+
+        [HttpPost]
+        public IActionResult Update(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                productRepository.Update(product);
+                TempData["MSG_OK"] = Message.MSG_OK_002;
+                return RedirectToAction(nameof(Index));
+            }
+
+            IEnumerable<Category> categories = categoryRepository.GetAllCategories();
+            ViewBag.Categories = ListOfCategoryItems.CreateNewListOfCategoryItems(categories);
+            return View();
+        }
     }
 }
