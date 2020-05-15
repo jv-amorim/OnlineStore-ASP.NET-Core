@@ -143,6 +143,9 @@
   <data name="MSG_ERROR_009" xml:space="preserve">
     <value>An account is already registered with this email address!</value>
   </data>
+  <data name="MSG_ERROR_010" xml:space="preserve">
+    <value>The {0} field value must be between {1} and {2}!</value>
+  </data>
   <data name="MSG_OK_001" xml:space="preserve">
     <value>Successful registration!</value>
   </data>

@@ -28,17 +28,30 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         {
             IPagedList<Product> products =
                 productRepository.GetAllProducts(page, NumberOfItemsPerPage, searchParameter);
-            
-            IEnumerable<Category> categories = categoryRepository.GetAllCategories();
-            ViewBag.Categories = ListOfCategoryItems.CreateNewListOfCategoryItems(categories);
-
             return View(products);
         }
 
         [HttpGet]
-        public IActionResult Register() => View();
+        public IActionResult Register()
+        {
+            IEnumerable<Category> categories = categoryRepository.GetAllCategories();
+            ViewBag.Categories = ListOfCategoryItems.CreateNewListOfCategoryItems(categories);
+            return View();
+        }
 
         [HttpPost]
-        public IActionResult Register([FromForm] Product product) => View();
+        public IActionResult Register([FromForm] Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                productRepository.Register(product);
+                TempData["MSG_OK"] = Message.MSG_OK_001;
+                return RedirectToAction(nameof(Register));
+            }
+
+            IEnumerable<Category> categories = categoryRepository.GetAllCategories();
+            ViewBag.Categories = ListOfCategoryItems.CreateNewListOfCategoryItems(categories);
+            return View();
+        }
     }
 }

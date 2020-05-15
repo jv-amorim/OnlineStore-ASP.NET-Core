@@ -3,6 +3,27 @@
     display: block;
 }
 
-.btn-custom {
+.btn-custom
+{
     font-size: 14px;
+}
+
+.registration-images div
+{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.registration-images .btn-delete-image
+{
+    width: 100%;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.registration-images .img-thumbnail
+{
+    width: 100%;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
