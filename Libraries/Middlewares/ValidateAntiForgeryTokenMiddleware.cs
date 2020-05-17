@@ -18,7 +18,13 @@ namespace OnlineStore.Libraries.Middlewares
         public async Task Invoke(HttpContext context)
         {
             if (HttpMethods.IsPost(context.Request.Method))
-                await antiforgery.ValidateRequestAsync(context);
+            {
+                bool isTheRequestMadeWithAjax = context.Request.Headers["x-requested-with"] == "XMLHttpRequest"; 
+                bool isTheRequestAFileUpload = isTheRequestMadeWithAjax && context.Request.Form.Files.Count > 0;
+
+                if (!isTheRequestAFileUpload)
+                    await antiforgery.ValidateRequestAsync(context);
+            }
 
             await next(context);
         }
