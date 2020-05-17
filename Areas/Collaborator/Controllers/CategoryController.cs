@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Models;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.Language;
-using OnlineStore.Libraries.RazorUtils;
 using OnlineStore.Libraries.Filters;
+using OnlineStore.Libraries.Helpers.RazorHelpers;
 using X.PagedList;
 
 namespace OnlineStore.Areas.Collaborator.Controllers

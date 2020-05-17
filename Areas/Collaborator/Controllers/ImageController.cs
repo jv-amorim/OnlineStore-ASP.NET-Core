@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Libraries.Filters;
-using OnlineStore.Libraries.FileUtils;
+using OnlineStore.Repositories.Interfaces;
+using OnlineStore.Libraries.Helpers.FileHelpers;
 
 namespace OnlineStore.Areas.Collaborator.Controllers
 {
@@ -9,6 +10,10 @@ namespace OnlineStore.Areas.Collaborator.Controllers
     [CollaboratorAuthorization]
     public class ImageController : Controller
     {
+        private IImageRepository imageRepository;
+
+        public ImageController(IImageRepository imageRepository) => this.imageRepository = imageRepository;
+
         [HttpPost]
         public IActionResult Save(IFormFile file)
         {
@@ -26,7 +31,10 @@ namespace OnlineStore.Areas.Collaborator.Controllers
             bool wasTheFileDeleted = FileManager.DeleteProductImage(filePath);
 
             if (wasTheFileDeleted)
+            {
+                imageRepository.Delete(filePath);
                 return Ok();
+            }
             
             return BadRequest();
         }

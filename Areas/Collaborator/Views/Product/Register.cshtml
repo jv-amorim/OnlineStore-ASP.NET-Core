@@ -108,17 +108,40 @@
     </h3>
 
     <div class="row registration-images">
-        @for (int i = 0; i < 12; i++)
+    @{
+        List<string> imagesPaths;
+
+        if (ViewBag.ImagesPaths != null)
+            imagesPaths = ViewBag.ImagesPaths;
+        else
+            imagesPaths = new List<string>();
+
+        for (int i = 0; i < 12; i++)
         {
-            <div class="col-md-2">
-                <input type="file" class="img-file-input">
-                <img src="~/img/default-image.png" class="img-thumbnail img-upload">
-                <a class="btn btn-danger btn-delete-image">
-                    <span data-feather="trash" style="color: #FFF;"></span>
-                </a>
-                <input type="text" name="imageFilePath">
-            </div>
+            if (string.IsNullOrEmpty(imagesPaths.ElementAtOrDefault(i)))
+            {
+                <div class="col-md-2">
+                    <input type="file" class="img-file-input">
+                    <img src="/img/default-image.png" class="img-thumbnail img-upload">
+                    <a class="btn btn-danger btn-delete-image">
+                        <span data-feather="trash" style="color: #FFF;"></span>
+                    </a>
+                    <input type="text" name="imageFilePath">
+                </div>
+            }
+            else
+            {
+                <div class="col-md-2">
+                    <input type="file" class="img-file-input">
+                    <img src="@imagesPaths[i]" class="img-thumbnail img-upload">
+                    <a class="btn btn-danger btn-delete-image" style="display: inline-block;">
+                        <span data-feather="trash" style="color: #FFF;"></span>
+                    </a>
+                    <input type="text" name="imageFilePath" value="@imagesPaths[i]">
+                </div>
+            }
         }
+    }
     </div>
 
     <div style="margin-bottom: 45px;">

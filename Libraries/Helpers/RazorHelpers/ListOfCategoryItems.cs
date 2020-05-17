@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OnlineStore.Models;
 
-namespace OnlineStore.Libraries.RazorUtils
+namespace OnlineStore.Libraries.Helpers.RazorHelpers
 {
     /// <summary>Useful methods to use SelectListItem of categories in "select" HTML tag (options dropdown).</summary>
     public static class ListOfCategoryItems

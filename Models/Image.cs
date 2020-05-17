@@ -1,7 +1,5 @@
-using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using OnlineStore.Libraries.Language;
 
 namespace OnlineStore.Models
 {
@@ -14,5 +12,24 @@ namespace OnlineStore.Models
 
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
+
+        public static List<Image> CreateImageList(List<string> paths, int productId)
+        {
+            List<Image> images = new List<Image>();
+            
+            foreach (string path in paths)
+            {
+                if(string.IsNullOrEmpty(path))
+                    continue;
+
+                images.Add(new Image()
+                {
+                    Path = path,
+                    ProductId = productId
+                });
+            }
+
+            return images;
+        }
     }
 }

@@ -17,12 +17,31 @@ namespace OnlineStore.Repositories
             database.Add(image);
             database.SaveChanges();
         }
+
+        public void Register(List<Image> images)
+        {
+            foreach (Image image in images)
+                database.Add(image);
+                
+            database.SaveChanges();
+        }
         
         public void Delete(int id)
         {
             Image image = database.Images.Find(id);
             database.Remove(image);
             database.SaveChanges();
+        }
+        
+        public void Delete(string path)
+        {
+            Image image = database.Images.Where(i => i.Path == path).FirstOrDefault();
+
+            if(image != null)
+            {
+                database.Remove(image);
+                database.SaveChanges();
+            }
         }
 
         public void DeleteAllProductImages(int productId)
