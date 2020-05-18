@@ -50,6 +50,14 @@ namespace OnlineStore.Libraries.Helpers.FileHelpers
             return false;
         }
 
+        public static void DeleteProductImagesFolder(int productId)
+        {
+            string folderPath = Path.Combine(currentDirectoryPath, String.Format(permanentUploadFolder, productId));
+
+            if (Directory.Exists(folderPath))
+                Directory.Delete(folderPath, true);
+        }
+
         public static void ClearTempUploadFolder()
         {
             DirectoryInfo directoryInfo = 

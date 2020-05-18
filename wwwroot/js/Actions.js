@@ -37,6 +37,8 @@ function AddProductImageUploadEvent()
         var imageField = $(this).parent().find(".img-upload");
         var imageFilePathField = $(this).parent().find("input[name=imageFilePath]");
         var deleteButton = $(this).parent().find(".btn-delete-image");
+        
+        imageField.attr("src", "/img/loading-animation.gif");
 
         $.ajax({
             type: "POST",
@@ -47,6 +49,7 @@ function AddProductImageUploadEvent()
             error: function() 
             {
                 alert("Error uploading image. Try again.");
+                imageField.attr("src", "/img/default-image.png");
             },
             success: function(data) 
             {

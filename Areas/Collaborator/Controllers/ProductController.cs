@@ -104,5 +104,18 @@ namespace OnlineStore.Areas.Collaborator.Controllers
             
             return View();
         }
+
+        [HttpGet]
+        [ValidateHttpReferer]
+        public IActionResult Delete(int id)
+        {
+            imageRepository.DeleteAllProductImages(id);
+            FileManager.DeleteProductImagesFolder(id);
+
+            productRepository.Delete(id);
+
+            TempData["MSG_OK"] = Message.MSG_OK_003;
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
