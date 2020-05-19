@@ -1,0 +1,34 @@
+@model List<Category>
+
+@{
+    var allCategories = Model;
+    var parentCategory = (Category)ViewData["ParentCategory"];
+    var childCategories = allCategories.Where(c => c.ParentCategoryId == parentCategory.Id);
+        
+    if (childCategories.Count() > 0)
+    {
+        <li class="dropdown-submenu">
+            <a class="dropdown-item" tabindex="-1" href="#">@parentCategory.Name</a>
+            <ul class="dropdown-menu">
+                @foreach (var child in childCategories)
+                {
+                    if (allCategories.Where(c => c.ParentCategoryId == child.Id).Count() > 0)
+                    {
+                        ViewData.Remove("ParentCategory");
+                        var viewData = new ViewDataDictionary(ViewData){{"ParentCategory", child}};
+                        
+                        @await Html.PartialAsync("_DropdownSubmenu.cshtml", Model, viewData);
+                    }
+                    else
+                    {
+                        <li class="dropdown-item"><a href="#">@child.Name</a></li>
+                    }
+                }
+            </ul>
+        </li>
+    }
+    else
+    {
+        <a class="dropdown-item" href="#">@parentCategory.Name</a>
+    }
+}
