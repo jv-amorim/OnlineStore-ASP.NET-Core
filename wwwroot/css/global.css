@@ -8,6 +8,34 @@
     font-size: 14px;
 }
 
+
+/* Products in Home Page: */
+
+.card-product
+{
+    height: 100%;
+}
+
+.home-products
+{
+    margin-bottom: 32px;
+}
+
+.home-products .product-button
+{
+    position: absolute; 
+    right: 20px; 
+    bottom: 20px;
+}
+
+.home-products .product-price
+{
+    position: absolute; 
+    left: 20px; 
+    bottom: 15px
+}
+
+
 /* Product Images Registration: */
 
 .registration-images div
@@ -37,6 +65,7 @@
 {
     display: none;
 }
+
 
 /* Bootstrap4 Multilevel Dropdown: */
 

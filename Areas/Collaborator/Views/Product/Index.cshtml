@@ -57,7 +57,7 @@ else
                         <th scope="row">@product.Id</th>
                         <td>@product.Name</td>
                         <td>@product.CategoryId</td>
-                        <td>@product.UnitPrice</td>
+                        <td>@product.UnitPrice.ToString("C")</td>
                         <td>@product.UnitsInStock</td>
                         <td>
                              <a asp-action="Update" asp-route-id="@product.Id" 

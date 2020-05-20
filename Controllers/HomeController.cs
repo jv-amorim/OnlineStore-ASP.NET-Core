@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Models;
+using OnlineStore.Models.ViewModels;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.Email;
 using OnlineStore.Libraries.LogResources;
@@ -17,32 +18,49 @@ namespace OnlineStore.Controllers
     {
         private ICustomerRepository customerRepository;
         private INewsletterRepository newsletterRepository;
+        private IProductRepository productRepository;
         private CustomerSession customerSession;
+        private const int NumberOfItemsPerPage = 12;
 
-        public HomeController(ICustomerRepository customerRepository, INewsletterRepository newsletterRepository, CustomerSession customerSession)
+        public HomeController(ICustomerRepository customerRepository, INewsletterRepository newsletterRepository, 
+            CustomerSession customerSession, IProductRepository productRepository)
         {
             this.customerRepository = customerRepository;
             this.newsletterRepository = newsletterRepository;
             this.customerSession = customerSession;
+            this.productRepository = productRepository;
         }
 
         [HttpGet]
-        public IActionResult Index() => View();
+        public IActionResult Index(int? page, string searchParameter)
+        {
+            IndexViewModel indexViewModel = new IndexViewModel()
+            {
+                Products = productRepository.GetAllProducts(page, NumberOfItemsPerPage, searchParameter)
+            };
+
+            return View(indexViewModel);
+        }
 
         [HttpPost]
-        public IActionResult Index([FromForm]NewsletterEmail newsletter)
+        public IActionResult Index(int? page, string searchParameter, [FromForm]IndexViewModel indexViewModel)
         {
-            if( ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                newsletterRepository.Subscribe(newsletter);
+                newsletterRepository.Subscribe(indexViewModel.NewsletterEmail);
 
                 TempData["MSG_OK"] = 
                     "Your email has been successfully registered to the newsletter!";
 
                 return RedirectToAction(nameof(Index));
             }
+            
+            indexViewModel = new IndexViewModel()
+            {
+                Products = productRepository.GetAllProducts(page, NumberOfItemsPerPage, searchParameter)
+            };
 
-            return View();
+            return View(indexViewModel);
         }
 
         public IActionResult Contact() => View();
