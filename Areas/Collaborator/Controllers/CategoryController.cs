@@ -31,7 +31,7 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         public IActionResult Register()
         {
             IEnumerable<Category> categories = categoryRepository.GetAllCategories();
-            ViewBag.Categories = ListOfCategoryItems.CreateNewListOfCategoryItems(categories);
+            ViewBag.Categories = SelectListItemHelpers.CreateNewListOfCategoryItems(categories);
             return View();
         }
 
@@ -46,7 +46,7 @@ namespace OnlineStore.Areas.Collaborator.Controllers
             }
             
             IEnumerable<Category> categories = categoryRepository.GetAllCategories();
-            ViewBag.Categories = ListOfCategoryItems.CreateNewListOfCategoryItems(categories);
+            ViewBag.Categories = SelectListItemHelpers.CreateNewListOfCategoryItems(categories);
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace OnlineStore.Areas.Collaborator.Controllers
             
             IEnumerable<Category> categories = categoryRepository.GetAllCategories();
             categories = categories.ToList().Where(c => c.Id != id);
-            ViewBag.Categories = ListOfCategoryItems.CreateNewListOfCategoryItems(categories);
+            ViewBag.Categories = SelectListItemHelpers.CreateNewListOfCategoryItems(categories);
 
             return View(categoryToUpdate);
         }
@@ -74,7 +74,7 @@ namespace OnlineStore.Areas.Collaborator.Controllers
             
             IEnumerable<Category> categories = categoryRepository.GetAllCategories();
             categories = categories.ToList().Where(c => c.Id != category.Id);
-            ViewBag.Categories = ListOfCategoryItems.CreateNewListOfCategoryItems(categories);
+            ViewBag.Categories = SelectListItemHelpers.CreateNewListOfCategoryItems(categories);
             
             return View();
         }

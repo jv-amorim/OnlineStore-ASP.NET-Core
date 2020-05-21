@@ -10,5 +10,6 @@ namespace OnlineStore.Repositories.Interfaces
         void Delete(int id);
         Product GetProduct(int id);
         IPagedList<Product> GetAllProducts(int? page, int pageSize, string searchParameter);
+        IPagedList<Product> GetAllProducts(int? page, int pageSize, string searchParameter, string sortingOption);
     }
 }

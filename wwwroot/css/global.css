@@ -11,6 +11,16 @@
 
 /* Products in Home Page: */
 
+#sortingOption
+{
+    scroll-margin-top: 100px;
+}
+
+.home-products-container
+{
+    margin-top: 30px;
+}
+
 .card-product
 {
     height: 100%;

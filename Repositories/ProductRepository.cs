@@ -2,6 +2,7 @@ using System.Linq;
 using OnlineStore.Database;
 using OnlineStore.Models;
 using OnlineStore.Repositories.Interfaces;
+using OnlineStore.Libraries.Enums;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 
@@ -29,12 +30,15 @@ namespace OnlineStore.Repositories
         {
             return 
                 database.Products
-                .Include(i => i.Images)
-                .Where(a => a.Id == id)
+                .Include(p => p.Images)
+                .Where(p => p.Id == id)
                 .FirstOrDefault();
         }
             
-        public IPagedList<Product> GetAllProducts(int? page, int pageSize, string searchParameter)
+        public IPagedList<Product> GetAllProducts(int? page, int pageSize, string searchParameter) => 
+            GetAllProducts(page, pageSize, searchParameter, null);
+
+        public IPagedList<Product> GetAllProducts(int? page, int pageSize, string searchParameter, string sortingOption)
         {
             var productsFromDB = database.Products.AsQueryable();
             
@@ -43,10 +47,27 @@ namespace OnlineStore.Repositories
                 searchParameter = searchParameter.Trim();
                 productsFromDB = 
                     productsFromDB
-                    .Where(c => c.Name.Contains(searchParameter));
+                    .Where(p => p.Name.Contains(searchParameter));
             }
 
-            return productsFromDB.Include(i => i.Images).ToPagedList<Product>(page ?? 1, pageSize);
+            if (!string.IsNullOrEmpty(sortingOption))
+            {
+                SortingOptions option;   
+                  
+                if (SortingOptions.TryParse<SortingOptions>(sortingOption, out option))
+                {
+                    productsFromDB = option switch
+                    {
+                        SortingOptions.Alphabetical_Ascending => productsFromDB.OrderBy(p => p.Name),
+                        SortingOptions.Alphabetical_Descending => productsFromDB.OrderByDescending(p => p.Name),
+                        SortingOptions.Price_LowToHigh => productsFromDB.OrderBy(p => p.UnitPrice),
+                        SortingOptions.Price_HighToLow => productsFromDB.OrderByDescending(p => p.UnitPrice),
+                        _ => productsFromDB
+                    };
+                }
+            }
+
+            return productsFromDB.Include(p => p.Images).ToPagedList<Product>(page ?? 1, pageSize);
         }
 
         public void Delete(int id)

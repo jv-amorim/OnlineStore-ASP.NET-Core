@@ -1,6 +1,8 @@
 @model IndexViewModel
 @{
     ViewData["Title"] = "Index";
+    var searchParameter = Context.Request.Query["searchParameter"];
+    var sortingOption = Context.Request.Query["sortingOption"].ToString();
 }
 
 <main role="main">
@@ -61,6 +63,13 @@
     @if (Model.Products.Count > 0)
     {
         <div class="container" id="code_prod_complex">
+            <div class="row">
+                <div class="offset-md-10 col-md-2">
+                    Sort by:
+                    <select id="sortingOption" asp-items="@Model.SortingOptionsList"
+                        asp-for="@sortingOption" class="form-control"></select>
+                </div>
+            </div>
             <div class="row home-products-container">
                 @foreach (var product in Model.Products)
                 {
@@ -83,7 +92,7 @@
                                 <a href="" class="btn btn-sm btn-primary float-right product-button">
                                     <i class="fas fa-shopping-cart"></i> Add to Cart
                                 </a>
-                                <div class="price-wrap h5 product-price" style="position: absolute; left: 20px; bottom: 15px;">
+                                <div class="price-wrap h5 product-price">
                                     <span class="price-new">@product.UnitPrice.ToString("C")</span>
                                 </div>
                             </div>
@@ -92,7 +101,7 @@
                 }
             </div>
             <div style="text-align: center;">
-                @Html.PagedListPager(Model.Products, page => Url.Action("Index", new { page = page }))
+                @Html.PagedListPager(Model.Products, page => Url.Action("Index", new { page = page, searchParameter = searchParameter, sortingOption = sortingOption }))
             </div>
         </div>
     }

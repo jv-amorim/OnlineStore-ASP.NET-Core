@@ -32,18 +32,18 @@ namespace OnlineStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int? page, string searchParameter)
+        public IActionResult Index(int? page, string searchParameter, string sortingOption)
         {
             IndexViewModel indexViewModel = new IndexViewModel()
             {
-                Products = productRepository.GetAllProducts(page, NumberOfItemsPerPage, searchParameter)
+                Products = productRepository.GetAllProducts(page, NumberOfItemsPerPage, searchParameter, sortingOption)
             };
 
             return View(indexViewModel);
         }
 
         [HttpPost]
-        public IActionResult Index(int? page, string searchParameter, [FromForm]IndexViewModel indexViewModel)
+        public IActionResult Index(int? page, string searchParameter, string sortingOption, [FromForm]IndexViewModel indexViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace OnlineStore.Controllers
             
             indexViewModel = new IndexViewModel()
             {
-                Products = productRepository.GetAllProducts(page, NumberOfItemsPerPage, searchParameter)
+                Products = productRepository.GetAllProducts(page, NumberOfItemsPerPage, searchParameter, sortingOption)
             };
 
             return View(indexViewModel);
