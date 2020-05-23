@@ -1,8 +1,6 @@
-@model IndexViewModel
+@model NewsletterEmail
 @{
-    ViewData["Title"] = "Index";
-    var searchParameter = Context.Request.Query["searchParameter"];
-    var sortingOption = Context.Request.Query["sortingOption"].ToString();
+    ViewData["Title"] = "Online Store";
 }
 
 <main role="main">
@@ -60,51 +58,7 @@
         </a>
     </div>
 
-    @if (Model.Products.Count > 0)
-    {
-        <div class="container" id="code_prod_complex">
-            <div class="row">
-                <div class="offset-md-10 col-md-2">
-                    Sort by:
-                    <select id="sortingOption" asp-items="@Model.SortingOptionsList"
-                        asp-for="@sortingOption" class="form-control"></select>
-                </div>
-            </div>
-            <div class="row home-products-container">
-                @foreach (var product in Model.Products)
-                {
-                    <div class="col-md-3 home-products">
-                        <figure class="card card-product">
-                            <div class="img-wrap">
-                                @if (product.Images != null && product.Images.Count > 0)
-                                {
-                                    <img src="@product.Images.ElementAt(0).Path">
-                                }
-                                else
-                                {
-                                    <img src="/img/default-image.png">
-                                }
-                            </div>
-                            <figcaption class="info-wrap">
-                                <h4 class="title">@product.Name</h4>
-                            </figcaption>
-                            <div class="bottom-wrap" style="border: none;">
-                                <a href="" class="btn btn-sm btn-primary float-right product-button">
-                                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                                </a>
-                                <div class="price-wrap h5 product-price">
-                                    <span class="price-new">@product.UnitPrice.ToString("C")</span>
-                                </div>
-                            </div>
-                        </figure>
-                    </div>
-                }
-            </div>
-            <div style="text-align: center;">
-                @Html.PagedListPager(Model.Products, page => Url.Action("Index", new { page = page, searchParameter = searchParameter, sortingOption = sortingOption }))
-            </div>
-        </div>
-    }
+    @await Component.InvokeAsync("ProductList", new { numberOfItemsPerPage = 12 })
 </main>
 
 @using (Html.BeginForm(null, null, null, FormMethod.Post, true,
@@ -127,9 +81,9 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                     </div>
-                    @Html.EditorFor(m => m.NewsletterEmail.Email, new { htmlAttributes = new { @class="form-control" } })
+                    @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class="form-control" } })
                 </div>
-                <span style="color: red">@Html.ValidationMessageFor(m => m.NewsletterEmail.Email)</span>
+                <span style="color: red">@Html.ValidationMessageFor(m => m.Email)</span>
             </div>
         </div>
         <div class="col-sm-2">
