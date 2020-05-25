@@ -1,0 +1,7 @@
+@{
+    ViewData["Title"] = "Online Store - Products";
+}
+
+<div id="category-page">
+    @await Component.InvokeAsync("ProductList", new { numberOfItemsPerPage = 30 })
+</div>

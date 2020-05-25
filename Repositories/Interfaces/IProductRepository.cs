@@ -11,5 +11,6 @@ namespace OnlineStore.Repositories.Interfaces
         Product GetProduct(int id);
         IPagedList<Product> GetAllProducts(int? page, int pageSize, string searchParameter);
         IPagedList<Product> GetAllProducts(int? page, int pageSize, string searchParameter, string sortingOption);
+        IPagedList<Product> GetAllProducts(int? page, int pageSize, string searchParameter, string sortingOption, Category category);
     }
 }

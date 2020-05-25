@@ -10,7 +10,9 @@ namespace OnlineStore.Repositories.Interfaces
         void Update(Category category);
         void Delete(int id);
         Category GetCategory(int id);
+        Category GetCategory(string slug);
         IEnumerable<Category> GetAllCategories();
+        IEnumerable<Category> GetAllChildCategories(int parentCategoryId);
         IPagedList<Category> GetAllCategories(int? page, int pageSize);
     }
 }

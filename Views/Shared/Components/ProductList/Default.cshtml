@@ -2,13 +2,23 @@
 @{
     var searchParameter = Context.Request.Query["searchParameter"];
     var sortingOption = Context.Request.Query["sortingOption"].ToString();
+    var currentAction = ViewContext.RouteData.Values["action"].ToString();
+
+    string categoryName;
+    if (ViewData["CategoryName"] != null)
+        categoryName = ViewData["CategoryName"].ToString();
+    else
+        categoryName = "All Products";
 }
 
 @if (Model.Products.Count > 0)
 {
     <div class="container" id="code_prod_complex">
         <div class="row">
-            <div class="offset-md-10 col-md-2">
+            <div class="col-md-4">
+                <h1>@categoryName</h1>
+            </div>
+            <div class="offset-md-6 col-md-2">
                 Sort by:
                 <select id="sortingOption" asp-items="@Model.SortingOptionsList"
                     asp-for="@sortingOption" class="form-control"></select>
@@ -45,8 +55,16 @@
             }
         </div>
         <div style="text-align: center;">
-            @Html.PagedListPager(Model.Products, page => Url.Action("Index", 
+            @Html.PagedListPager(Model.Products, page => Url.Action(currentAction, 
                 new { page = page, searchParameter = searchParameter, sortingOption = sortingOption }))
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="alert alert-info">
+            No products belonging to this category were found.
         </div>
     </div>
 }

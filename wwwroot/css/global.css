@@ -9,11 +9,16 @@
 }
 
 
-/* Products in Home Page: */
+/* Products Listing: */
 
 #sortingOption
 {
     scroll-margin-top: 100px;
+}
+
+#category-page
+{
+    margin-top: 50px;
 }
 
 .home-products-container
