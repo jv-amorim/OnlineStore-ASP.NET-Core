@@ -1,0 +1,110 @@
+@model Product
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+@if(Model == null)
+{
+    <br/>
+    <p class="alert alert-danger">This product was not found.</p>
+}
+else
+{
+    <main role="main">
+        <div class="container" id="code_prod_detail" style="margin-top: 50px">
+            <div class="card">
+                <div class="row no-gutters">
+                    <aside class="col-sm-5 border-right">
+                        <article class="gallery-wrap">
+                            @if (Model.Images != null && Model.Images.Count > 0)
+                            {
+                                <div class="img-big-wrap">
+                                    <div>
+                                        <a href="@Model.Images.ElementAt(0).Path" data-fancybox="">
+                                        <img src="@Model.Images.ElementAt(0).Path"></a>
+                                    </div>
+                                </div>
+                                <div class="img-small-wrap">
+                                    @foreach (Image image in Model.Images)
+                                    {
+                                        <div class="item-gallery">
+                                            <img src="@image.Path">
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                 <div class="img-big-wrap">
+                                    <div>
+                                        <img src="/img/default-image.png">
+                                    </div>
+                                </div>
+                            }
+                        </article>
+                    </aside>
+                    <aside class="col-sm-7">
+                        <article class="p-5">
+                            <h3 class="title mb-3">@Model.Name</h3>
+
+                            @if (Model.UnitsInStock > 0)
+                            {
+                                <div class="mb-3">
+                                    <var class="price h3 text-warning">
+                                    <span class="num">@Model.UnitPrice.ToString("c")</span>
+                                    </var>
+                                    <span>per unit</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="mb-3">
+                                    <var class="price h3 text-warning">
+                                        <span>Out of stock!</span>
+                                    </var>
+                                </div>
+                            }
+                        
+                            <dl>
+                                <dt>Description</dt>
+                                <dd>
+                                    <p>@Model.Description</p>
+                                </dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-4">Category</dt>
+                                <dd class="col-sm-8">@Model.Category.Name</dd>
+
+                                <dt class="col-sm-4">Weight</dt>
+                                <dd class="col-sm-8">@Model.Weight kg</dd>
+
+                                <dt class="col-sm-4">Dimensions (packed)</dt>
+                                <dd class="col-sm-8">@(Model.Width) cm x @(Model.Height) cm x @(Model.Length) cm</dd>
+                            </dl>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <dl class="dlist-inline">
+                                        <dt>Quantity: </dt>
+                                        <dd>
+                                            <select class="form-control form-control-sm" style="width:70px;">
+                                                <option> 1 </option>
+                                                <option> 2 </option>
+                                                <option> 3 </option>
+                                            </select>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <hr>
+                            <a href="#" class="btn  btn-primary"> 
+                                <i class="fas fa-shopping-cart"></i> 
+                                Add to cart 
+                            </a>
+                        </article>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+}

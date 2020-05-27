@@ -27,31 +27,33 @@
         <div class="row home-products-container">
             @foreach (var product in Model.Products)
             {
-                <div class="col-md-3 home-products">
-                    <figure class="card card-product">
-                        <div class="img-wrap">
-                            @if (product.Images != null && product.Images.Count > 0)
-                            {
-                                <img src="@product.Images.ElementAt(0).Path">
-                            }
-                            else
-                            {
-                                <img src="/img/default-image.png">
-                            }
-                        </div>
-                        <figcaption class="info-wrap">
-                            <h4 class="title">@product.Name</h4>
-                        </figcaption>
-                        <div class="bottom-wrap" style="border: none;">
-                            <a href="" class="btn btn-sm btn-primary float-right product-button">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
-                            </a>
-                            <div class="price-wrap h5 product-price">
-                                <span class="price-new">@product.UnitPrice.ToString("C")</span>
+                <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@product.Id">
+                    <div class="col-md-3 home-products">
+                        <figure class="card card-product">
+                            <div class="img-wrap">
+                                @if (product.Images != null && product.Images.Count > 0)
+                                {
+                                    <img src="@product.Images.ElementAt(0).Path">
+                                }
+                                else
+                                {
+                                    <img src="/img/default-image.png">
+                                }
                             </div>
-                        </div>
-                    </figure>
-                </div>
+                            <figcaption class="info-wrap">
+                                <h4 class="title">@product.Name</h4>
+                            </figcaption>
+                            <div class="bottom-wrap" style="border: none;">
+                                <a href="" class="btn btn-sm btn-primary float-right product-button">
+                                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                                </a>
+                                <div class="price-wrap h5 product-price">
+                                    <span class="price-new">@product.UnitPrice.ToString("C")</span>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+                </a>
             }
         </div>
         <div style="text-align: center;">

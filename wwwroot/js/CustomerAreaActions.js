@@ -1,6 +1,7 @@
 $(document).ready(function()
 {
     ChangeProductSorting();
+    ChangeProductFeaturedImage();
 });
 
 function ChangeProductSorting()
@@ -28,5 +29,14 @@ function ChangeProductSorting()
             "#sortingOption";
         
         window.location.href = uri;
+    });
+}
+
+function ChangeProductFeaturedImage()
+{
+    $(".img-small-wrap img").click(function(){
+        var imagePath = $(this).attr("src");
+        $(".img-big-wrap a").attr("href", imagePath);
+        $(".img-big-wrap img").attr("src", imagePath);
     });
 }
