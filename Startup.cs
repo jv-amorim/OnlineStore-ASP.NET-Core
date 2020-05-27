@@ -14,6 +14,7 @@ using OnlineStore.Repositories;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.XML;
 using OnlineStore.Libraries.Session;
+using OnlineStore.Libraries.Cookie;
 using OnlineStore.Libraries.Middlewares;
 
 namespace OnlineStore
@@ -42,6 +43,7 @@ namespace OnlineStore
             services.AddSession(options => { });
             
             services.AddScoped<SessionManager>();
+            services.AddScoped<CookieManager>();
             services.AddScoped<CustomerSession>();
             services.AddScoped<CollaboratorSession>();
 
