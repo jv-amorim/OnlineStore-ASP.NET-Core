@@ -2,6 +2,7 @@ $(document).ready(function()
 {
     ChangeProductSorting();
     ChangeProductFeaturedImage();
+    ChangeProductAmountInCart();
 });
 
 function ChangeProductSorting()
@@ -38,5 +39,15 @@ function ChangeProductFeaturedImage()
         var imagePath = $(this).attr("src");
         $(".img-big-wrap a").attr("href", imagePath);
         $(".img-big-wrap img").attr("src", imagePath);
+    });
+}
+
+function ChangeProductAmountInCart() 
+{
+    $(".increase-button").click(function () {
+        var productId = $(this).parent().parent().find(".product-id").val();
+    });
+    $(".decrease-button").click(function () {
+        var productId = $(this).parent().parent().find(".product-id").val();
     });
 }

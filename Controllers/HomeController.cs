@@ -106,7 +106,5 @@ namespace OnlineStore.Controllers
         [HttpGet]
         [CustomerAuthorization]
         public IActionResult CustomerPanel() => new ContentResult() { Content = "Customer Panel." };
-
-        public IActionResult Cart() => View();
     }
 }

@@ -44,6 +44,7 @@ namespace OnlineStore
             
             services.AddScoped<SessionManager>();
             services.AddScoped<CookieManager>();
+            services.AddScoped<CartCookieManager>();
             services.AddScoped<CustomerSession>();
             services.AddScoped<CollaboratorSession>();
 

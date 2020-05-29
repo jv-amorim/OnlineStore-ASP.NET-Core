@@ -13,20 +13,9 @@ namespace OnlineStore.Libraries.Cookie
 
         public void SetValue(string key, string value, int lifeTimeInDays)
         {
-            if (IsTheValueExisting(key))
-                UpdateValue(key, value, lifeTimeInDays);
-            else
-            {
-                CookieOptions cookieOptions= new CookieOptions();
-                cookieOptions.Expires = DateTime.Now.AddDays(lifeTimeInDays);
-                httpContextAccessor.HttpContext.Response.Cookies.Append(key, value, cookieOptions);
-            }
-        }
-
-        public void UpdateValue(string key, string value, int lifeTimeInDays)
-        {
-            RemoveValue(key);
-            SetValue(key, value, lifeTimeInDays);
+            CookieOptions cookieOptions= new CookieOptions();
+            cookieOptions.Expires = DateTime.Now.AddDays(lifeTimeInDays);
+            httpContextAccessor.HttpContext.Response.Cookies.Append(key, value, cookieOptions);
         }
 
         public string GetValue(string key)
@@ -39,9 +28,9 @@ namespace OnlineStore.Libraries.Cookie
 
         public bool IsTheValueExisting(string key)
         {
-            if (httpContextAccessor.HttpContext.Request.Cookies[key] == null)
-                return false;         
-            return true;
+            if (httpContextAccessor.HttpContext.Request.Cookies.ContainsKey(key))
+                return true;         
+            return false;
         }
 
         public void RemoveValue(string key)

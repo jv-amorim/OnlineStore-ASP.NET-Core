@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using OnlineStore.Models.Cookies;
+using OnlineStore.Models.ShoppingCart;
 using Newtonsoft.Json;
 
 namespace OnlineStore.Libraries.Cookie
@@ -35,14 +35,15 @@ namespace OnlineStore.Libraries.Cookie
             List<CartItem> cookieData = GetCookieData();
             CartItem cartItemInCookie = cookieData.SingleOrDefault(c => c.Id == cartItem.Id);
 
-            if (cartItemInCookie != null)
+            if (cartItemInCookie == null)
             {
+                cartItem.Amount = 1;
                 cookieData.Add(cartItem);
                 SaveCookieData(cookieData);
             }
             else
             {
-                cartItem.Amount++;
+                cartItem.Amount = cartItemInCookie.Amount + 1;
                 UpdateCartItemInCookie(cartItem); 
             }
         }

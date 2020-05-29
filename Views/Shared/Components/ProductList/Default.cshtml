@@ -44,7 +44,8 @@
                                 <h4 class="title">@product.Name</h4>
                             </figcaption>
                             <div class="bottom-wrap" style="border: none;">
-                                <a href="" class="btn btn-sm btn-primary float-right product-button">
+                                <a asp-controller="Cart" asp-action="AddProductToTheCart" asp-route-id="@product.Id"
+                                class="btn btn-sm btn-primary float-right product-button">
                                     <i class="fas fa-shopping-cart"></i> Add to Cart
                                 </a>
                                 <div class="price-wrap h5 product-price">
