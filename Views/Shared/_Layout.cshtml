@@ -5,6 +5,8 @@
     <title>@ViewBag.Title</title>
     <meta name="description" content="Online store created with ASP.NET Core.">
     <meta name="author" content="João Vitor Amorim">
+
+    <!-- Library Stylesheets -->
     <link rel="stylesheet" href="/resources/lib/bootstrap-4.2.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/resources/lib/caroussel/carousel.css" />
     <link rel="stylesheet" href="/resources/lib/bootstrap-ecommerce-uikit/css/ui.css" />
@@ -12,7 +14,13 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="/resources/lib/x-paged-list/page-list.css" type="text/css">
     <link rel="stylesheet" href="/resources/lib/bootstrap-ecommerce-uikit/ui-ecommerce/plugins/fancybox/fancybox.min.css">
+
+    <!-- Custom Stylesheets -->
     <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/multilevelDropdown.css">
+    <link rel="stylesheet" href="/css/productDetails.css">
+    <link rel="stylesheet" href="/css/productListing.css">
+    <link rel="stylesheet" href="/css/shoppingCart.css">
 </head>
 
 <body>
@@ -31,11 +39,16 @@
         <p>&copy; @DateTime.Now.Year OnlineStore. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
     </footer>
 
+    <!-- Library Scripts-->
     <script src="/resources/lib/holder/holder.min.js"></script>
     <script src="/resources/lib/jquery3.3.1/jquery-3.3.1.min.js"></script>
     <script src="/resources/lib/popper1.14.6/popper.min.js"></script>
     <script src="/resources/lib/bootstrap-4.2.1-dist/js/bootstrap.min.js"></script>
     <script src="/resources/lib/bootstrap-ecommerce-uikit/ui-ecommerce/plugins/fancybox/fancybox.min.js"></script>
-    <script src="/js/CustomerAreaActions.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="/js/CustomerArea/CartPageActions.js"></script>
+    <script src="/js/CustomerArea/DetailsPageActions.js"></script>
+    <script src="/js/CustomerArea/ProductSortingActions.js"></script>
 </body>
 </html>

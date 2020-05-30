@@ -13,7 +13,7 @@
         <h2 class="title-doc">Shopping Cart</h2>
         <div id="code_cart">
             <div class="card">
-                <table class="table table-hover shopping-cart-wrap">
+                <table class="table table-hover shopping-cart-wrap cart-table">
                     <thead class="text-muted">
                         <tr>
                             <th scope="col">Product</th>
@@ -45,9 +45,8 @@
                                     </figure>
                                 </td>
                                 <td>
-                                    <div class="col-auto" style="position: relative;">
-                                        <div class="input-group" style="position: absolute; right: 40px;">
-                                            <input type="hidden" class="product-id" value="@cartItem.Id">
+                                    <div class="col-auto input-buttons-container">
+                                        <div class="input-group input-buttons-group">
                                             <div class="input-group-prepend">
                                                 <a href="#" class="btn btn-outline-info increase-button">
                                                      + 
@@ -61,6 +60,10 @@
                                                 </a>
                                             </div>
                                         </div>
+                                        <input type="hidden" class="product-id" value="@cartItem.Id">
+                                        <input type="hidden" class="product-amount" value="@cartItem.Amount">
+                                        <input type="hidden" class="product-unitsInStock" value="@cartItem.Product.UnitsInStock">
+                                        <input type="hidden" class="product-unitPrice" value="@cartItem.Product.UnitPrice">
                                     </div>
                                 </td>
                                 <td>

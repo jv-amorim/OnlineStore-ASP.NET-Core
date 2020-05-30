@@ -1,0 +1,31 @@
+.input-buttons-container {
+    position: relative;
+}
+
+.input-buttons-group {
+    position: absolute;
+    right: 40px;
+}
+
+.increase-button {
+    border-radius: 5px 0px 0px 5px !important;
+}
+
+.decrease-button {
+    border-radius: 0px 5px 5px 0px !important;
+}
+
+#code_cart .card {
+    width: 100% !important;
+    min-width: 960px !important;
+}
+
+.cart-table {
+    width: 100% !important;
+    min-width: 960px !important;
+}
+
+.cart-table {
+    width: 100% !important;
+    min-width: 960px !important;
+}

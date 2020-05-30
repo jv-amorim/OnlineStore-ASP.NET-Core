@@ -1,0 +1,57 @@
+.registration-images div {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.registration-images .btn-delete-image {
+    width: 100%;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    display: none;
+}
+
+.registration-images .img-upload {
+    width: 100%;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    cursor: pointer;
+}
+
+.registration-images .img-file-input, 
+.registration-images input[name="imageFilePath"] {
+    display: none;
+}
+
+.btn-delete-image {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-delete-image:hover {
+    color: #fff;
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.btn-delete-image:focus, .btn-delete-image.focus {
+    box-shadow: 0 0 0 0.2rem rgba(225, 83, 97, 0.5);
+}
+
+.btn-delete-image.disabled, .btn-delete-image:disabled {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-delete-image:not(:disabled):not(.disabled):active, .btn-delete-image:not(:disabled):not(.disabled).active,
+.show > .btn-delete-image.dropdown-toggle {
+    color: #fff;
+    background-color: #bd2130;
+    border-color: #b21f2d;
+}
+
+.btn-delete-image:not(:disabled):not(.disabled):active:focus, .btn-delete-image:not(:disabled):not(.disabled).active:focus,
+.show > .btn-delete-image.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(225, 83, 97, 0.5);
+}

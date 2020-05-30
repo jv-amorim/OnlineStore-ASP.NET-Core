@@ -9,11 +9,11 @@
     <title>@ViewBag.Title</title>
     <meta name="description" content="Online store created with ASP.NET Core.">
     <meta name="author" content="João Vitor Amorim">
-    
-    <link href="~/resources/lib/bootstrap-4.2.1-dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/resources/lib/dashboard/dashboard.css" rel="stylesheet">
-    <link href="~/resources/lib/x-paged-list/page-list.css" rel="stylesheet" type="text/css">
-    <link href="~/css/global.css" rel="stylesheet" type="text/css">
+
+    <!-- Library Stylesheets-->
+    <link href="/resources/lib/bootstrap-4.2.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/lib/dashboard/dashboard.css" rel="stylesheet">
+    <link href="/resources/lib/x-paged-list/page-list.css" rel="stylesheet" type="text/css">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -29,6 +29,10 @@
         }
       }
     </style>
+
+    <!-- Custom Stylesheets-->
+    <link href="/css/global.css" rel="stylesheet" type="text/css">
+    <link href="/css/productRegistration.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -129,21 +133,23 @@
                 </div>
             </nav>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                
-                @RenderBody()
-            
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">             
+                @RenderBody()         
             </main>
         </div>
     </div>
 
-    <script src="~/resources/lib/jquery3.3.1/jquery-3.3.1.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/resources/lib/jquery3.3.1/jquery-3.3.1.min.js"><\/script>')</script>
-    <script src="~/resources/lib/jquery-mask/jquery.mask.min.js"></script>
-    <script src="~/resources/lib/bootstrap-4.2.1-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/resources/lib/feather/feather.js"></script>
-    <script src="~/resources/lib/charts/charts.js"></script>
-    <script src="~/resources/lib/dashboard/dashboard.js"></script>
-    <script src="~/js/CollaboratorAreaActions.js"></script>
+    <!-- Library Scripts -->
+    <script src="/resources/lib/jquery3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="/resources/lib/jquery-mask/jquery.mask.min.js"></script>
+    <script src="/resources/lib/bootstrap-4.2.1-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/resources/lib/feather/feather.js"></script>
+    <script src="/resources/lib/charts/charts.js"></script>
+    <script src="/resources/lib/dashboard/dashboard.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="/js/CollaboratorArea/ConfirmationAlerts.js"></script>
+    <script src="/js/CollaboratorArea/InputFieldMasks.js"></script>
+    <script src="/js/CollaboratorArea/FeaturesToUploadProductImages.js"></script>
 </body>
 </html>
