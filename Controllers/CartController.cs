@@ -44,15 +44,15 @@ namespace OnlineStore.Controllers
                 ViewData["MSG_ERROR"] = Message.MSG_ERROR_012;
                 return View();
             }
-            
-            cartCookieManager.AddCartItemToCookie(new CartItem{ Id = id });
+
+            cartCookieManager.IncrementTheCartItemAmountInCookie(new CartItem{ Id = id });
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult UpdateProductInCart(int id, int amount)
         {
             cartCookieManager.UpdateCartItemInCookie(new CartItem{ Id = id, Amount = amount });
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult RemoveProductFromCart(int id)

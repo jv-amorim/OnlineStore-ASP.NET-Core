@@ -15,6 +15,10 @@
     border-radius: 0px 5px 5px 0px !important;
 }
 
+.product-amount {
+    text-align: center;
+}
+
 #code_cart .card {
     width: 100% !important;
     min-width: 960px !important;

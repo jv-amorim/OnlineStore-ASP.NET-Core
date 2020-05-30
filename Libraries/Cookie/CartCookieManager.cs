@@ -37,9 +37,22 @@ namespace OnlineStore.Libraries.Cookie
 
             if (cartItemInCookie == null)
             {
-                cartItem.Amount = 1;
                 cookieData.Add(cartItem);
                 SaveCookieData(cookieData);
+            }
+            else
+                UpdateCartItemInCookie(cartItem); 
+        }
+
+        public void IncrementTheCartItemAmountInCookie(CartItem cartItem)
+        {
+            List<CartItem> cookieData = GetCookieData();
+            CartItem cartItemInCookie = cookieData.SingleOrDefault(c => c.Id == cartItem.Id);
+
+            if (cartItemInCookie == null)
+            {
+                cartItem.Amount = 1;
+                AddCartItemToCookie(cartItem);
             }
             else
             {

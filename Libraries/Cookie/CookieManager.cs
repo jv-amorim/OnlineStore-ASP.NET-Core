@@ -15,6 +15,7 @@ namespace OnlineStore.Libraries.Cookie
         {
             CookieOptions cookieOptions= new CookieOptions();
             cookieOptions.Expires = DateTime.Now.AddDays(lifeTimeInDays);
+            cookieOptions.IsEssential = true;
             httpContextAccessor.HttpContext.Response.Cookies.Append(key, value, cookieOptions);
         }
 

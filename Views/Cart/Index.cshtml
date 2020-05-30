@@ -8,130 +8,144 @@
     <p class="alert alert-danger">@Html.Raw(ViewData["MSG_ERROR"])</p>
 }
 
-<main role="main">
-    <section class="container" id="order" style="margin-top: 50px">
-        <h2 class="title-doc">Shopping Cart</h2>
-        <div id="code_cart">
-            <div class="card">
-                <table class="table table-hover shopping-cart-wrap cart-table">
-                    <thead class="text-muted">
-                        <tr>
-                            <th scope="col">Product</th>
-                            <th scope="col" width="160">Quantity</th>
-                            <th scope="col" width="140">Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var cartItem in Model)
-                        {  
+@if (Model != null && Model.Count == 0) 
+{
+    <p class="alert alert-primary" style="margin-top: 50px">
+        No products in the cart.
+    </p>
+}
+else
+{
+    <main role="main">
+        <section class="container" id="order" style="margin-top: 50px">
+            <p id="unitsInStockMessage" class="alert alert-warning" style="display: none;">
+                Sorry, there are no more units of this product in stock.
+            </p>
+            <p id="removalErrorMessage" class="alert alert-danger" style="display: none;">
+                Sorry, the product has not been removed, please try again.
+            </p>
+            <h2 class="title-doc">Shopping Cart</h2>
+            <div id="code_cart">
+                <div class="card">
+                    <table class="table table-hover shopping-cart-wrap cart-table">
+                        <thead class="text-muted">
                             <tr>
-                                <td>
-                                    <figure class="media">
-                                        <div class="img-wrap">
-                                            <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@cartItem.Id">
-                                                @if (cartItem.Product.Images != null && cartItem.Product.Images.Count > 0)
-                                                {
-                                                    <img src="@cartItem.Product.Images.FirstOrDefault().Path" class="img-thumbnail img-sm">
-                                                }
-                                                else
-                                                {
-                                                    <img src="/img/default-image.png" class="img-thumbnail img-sm">
-                                                }
-                                            </a>
-                                        </div>
-                                        <figcaption class="media-body">
-                                            <h6 class="title text-truncate">@cartItem.Product.Name</h6>
-                                        </figcaption>
-                                    </figure>
-                                </td>
-                                <td>
-                                    <div class="col-auto input-buttons-container">
-                                        <div class="input-group input-buttons-group">
-                                            <div class="input-group-prepend">
-                                                <a href="#" class="btn btn-outline-info increase-button">
-                                                     + 
-                                                </a>
-                                            </div>
-                                            <input type="text" class="form-control" readonly
-                                                style="text-align: center;" value="@cartItem.Amount">
-                                            <div class="input-group-append">
-                                                <a href="#" class="btn btn-outline-info decrease-button">
-                                                     - 
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" class="product-id" value="@cartItem.Id">
-                                        <input type="hidden" class="product-amount" value="@cartItem.Amount">
-                                        <input type="hidden" class="product-unitsInStock" value="@cartItem.Product.UnitsInStock">
-                                        <input type="hidden" class="product-unitPrice" value="@cartItem.Product.UnitPrice">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="price-wrap">
-                                        <var class="price">
-                                            @((cartItem.Product.UnitPrice * cartItem.Amount).ToString("c"))
-                                        </var>
-                                        <small class="text-muted">@cartItem.Product.UnitPrice.ToString("c")</small>
-                                    </div>
-                                </td>
+                                <th scope="col">Product</th>
+                                <th scope="col" width="160">Quantity</th>
+                                <th scope="col" width="140">Price</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var cartItem in Model)
+                            {
+                                <tr class="product-row">
+                                    <td>
+                                        <figure class="media">
+                                            <div class="img-wrap">
+                                                <a asp-controller="Product" asp-action="ProductDetails" asp-route-id="@cartItem.Id">
+                                                    @if (cartItem.Product.Images != null && cartItem.Product.Images.Count > 0)
+                                                    {
+                                                        <img src="@cartItem.Product.Images.FirstOrDefault().Path" class="img-thumbnail img-sm">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="/img/default-image.png" class="img-thumbnail img-sm">
+                                                    }
+                                                </a>
+                                            </div>
+                                            <figcaption class="media-body">
+                                                <h6 class="title text-truncate product-name">@cartItem.Product.Name</h6>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td>
+                                        <div class="col-auto input-buttons-container">
+                                            <div class="input-group input-buttons-group">
+                                                <div class="input-group-prepend">
+                                                    <a href="#" class="btn btn-outline-info increase-button">
+                                                        + 
+                                                    </a>
+                                                </div>
+                                                <input type="text" class="form-control product-amount"
+                                                    readonly value="@cartItem.Amount">
+                                                <div class="input-group-append">
+                                                    <a href="#" class="btn btn-outline-info decrease-button">
+                                                        - 
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" class="product-id" value="@cartItem.Id">
+                                            <input type="hidden" class="product-unitsInStock" value="@cartItem.Product.UnitsInStock">
+                                            <input type="hidden" class="product-unitPrice" value="@cartItem.Product.UnitPrice">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price product-subtotal">
+                                                @((cartItem.Product.UnitPrice * cartItem.Amount).ToString("c"))
+                                            </var>
+                                            <small class="text-muted">@cartItem.Product.UnitPrice.ToString("c")</small>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </section>
-    <br />
-    <br />
-    <section class="container">
-        <div class="row">
-            <aside class="col-md-4" style="margin-bottom: 40px;">
-                <h4 class="subtitle-doc">
-                    Shipping Rates
-                </h4>
-                <div id="code_desc_align">
-                    <div class="box">
-                        <dl class="dlist-align">
-                            <dt>CEP:</dt>
-                            <dd>
-                                <input type="text" name="cep" 
-                                    class="form-control" style="height: 30px;">
-                            </dd>
-                        </dl>
-                        <dl class="dlist-align">
-                            <dt><input type="radio" name="shipping-option-sedex"></dt>
-                            <dd>SEDEX - $ 0,00</dd>
-                        </dl>
-                        <dl class="dlist-align">
-                            <dt><input type="radio" name="shipping-option-pac"></dt>
-                            <dd>PAC - $ 0,00</dd>
-                        </dl>
+        </section>
+        <br />
+        <br />
+        <section class="container">
+            <div class="row">
+                <aside class="col-md-4" style="margin-bottom: 40px;">
+                    <h4 class="subtitle-doc">
+                        Shipping Rates
+                    </h4>
+                    <div id="code_desc_align">
+                        <div class="box">
+                            <dl class="dlist-align">
+                                <dt>CEP:</dt>
+                                <dd>
+                                    <input type="text" name="cep" 
+                                        class="form-control" style="height: 30px;">
+                                </dd>
+                            </dl>
+                            <dl class="dlist-align">
+                                <dt><input type="radio" name="shipping-option-sedex"></dt>
+                                <dd>SEDEX - $ 0,00</dd>
+                            </dl>
+                            <dl class="dlist-align">
+                                <dt><input type="radio" name="shipping-option-pac"></dt>
+                                <dd>PAC - $ 0,00</dd>
+                            </dl>
+                        </div>
                     </div>
-                </div>
-            </aside>
-            <aside class="offset-md-4 col-md-4">
-                <h4 class="subtitle-doc">
-                    Final Price
-                </h4>
-                <div id="code_desc_right">
-                    <div class="box">
-                        <dl class="dlist-align">
-                            <dt>Subtotal</dt>
-                            <dd class="text-right">$ 0,00</dd>
-                        </dl>
-                        <dl class="dlist-align">
-                            <dt style="width: 120px;">Shipping Rate</dt>
-                            <dd class="text-right">$ 0,00</dd>
-                        </dl>
-                        <dl class="dlist-align">
-                            <dt>TOTAL</dt>
-                            <dd class="text-right">
-                                <b>$ 0,00</b>
-                            </dd>
-                        </dl>
+                </aside>
+                <aside class="offset-md-4 col-md-4">
+                    <h4 class="subtitle-doc">
+                        Final Price
+                    </h4>
+                    <div id="code_desc_right">
+                        <div class="box">
+                            <dl class="dlist-align">
+                                <dt>Subtotal</dt>
+                                <dd class="text-right">$ 0,00</dd>
+                            </dl>
+                            <dl class="dlist-align">
+                                <dt style="width: 120px;">Shipping Rate</dt>
+                                <dd class="text-right">$ 0,00</dd>
+                            </dl>
+                            <dl class="dlist-align">
+                                <dt>TOTAL</dt>
+                                <dd class="text-right">
+                                    <b>$ 0,00</b>
+                                </dd>
+                            </dl>
+                        </div>
                     </div>
-                </div>
-            </aside>
-        </div>
-    </section>
-</main>
+                </aside>
+            </div>
+        </section>
+    </main>
+}
