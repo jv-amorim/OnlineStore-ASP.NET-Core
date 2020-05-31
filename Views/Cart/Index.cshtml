@@ -76,10 +76,15 @@ else
                                     </td>
                                     <td>
                                         <div class="price-wrap">
-                                            <var class="price product-totalPrice">
-                                                @((cartItem.Product.UnitPrice * cartItem.Amount).ToString("c"))
+                                            @{
+                                                var productTotalPrice = cartItem.Product.UnitPrice * cartItem.Amount;
+                                            }
+                                            <var class="price product-totalPrice" value="@productTotalPrice">
+                                                @productTotalPrice.ToString("c")
                                             </var>
-                                            <small class="text-muted">@cartItem.Product.UnitPrice.ToString("c")</small>
+                                            <small class="text-muted">
+                                                @cartItem.Product.UnitPrice.ToString("c")
+                                            </small>
                                         </div>
                                     </td>
                                 </tr>
@@ -133,15 +138,19 @@ else
 
                             <dl class="dlist-align">
                                 <dt>Subtotal</dt>
-                                <dd class="text-right">@(subtotalPrice.ToString("c"))</dd>
+                                <dd class="text-right" id="cart-subtotalPrice">
+                                    @(subtotalPrice.ToString("c"))
+                                </dd>
                             </dl>
                             <dl class="dlist-align">
                                 <dt style="width: 120px;">Shipping Rate</dt>
-                                <dd class="text-right">@(shippingRate.ToString("c"))</dd>
+                                <dd class="text-right" id="cart-shippingRate">
+                                    @(shippingRate.ToString("c"))
+                                </dd>
                             </dl>
                             <dl class="dlist-align">
                                 <dt>TOTAL</dt>
-                                <dd class="text-right">
+                                <dd class="text-right" id="cart-totalPrice">
                                     <b>@(totalPrice.ToString("c"))</b>
                                 </dd>
                             </dl>
