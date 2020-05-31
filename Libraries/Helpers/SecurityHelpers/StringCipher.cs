@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Linq;
 
-namespace OnlineStore.Libraries.Security
+namespace OnlineStore.Libraries.Helpers.SecurityHelpers
 {
     public static class StringCipher
     {

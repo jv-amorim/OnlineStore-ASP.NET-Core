@@ -12,10 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using OnlineStore.Database;
 using OnlineStore.Repositories;
 using OnlineStore.Repositories.Interfaces;
-using OnlineStore.Libraries.XML;
 using OnlineStore.Libraries.Session;
 using OnlineStore.Libraries.Cookie;
 using OnlineStore.Libraries.Middlewares;
+using OnlineStore.Libraries.Helpers.XmlHelpers;
 
 namespace OnlineStore
 {

@@ -1,6 +1,6 @@
 using System.Xml.Linq;
 
-namespace OnlineStore.Libraries.XML
+namespace OnlineStore.Libraries.Helpers.XmlHelpers
 {
     public static class XMLReader
     {

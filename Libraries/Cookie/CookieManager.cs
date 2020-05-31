@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using OnlineStore.Libraries.Security;
+using OnlineStore.Libraries.Helpers.SecurityHelpers;
 
 namespace OnlineStore.Libraries.Cookie
 {

@@ -1,9 +1,9 @@
 using System.Net;
 using System.Net.Mail;
 using OnlineStore.Models;
-using OnlineStore.Libraries.XML;
+using OnlineStore.Libraries.Helpers.XmlHelpers;
 
-namespace OnlineStore.Libraries.Email
+namespace OnlineStore.Libraries.Helpers.EmailHelpers
 {
     public class EmailContact
     {
