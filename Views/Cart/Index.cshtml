@@ -18,12 +18,7 @@ else
 {
     <main role="main">
         <section class="container" id="order" style="margin-top: 50px">
-            <p id="unitsInStockMessage" class="alert alert-warning" style="display: none;">
-                Sorry, there are no more units of this product in stock.
-            </p>
-            <p id="removalErrorMessage" class="alert alert-danger" style="display: none;">
-                Sorry, the product has not been removed, please try again.
-            </p>
+            <p id="cart-error-message" class="alert alert-warning" style="display: none;"></p>
             <h2 class="title-doc">Shopping Cart</h2>
             <div id="code_cart">
                 <div class="card">
@@ -62,14 +57,14 @@ else
                                         <div class="col-auto input-buttons-container">
                                             <div class="input-group input-buttons-group">
                                                 <div class="input-group-prepend">
-                                                    <a href="#" class="btn btn-outline-info increase-button">
+                                                    <a class="btn btn-outline-info increase-button">
                                                         + 
                                                     </a>
                                                 </div>
                                                 <input type="text" class="form-control product-amount"
                                                     readonly value="@cartItem.Amount">
                                                 <div class="input-group-append">
-                                                    <a href="#" class="btn btn-outline-info decrease-button">
+                                                    <a class="btn btn-outline-info decrease-button">
                                                         - 
                                                     </a>
                                                 </div>
@@ -81,7 +76,7 @@ else
                                     </td>
                                     <td>
                                         <div class="price-wrap">
-                                            <var class="price product-subtotal">
+                                            <var class="price product-totalPrice">
                                                 @((cartItem.Product.UnitPrice * cartItem.Amount).ToString("c"))
                                             </var>
                                             <small class="text-muted">@cartItem.Product.UnitPrice.ToString("c")</small>
@@ -128,18 +123,26 @@ else
                     </h4>
                     <div id="code_desc_right">
                         <div class="box">
+                            @{
+                                decimal subtotalPrice = 0;
+                                foreach (var cartItem in Model)
+                                    subtotalPrice += cartItem.Amount * cartItem.Product.UnitPrice;
+                                decimal shippingRate = 0;
+                                decimal totalPrice = shippingRate + subtotalPrice;
+                            }
+
                             <dl class="dlist-align">
                                 <dt>Subtotal</dt>
-                                <dd class="text-right">$ 0,00</dd>
+                                <dd class="text-right">@(subtotalPrice.ToString("c"))</dd>
                             </dl>
                             <dl class="dlist-align">
                                 <dt style="width: 120px;">Shipping Rate</dt>
-                                <dd class="text-right">$ 0,00</dd>
+                                <dd class="text-right">@(shippingRate.ToString("c"))</dd>
                             </dl>
                             <dl class="dlist-align">
                                 <dt>TOTAL</dt>
                                 <dd class="text-right">
-                                    <b>$ 0,00</b>
+                                    <b>@(totalPrice.ToString("c"))</b>
                                 </dd>
                             </dl>
                         </div>

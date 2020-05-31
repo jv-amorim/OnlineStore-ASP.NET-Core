@@ -25,7 +25,7 @@ class ProductAmountManager {
         this.amount = document.getElementsByClassName('product-amount')[productIndexInCart];
         this.unitsInStock = document.getElementsByClassName('product-unitsInStock')[productIndexInCart];
         this.unitPrice = document.getElementsByClassName('product-unitPrice')[productIndexInCart];
-        this.subtotalPrice = document.getElementsByClassName('product-subtotal')[productIndexInCart];
+        this.subtotalPrice = document.getElementsByClassName('product-totalPrice')[productIndexInCart];
 
         this.originalAmountValue = parseInt(this.amount.value);
         this.currentAmountValue = parseInt(this.amount.value);
@@ -41,13 +41,13 @@ class ProductAmountManager {
             return;
 
         this.amount.value = this.currentAmountValue;
-        this.SetSubtotalPrice();
+        this.SetProductTotalPrice();
         this.ChangeProductAmountInTheCartCookie();
     }
 
     ValidateAmountValue() {
         if (this.currentAmountValue > parseInt(this.unitsInStock.value)) {
-            this.ShowUnitsInStockMessage();
+            this.ShowCartErrorMessage('Sorry, there are no more units of this product in stock.');
             return false;
         }
         if (this.currentAmountValue < 1) {
@@ -57,7 +57,7 @@ class ProductAmountManager {
         return true;
     }
 
-    SetSubtotalPrice() {
+    SetProductTotalPrice() {
         const newSubtotal = 
             (this.currentAmountValue * parseFloat(this.unitPrice.value))
             .toLocaleString(undefined, {
@@ -68,16 +68,25 @@ class ProductAmountManager {
         this.subtotalPrice.innerHTML = '$' + newSubtotal;
     }
 
-    ShowUnitsInStockMessage() {
-        const unitsInStockMessage = document.getElementById('unitsInStockMessage');
-        unitsInStockMessage.style.display = 'block';
-        setTimeout(() => unitsInStockMessage.style.display = 'none', 5000);
+    ShowCartErrorMessage(message) {
+        const cartErrorMessage = document.getElementById('cart-error-message');
+        cartErrorMessage.innerHTML = message;
+        cartErrorMessage.style.display = 'block';
+        setTimeout(() => cartErrorMessage.style.display = 'none', 5000);
     }
+    
+    ChangeProductAmountInTheCartCookie() {
+        const xmlHttpRequest = new XMLHttpRequest();
 
-    ShowRemovalErrorMessage() {
-        const unitsInStockMessage = document.getElementById('removalErrorMessage');
-        unitsInStockMessage.style.display = 'block';
-        setTimeout(() => unitsInStockMessage.style.display = 'none', 5000);
+        xmlHttpRequest.addEventListener('error', () => {
+            this.amount.value = this.originalAmountValue;
+            this.currentAmountValue = this.originalAmountValue;
+            this.SetProductTotalPrice();
+        }, false);
+
+        const url = `/Cart/UpdateProductInCart?id=${this.productIdValue}&amount=${this.currentAmountValue}`;
+        xmlHttpRequest.open('get', url, true);
+        xmlHttpRequest.send();
     }
 
     RemoveProductFromCart() {
@@ -87,28 +96,14 @@ class ProductAmountManager {
         const xmlHttpRequest = new XMLHttpRequest();
 
         xmlHttpRequest.addEventListener('error', () => {
-            this.ShowRemovalErrorMessage();
             this.amount.value = this.originalAmountValue;
             this.currentAmountValue = this.originalAmountValue;
-            this.SetSubtotalPrice();
+            this.SetProductTotalPrice();
+            this.ShowCartErrorMessage('Sorry, the product has not been removed, please try again.');
             productRow.style.display = 'contents';
         }, false);
 
         const url = `/Cart/RemoveProductFromCart?id=${this.productIdValue}`;
-        xmlHttpRequest.open('get', url, true);
-        xmlHttpRequest.send();
-    }
-    
-    ChangeProductAmountInTheCartCookie() {
-        const xmlHttpRequest = new XMLHttpRequest();
-
-        xmlHttpRequest.addEventListener('error', () => {
-            this.amount.value = this.originalAmountValue;
-            this.currentAmountValue = this.originalAmountValue;
-            this.SetSubtotalPrice();
-        }, false);
-
-        const url = `/Cart/UpdateProductInCart?id=${this.productIdValue}&amount=${this.currentAmountValue}`;
         xmlHttpRequest.open('get', url, true);
         xmlHttpRequest.send();
     }

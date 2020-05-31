@@ -1,12 +1,14 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using OnlineStore.Libraries.Security;
 
 namespace OnlineStore.Libraries.Cookie
 {
     public class CookieManager
     {
         private IHttpContextAccessor httpContextAccessor;
+        private const string EncryptionPassphrase = "3Zv-m-P^@BXr-&4^";
         
         public CookieManager(IHttpContextAccessor httpContextAccessor) => 
             this.httpContextAccessor = httpContextAccessor;
@@ -16,13 +18,20 @@ namespace OnlineStore.Libraries.Cookie
             CookieOptions cookieOptions= new CookieOptions();
             cookieOptions.Expires = DateTime.Now.AddDays(lifeTimeInDays);
             cookieOptions.IsEssential = true;
+            cookieOptions.SameSite = SameSiteMode.Lax;
+
+            value = StringCipher.Encrypt(value, EncryptionPassphrase);
+
             httpContextAccessor.HttpContext.Response.Cookies.Append(key, value, cookieOptions);
         }
 
         public string GetValue(string key)
         {   
             if (IsTheValueExisting(key))
-                return httpContextAccessor.HttpContext.Request.Cookies[key];
+            {
+                string value = httpContextAccessor.HttpContext.Request.Cookies[key];
+                return StringCipher.Decrypt(value, EncryptionPassphrase);
+            }
             else
                 return null;
         }

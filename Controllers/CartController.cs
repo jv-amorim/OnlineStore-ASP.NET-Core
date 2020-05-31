@@ -51,12 +51,20 @@ namespace OnlineStore.Controllers
 
         public IActionResult UpdateProductInCart(int id, int amount)
         {
+            Product product = productRepository.GetProduct(id);
+
+            if (product == null)
+                return BadRequest(new { message = Message.MSG_ERROR_011 });
+
+            if (amount > product.UnitsInStock)
+                return BadRequest(new { message = Message.MSG_ERROR_012 });
+
             cartCookieManager.UpdateCartItemInCookie(new CartItem{ Id = id, Amount = amount });
-            return RedirectToAction(nameof(Index));
+            return Ok();
         }
 
         public IActionResult RemoveProductFromCart(int id)
-        {
+        {   
             cartCookieManager.DeleteCartItemFromCookie(new CartItem{ Id = id });
             return RedirectToAction(nameof(Index));
         }
