@@ -16,7 +16,7 @@ using OnlineStore.Libraries.Session;
 using OnlineStore.Libraries.Cookie;
 using OnlineStore.Libraries.Middlewares;
 using OnlineStore.Libraries.Helpers.XmlHelpers;
-using OnlineStore.Libraries.Helpers.CartHelpers;
+using OnlineStore.Libraries.Services.Shipping;
 using ServiceReference;
 
 namespace OnlineStore
