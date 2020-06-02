@@ -3,7 +3,7 @@ using System.Linq;
 using OnlineStore.Database;
 using OnlineStore.Models;
 using OnlineStore.Repositories.Interfaces;
-using OnlineStore.Libraries.Enums;
+using OnlineStore.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 

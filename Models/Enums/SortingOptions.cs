@@ -1,4 +1,4 @@
-namespace OnlineStore.Libraries.Enums
+namespace OnlineStore.Models.Enums
 {
     public enum SortingOptions
     {

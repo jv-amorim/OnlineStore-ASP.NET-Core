@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using OnlineStore.Libraries.Enums;
+using OnlineStore.Models.Enums;
 using X.PagedList;
 
 namespace OnlineStore.Models.ViewModels

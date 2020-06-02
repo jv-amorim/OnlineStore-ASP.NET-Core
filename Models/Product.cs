@@ -26,7 +26,7 @@ namespace OnlineStore.Models
         [Range(0, 1000000, ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_010")]
         public int UnitsInStock { get; set; }
 
-        // The range values of the four following properties are as requested in the Correios specifications.
+        // The range values of the four following properties are as requested in the Correios (brazilian company) specifications.
         
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]
         [Range(0.001, 30, ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_010")]

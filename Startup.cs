@@ -16,6 +16,8 @@ using OnlineStore.Libraries.Session;
 using OnlineStore.Libraries.Cookie;
 using OnlineStore.Libraries.Middlewares;
 using OnlineStore.Libraries.Helpers.XmlHelpers;
+using OnlineStore.Libraries.Helpers.CartHelpers;
+using ServiceReference;
 
 namespace OnlineStore
 {
@@ -31,20 +33,26 @@ namespace OnlineStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            services.AddMemoryCache();
+
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<INewsletterRepository, NewsletterRepository>();
             services.AddScoped<ICollaboratorRepository, CollaboratorRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
-
-            services.AddHttpContextAccessor();
-            services.AddMemoryCache();
-            services.AddSession(options => { });
             
-            services.AddScoped<SessionManager>();
+            services.AddScoped<CalcPrecoPrazoWSSoap>(options => 
+                new CalcPrecoPrazoWSSoapClient(CalcPrecoPrazoWSSoapClient.EndpointConfiguration.CalcPrecoPrazoWSSoap));
+                
+            services.AddScoped<ShippingRateCalculator>();
+
             services.AddScoped<CookieManager>();
             services.AddScoped<CartCookieManager>();
+
+            services.AddSession(options => { });
+            services.AddScoped<SessionManager>();
             services.AddScoped<CustomerSession>();
             services.AddScoped<CollaboratorSession>();
 
