@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using OnlineStore.Models.ShoppingCart;
 using ServiceReference;
 
-namespace OnlineStore.Libraries.Helpers.CartHelpers
+namespace OnlineStore.Libraries.Services.Shipping
 {
     /// <summary> Shipping rate calculator that consumes a SOAP web service of the Correios (brazilian company). </summary>
     public class ShippingRateCalculator

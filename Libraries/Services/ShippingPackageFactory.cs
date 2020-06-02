@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using OnlineStore.Models.ShoppingCart;
 
-namespace OnlineStore.Libraries.Helpers.CartHelpers
+namespace OnlineStore.Libraries.Services.Shipping
 {
     /// <summary> Class that creates shipping packages that are used in shipping rate calculation, following the Correios rules and specifications. 
     /// Note: The algorithm is for study purposes only. There are better algorithms for real cases (where you want to save on shipping rates by 
