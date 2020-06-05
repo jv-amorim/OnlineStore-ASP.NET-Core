@@ -18,16 +18,16 @@ namespace OnlineStore.Libraries.Services.Shipping
             {
                 for (int i = 0; i < cartItem.Amount; i++)
                 {
-                    if (ValidateCartItemAdditionToThePackage(package, cartItem))
+                    if (!ValidateCartItemAdditionToThePackage(package, cartItem))
                     {
                         shippingPackages.Add(package);
                         package = new ShippingPackage();
                     }
 
                     package.Weight += cartItem.Product.Weight;
-                    package.Height += (int)Math.Ceiling(package.Height + cartItem.Product.Height);
-                    package.Width += GetCorrectPackageWidth(package, cartItem);
-                    package.Length += GetCorrectPackageLength(package, cartItem);
+                    package.Height = (int)Math.Ceiling(package.Height + cartItem.Product.Height);
+                    package.Width = GetCorrectPackageWidth(package, cartItem);
+                    package.Length = GetCorrectPackageLength(package, cartItem);
                     package.Diameter = Math.Max(Math.Max(package.Width, package.Height), package.Length);
                 }
             }
@@ -43,10 +43,14 @@ namespace OnlineStore.Libraries.Services.Shipping
             int width = GetCorrectPackageWidth(package, cartItem);
             int length = GetCorrectPackageLength(package, cartItem);
         
-            if (weight > 30 || width + height + length > 200)
-                return true;
+            if (weight > 30)
+                return false;
+            if (width + height + length > 200)
+                return false;
+            if (width > 105 || height > 105 || length > 105 )
+                return false;
 
-            return false;
+            return true;
         }
 
         private int GetCorrectPackageWidth(ShippingPackage package, CartItem cartItem)

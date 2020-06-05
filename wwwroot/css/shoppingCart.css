@@ -33,3 +33,27 @@
     width: 100% !important;
     min-width: 960px !important;
 }
+
+#shipping-rate-container {
+    display: flex;
+}
+
+#shipping-rate-input {
+    height: 30px;
+}
+
+#shipping-rate-button {
+    margin-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+#shipping-rate-options {
+    margin-top: 20px;
+    display: none;
+}
+
+#shipping-rate-error {
+    display: none;
+    margin-top: 20px;
+}

@@ -15,31 +15,27 @@ namespace OnlineStore.Libraries.Services.Shipping
         public ShippingRateCalculator(CalcPrecoPrazoWSSoap service) => this.service = service;
 
         /// <summary> Returns the shipping rate and the ETA (Estimated Time of Arrival).  </summary>
-        public async Task<List<ShippingInformation>> CalculateShippingRateAndETA(string originCEP, string destinationCEP, string freightType, List<ShippingPackage> packages)
+        public async Task<ShippingInformation> CalculateShippingRateAndETA(string originCEP, string destinationCEP, string freightType, List<ShippingPackage> packages)
         {
             List<ShippingInformation> results = new List<ShippingInformation>();
             foreach (var package in packages)
             {
                 var result = await CalculateShippingRateAndETA(originCEP, destinationCEP, freightType, package);
-                results.Add(result);
+                if (result != null)
+                    results.Add(result);
             }
 
-            bool doesTheListHaveNullValues = results.Select(s => s == null).Count() > 0;
-            if (doesTheListHaveNullValues)
+            if (results.Count == 0)
                 return null;
 
-            List<ShippingInformation> shippingInfos = 
-                results
-                .GroupBy(s => s.FreightType)
-                .Select(group => new ShippingInformation()
-                {
-                    FreightType = group.First().FreightType,
-                    EstimatedTimeOfArrivalInDays = group.Max(s => s.EstimatedTimeOfArrivalInDays),
-                    Price = group.Sum(s => s.Price)
-                })
-                .ToList();
+            ShippingInformation shippingInfo = new ShippingInformation()
+            {
+                FreightType = freightType,
+                Price = results.Sum(r => r.Price),
+                EstimatedTimeOfArrivalInDays = results.Max(r => r.EstimatedTimeOfArrivalInDays)
+            };
 
-            return shippingInfos;
+            return shippingInfo;
         }
 
         /// <summary> Returns the shipping rate and the ETA (Estimated Time of Arrival).  </summary>
@@ -66,11 +62,11 @@ namespace OnlineStore.Libraries.Services.Shipping
             try 
             {
                 shippingInfo.Price = 
-                double.Parse(
-                    result.Servicos[0].Valor
-                    .Replace(".", "")
-                    .Replace(",", ".")
-                );
+                    double.Parse(
+                        result.Servicos[0].Valor
+                        .Replace(".", "")
+                        .Replace(",", ".")
+                    );
             }
             catch (Exception)
             {

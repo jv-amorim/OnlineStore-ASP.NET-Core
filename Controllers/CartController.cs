@@ -1,10 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Models;
 using OnlineStore.Models.ShoppingCart;
+using OnlineStore.Models.Consts;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.Cookie;
 using OnlineStore.Libraries.Language;
+using OnlineStore.Libraries.Services.Shipping;
 
 namespace OnlineStore.Controllers
 {
@@ -12,11 +16,17 @@ namespace OnlineStore.Controllers
     {
         private CartCookieManager cartCookieManager;
         private IProductRepository productRepository;
+        private ShippingPackageFactory shippingPackageFactory;
+        private ShippingRateCalculator shippingRateCalculator;
+        private readonly string shippingOriginCEP = "39404018";
 
-        public CartController(CartCookieManager cartCookieManager, IProductRepository productRepository)
+        public CartController(CartCookieManager cartCookieManager, IProductRepository productRepository, 
+        ShippingRateCalculator shippingRateCalculator, ShippingPackageFactory shippingPackageFactory)
         {
             this.cartCookieManager = cartCookieManager;
             this.productRepository = productRepository;
+            this.shippingRateCalculator = shippingRateCalculator;
+            this.shippingPackageFactory = shippingPackageFactory;
         }
 
         public IActionResult Index()
@@ -67,6 +77,30 @@ namespace OnlineStore.Controllers
         {   
             cartCookieManager.DeleteCartItemFromCookie(new CartItem{ Id = id });
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> CalculateShippingRate(string destinationCEP)
+        {
+            List<CartItem> cartItems = cartCookieManager.GetCookieData();
+            foreach (var cartItem in cartItems)
+                cartItem.Product = productRepository.GetProduct(cartItem.Id); 
+            var packages = shippingPackageFactory.CreateShippingPackages(cartItems);
+
+            var shippingInfoPAC = 
+                await shippingRateCalculator.CalculateShippingRateAndETA(shippingOriginCEP, destinationCEP, FreightTypes.PAC, packages);
+            var shippingInfoSEDEX = 
+                await shippingRateCalculator.CalculateShippingRateAndETA(shippingOriginCEP, destinationCEP, FreightTypes.SEDEX, packages);
+
+            if (shippingInfoPAC == null || shippingInfoSEDEX == null)
+                return BadRequest();
+
+            List<ShippingInformation> shippingInfos = new List<ShippingInformation>()
+            {
+                shippingInfoPAC,
+                shippingInfoSEDEX
+            };
+
+            return Ok(shippingInfos);
         }
     }
 }

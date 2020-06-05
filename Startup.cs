@@ -46,6 +46,7 @@ namespace OnlineStore
             services.AddScoped<CalcPrecoPrazoWSSoap>(options => 
                 new CalcPrecoPrazoWSSoapClient(CalcPrecoPrazoWSSoapClient.EndpointConfiguration.CalcPrecoPrazoWSSoap));
                 
+            services.AddScoped<ShippingPackageFactory>();
             services.AddScoped<ShippingRateCalculator>();
 
             services.AddScoped<CookieManager>();

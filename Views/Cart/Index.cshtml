@@ -107,18 +107,33 @@ else
                             <dl class="dlist-align">
                                 <dt>CEP:</dt>
                                 <dd>
-                                    <input type="text" name="cep" 
-                                        class="form-control" style="height: 30px;">
+                                    <div id="shipping-rate-container">
+                                        <div>
+                                            <input type="text" name="cep" class="form-control" id="shipping-rate-input">
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-outline-primary" id="shipping-rate-button">
+                                                Calcular
+                                            </button>
+                                        </div>
+                                    </div>
                                 </dd>
                             </dl>
-                            <dl class="dlist-align">
-                                <dt><input type="radio" name="shipping-option-sedex"></dt>
-                                <dd>SEDEX - $ 0,00</dd>
-                            </dl>
-                            <dl class="dlist-align">
-                                <dt><input type="radio" name="shipping-option-pac"></dt>
-                                <dd>PAC - $ 0,00</dd>
-                            </dl>
+                            <div id="shipping-rate-options">
+                                <dl class="dlist-align">
+                                    <dt><input type="radio" name="shipping-option-sedex"></dt>
+                                    <dd>SEDEX - $ 0,00</dd>
+                                </dl>
+                                <dl class="dlist-align">
+                                    <dt><input type="radio" name="shipping-option-pac"></dt>
+                                    <dd>PAC - $ 0,00</dd>
+                                </dl>
+                            </div>
+                            <div id="shipping-rate-error">
+                                <p class="alert alert-danger">
+                                    An error happened in shipping rate calculation. Please, try again.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </aside>
