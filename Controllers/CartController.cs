@@ -100,6 +100,7 @@ namespace OnlineStore.Controllers
                 shippingInfoSEDEX
             };
 
+            // TODO - Save destination CEP in cookie.
             return Ok(shippingInfos);
         }
     }

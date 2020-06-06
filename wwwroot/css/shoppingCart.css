@@ -1,3 +1,23 @@
+.cart-cards {
+    justify-content: space-between;
+    position: relative;
+}
+
+.custom-aside {
+    max-width: 100%;
+    margin-bottom: 40px;
+    z-index: 1;
+}
+
+#loading-animation {
+    display: none;
+    width: 85px;
+    position: absolute;
+    top: -30px;
+    left: 140px;
+    z-index: 0;
+}
+
 .input-buttons-container {
     position: relative;
 }
@@ -34,11 +54,11 @@
     min-width: 960px !important;
 }
 
-#shipping-rate-container {
+#cep-container {
     display: flex;
 }
 
-#shipping-rate-input {
+#cep-input {
     height: 30px;
 }
 
@@ -53,7 +73,29 @@
     display: none;
 }
 
+#shipping-rate-options .dlist-align {
+    padding: 10px;
+}
+
+#shipping-rate-container dt,
+#shipping-rate-options .dlist-align dt {
+    width: 70px;
+}
+
+#shipping-rate-container dd {
+    margin-left: 100px;
+}
+
+#shipping-rate-options .dlist-align dd {
+    margin-left: 90px;
+}
+
 #shipping-rate-error {
     display: none;
     margin-top: 20px;
+}
+
+.selected-radio-input {
+    background-color:  #f4f9ff;
+    border-radius: 5px 5px 5px 5px;
 }

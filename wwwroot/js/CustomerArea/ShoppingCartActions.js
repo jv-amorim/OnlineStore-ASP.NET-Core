@@ -1,4 +1,5 @@
 AddEventListenersToChangeProductAmountInCart();     /* JS Hoisting. */
+AddEventListenerToChangeCartShippingRate();
 
 function AddEventListenersToChangeProductAmountInCart() {
     const increaseButtons = document.getElementsByClassName('increase-button');
@@ -22,15 +23,12 @@ function AddEventListenersToChangeProductAmountInCart() {
     }
 }
 
-function ConvertNumericPriceToStringPrice(numericPrice) {
-    return (
-        numericPrice
-        .toLocaleString(undefined, {
-            minimumFractionDigits: 2, 
-            maximumFractionDigits: 2, 
-            currency: 'USD'
-        })
-    );
+function AddEventListenerToChangeCartShippingRate() {
+    const cartShippingRateInput = document.getElementById('cart-shipping-rate-input');
+    cartShippingRateInput.onchange = () => {
+        const cartTotalPriceManager = new CartTotalPriceManager();
+        cartTotalPriceManager.UpdateCartPrices();
+    }
 }
 
 class ProductAmountManager {
@@ -38,9 +36,9 @@ class ProductAmountManager {
         this.productIndexInCart = productIndexInCart;
         this.productIdValue = document.getElementsByClassName('product-id')[productIndexInCart].value;
         this.amount = document.getElementsByClassName('product-amount')[productIndexInCart];
-        this.unitsInStock = document.getElementsByClassName('product-unitsInStock')[productIndexInCart];
-        this.unitPrice = document.getElementsByClassName('product-unitPrice')[productIndexInCart];
-        this.productTotalPrice = document.getElementsByClassName('product-totalPrice')[productIndexInCart];
+        this.unitsInStock = document.getElementsByClassName('product-units-in-stock')[productIndexInCart];
+        this.unitPrice = document.getElementsByClassName('product-unit-price')[productIndexInCart];
+        this.productTotalPrice = document.getElementsByClassName('product-total-price')[productIndexInCart];
 
         this.originalAmountValue = parseInt(this.amount.value);
         this.currentAmountValue = parseInt(this.amount.value);
@@ -122,13 +120,12 @@ class ProductAmountManager {
 
 class CartTotalPriceManager {
     constructor() {
-        this.productTotalPrices = document.getElementsByClassName('product-totalPrice');
-        this.cartSubtotalPrice = document.getElementById('cart-subtotalPrice');
-        this.cartShippingRate = document.getElementById('cart-shippingRate');
-        this.cartTotalPrice = document.getElementById('cart-totalPrice');
+        this.productTotalPrices = document.getElementsByClassName('product-total-price');
+        this.cartSubtotalPrice = document.getElementById('cart-subtotal-price');
+        this.cartShippingRateInput = document.getElementById('cart-shipping-rate-input');
+        this.cartTotalPrice = document.getElementById('cart-total-price');
 
         this.cartSubtotalPriceValue = 0;
-        this.cartShippingRateValue = 0;
     }
 
     UpdateCartPrices() {
@@ -146,8 +143,20 @@ class CartTotalPriceManager {
     }
 
     UpdateTotalPrice() {
+        const cartShippingRateValue = parseFloat(this.cartShippingRateInput.value);
         const totalPrice = 
-            ConvertNumericPriceToStringPrice(this.cartSubtotalPriceValue + this.cartShippingRateValue);
+            ConvertNumericPriceToStringPrice(this.cartSubtotalPriceValue + cartShippingRateValue);
         this.cartTotalPrice.innerHTML = `<b>$${totalPrice}</b>`;
     }
+}
+
+function ConvertNumericPriceToStringPrice(numericPrice) {
+    return (
+        numericPrice
+        .toLocaleString(undefined, {
+            minimumFractionDigits: 2, 
+            maximumFractionDigits: 2, 
+            currency: 'USD'
+        })
+    );
 }

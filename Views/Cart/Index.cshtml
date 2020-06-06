@@ -70,8 +70,8 @@ else
                                                 </div>
                                             </div>
                                             <input type="hidden" class="product-id" value="@cartItem.Id">
-                                            <input type="hidden" class="product-unitsInStock" value="@cartItem.Product.UnitsInStock">
-                                            <input type="hidden" class="product-unitPrice" value="@cartItem.Product.UnitPrice">
+                                            <input type="hidden" class="product-units-in-stock" value="@cartItem.Product.UnitsInStock">
+                                            <input type="hidden" class="product-unit-price" value="@cartItem.Product.UnitPrice">
                                         </div>
                                     </td>
                                     <td>
@@ -79,7 +79,7 @@ else
                                             @{
                                                 var productTotalPrice = cartItem.Product.UnitPrice * cartItem.Amount;
                                             }
-                                            <var class="price product-totalPrice" value="@productTotalPrice">
+                                            <var class="price product-total-price" value="@productTotalPrice">
                                                 @productTotalPrice.ToString("c")
                                             </var>
                                             <small class="text-muted">
@@ -97,23 +97,24 @@ else
         <br />
         <br />
         <section class="container">
-            <div class="row">
-                <aside class="col-md-4" style="margin-bottom: 40px;">
+            <div class="row cart-cards">
+                <img id="loading-animation" src="/img/loading-animation.gif" alt="Loading...">
+                <aside class="col-md-4 custom-aside">
                     <h4 class="subtitle-doc">
-                        Shipping Rates
+                        Shipping Rate
                     </h4>
                     <div id="code_desc_align">
                         <div class="box">
-                            <dl class="dlist-align">
+                            <dl id="shipping-rate-container" class="dlist-align">
                                 <dt>CEP:</dt>
                                 <dd>
-                                    <div id="shipping-rate-container">
+                                    <div id="cep-container">
                                         <div>
-                                            <input type="text" name="cep" class="form-control" id="shipping-rate-input">
+                                            <input type="text" name="cep" class="form-control" id="cep-input">
                                         </div>
                                         <div>
                                             <button class="btn btn-outline-primary" id="shipping-rate-button">
-                                                Calcular
+                                                Calculate
                                             </button>
                                         </div>
                                     </div>
@@ -121,12 +122,24 @@ else
                             </dl>
                             <div id="shipping-rate-options">
                                 <dl class="dlist-align">
-                                    <dt><input type="radio" name="shipping-option-sedex"></dt>
-                                    <dd>SEDEX - $ 0,00</dd>
+                                    <dt><input type="radio" name="shipping-option" id="pac-option"></dt>
+                                    <dd>
+                                        PAC - <span id="pac-price"></span>
+                                        <br/>
+                                        <small>Estimated Time of Arrival: 
+                                            <b><span id="pac-eta"></span></b>
+                                        </small>
+                                    </dd>
                                 </dl>
                                 <dl class="dlist-align">
-                                    <dt><input type="radio" name="shipping-option-pac"></dt>
-                                    <dd>PAC - $ 0,00</dd>
+                                    <dt><input type="radio" name="shipping-option" id="sedex-option"></dt>
+                                    <dd>
+                                        SEDEX - <span id="sedex-price"></span>
+                                        <br/>
+                                        <small>Estimated Time of Arrival: 
+                                            <b><span id="sedex-eta"></span></b>
+                                        </small>
+                                    </dd>
                                 </dl>
                             </div>
                             <div id="shipping-rate-error">
@@ -137,7 +150,7 @@ else
                         </div>
                     </div>
                 </aside>
-                <aside class="offset-md-4 col-md-4">
+                <aside class="col-md-4 custom-aside">
                     <h4 class="subtitle-doc">
                         Final Price
                     </h4>
@@ -147,26 +160,25 @@ else
                                 decimal subtotalPrice = 0;
                                 foreach (var cartItem in Model)
                                     subtotalPrice += cartItem.Amount * cartItem.Product.UnitPrice;
-                                decimal shippingRate = 0;
-                                decimal totalPrice = shippingRate + subtotalPrice;
                             }
 
                             <dl class="dlist-align">
                                 <dt>Subtotal</dt>
-                                <dd class="text-right" id="cart-subtotalPrice">
+                                <dd class="text-right" id="cart-subtotal-price">
                                     @(subtotalPrice.ToString("c"))
                                 </dd>
                             </dl>
                             <dl class="dlist-align">
                                 <dt style="width: 120px;">Shipping Rate</dt>
-                                <dd class="text-right" id="cart-shippingRate">
-                                    @(shippingRate.ToString("c"))
+                                <dd class="text-right" id="cart-shipping-rate-text">
+                                    @(0.ToString("c"))
                                 </dd>
+                                <input type="hidden" id="cart-shipping-rate-input" value="0">
                             </dl>
                             <dl class="dlist-align">
                                 <dt>TOTAL</dt>
-                                <dd class="text-right" id="cart-totalPrice">
-                                    <b>@(totalPrice.ToString("c"))</b>
+                                <dd class="text-right" id="cart-total-price">
+                                    <b>@(subtotalPrice.ToString("c"))</b>
                                 </dd>
                             </dl>
                         </div>
