@@ -6,7 +6,7 @@
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/JV-Amorim/OnlineStore-ASP.NET-Core">
 
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/JV-Amorim/OnlineStore-ASP.NET-Core">
-  
+
   <a href="https://github.com/JV-Amorim/OnlineStore-ASP.NET-Core/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/JV-Amorim/OnlineStore-ASP.NET-Core">
   </a>
@@ -27,6 +27,12 @@
 ## Project
 
 Online store created with ASP.NET Core.
+
+<p align="center">
+  <kbd>
+    <img alt="Online Store" src="wwwroot/img/online-store.gif">
+  </kbd>
+</p>
 
 ## Tools
 
