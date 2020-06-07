@@ -6,14 +6,25 @@ function AddEventListenerToCalculateShippingRates() {
     if (shippingRateButton == null)
         return;
 
-    shippingRateButton.addEventListener('click', () => {
-        let destinationCEP = document.getElementById('cep-input').value;
-        destinationCEP = destinationCEP.replace('.', '').replace('-', '');
-        CalculateShippingRates(destinationCEP);
-    });
+    shippingRateButton.onclick = () => {
+        let destinationCep = document.getElementById('cep-input').value;
+        destinationCep = destinationCep.replace('.', '').replace('-', '');
+
+        if (destinationCep.length != 8)
+            document.getElementById('cep-validation').style.display= 'block';
+        else
+        {
+            document.getElementById('cep-validation').style.display = 'none';
+            CalculateShippingRates(destinationCep);
+        }
+    };
+
+    /* Calls the calculation functions if the CEP input field is filled (with cookie data). */
+    shippingRateButton.onclick();
+    document.getElementById('cep-validation').style.display = 'none';
 }
 
-function CalculateShippingRates(destinationCEP) {
+function CalculateShippingRates(destinationCep) {
     const xmlHttpRequest = new XMLHttpRequest();
 
     xmlHttpRequest.addEventListener('load', (response) => {
@@ -27,7 +38,7 @@ function CalculateShippingRates(destinationCEP) {
         document.getElementById('loading-animation').style.display = 'none';
     }, false);
 
-    const url = `/Cart/CalculateShippingRate?destinationCEP=${destinationCEP}`;
+    const url = `/Cart/CalculateShippingRate?destinationCep=${destinationCep}`;
     xmlHttpRequest.open('get', url, true);
     xmlHttpRequest.send();
 

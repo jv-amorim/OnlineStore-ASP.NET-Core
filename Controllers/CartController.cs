@@ -14,16 +14,23 @@ namespace OnlineStore.Controllers
 {
     public class CartController : Controller
     {
+        private readonly string shippingOriginCep = "39404018";
+
         private CartCookieManager cartCookieManager;
+        private DestinationCepCookieManager destinationCepCookieManager;
         private IProductRepository productRepository;
         private ShippingPackageFactory shippingPackageFactory;
         private ShippingRateCalculator shippingRateCalculator;
-        private readonly string shippingOriginCEP = "39404018";
 
-        public CartController(CartCookieManager cartCookieManager, IProductRepository productRepository, 
-        ShippingRateCalculator shippingRateCalculator, ShippingPackageFactory shippingPackageFactory)
+        public CartController(
+            CartCookieManager cartCookieManager, 
+            DestinationCepCookieManager destinationCepCookieManager,
+            IProductRepository productRepository, 
+            ShippingRateCalculator shippingRateCalculator, 
+            ShippingPackageFactory shippingPackageFactory)
         {
             this.cartCookieManager = cartCookieManager;
+            this.destinationCepCookieManager = destinationCepCookieManager;
             this.productRepository = productRepository;
             this.shippingRateCalculator = shippingRateCalculator;
             this.shippingPackageFactory = shippingPackageFactory;
@@ -32,10 +39,13 @@ namespace OnlineStore.Controllers
         public IActionResult Index()
         {
             List<CartItem> cartItems = cartCookieManager.GetCookieData();
-
             foreach (var cartItem in cartItems)
                 cartItem.Product = productRepository.GetProduct(cartItem.Id);
 
+            string destinationCep = destinationCepCookieManager.GetCookieData();
+            if (destinationCep != null)
+                ViewData["DestinationCep"] = destinationCep;
+            
             return View(cartItems);
         }
 
@@ -79,7 +89,7 @@ namespace OnlineStore.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> CalculateShippingRate(string destinationCEP)
+        public async Task<IActionResult> CalculateShippingRate(string destinationCep)
         {
             List<CartItem> cartItems = cartCookieManager.GetCookieData();
             foreach (var cartItem in cartItems)
@@ -87,12 +97,15 @@ namespace OnlineStore.Controllers
             var packages = shippingPackageFactory.CreateShippingPackages(cartItems);
 
             var shippingInfoPAC = 
-                await shippingRateCalculator.CalculateShippingRateAndETA(shippingOriginCEP, destinationCEP, FreightTypes.PAC, packages);
+                await shippingRateCalculator.CalculateShippingRateAndETA(shippingOriginCep, destinationCep, FreightTypes.PAC, packages);
             var shippingInfoSEDEX = 
-                await shippingRateCalculator.CalculateShippingRateAndETA(shippingOriginCEP, destinationCEP, FreightTypes.SEDEX, packages);
+                await shippingRateCalculator.CalculateShippingRateAndETA(shippingOriginCep, destinationCep, FreightTypes.SEDEX, packages);
 
             if (shippingInfoPAC == null || shippingInfoSEDEX == null)
+            {
+                destinationCepCookieManager.DeleteCookie();
                 return BadRequest();
+            }
 
             List<ShippingInformation> shippingInfos = new List<ShippingInformation>()
             {
@@ -100,7 +113,8 @@ namespace OnlineStore.Controllers
                 shippingInfoSEDEX
             };
 
-            // TODO - Save destination CEP in cookie.
+            destinationCepCookieManager.SetCookie(destinationCep);
+            
             return Ok(shippingInfos);
         }
     }

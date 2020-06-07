@@ -110,7 +110,10 @@ else
                                 <dd>
                                     <div id="cep-container">
                                         <div>
-                                            <input type="text" name="cep" class="form-control" id="cep-input">
+                                            @{
+                                                var destinationCep = ViewData["DestinationCep"] != null ? ViewData["DestinationCep"] : "";
+                                            }
+                                            <input type="text" name="cep" class="form-control" id="cep-input" value="@destinationCep">
                                         </div>
                                         <div>
                                             <button class="btn btn-outline-primary" id="shipping-rate-button">
@@ -118,6 +121,7 @@ else
                                             </button>
                                         </div>
                                     </div>
+                                    <small id="cep-validation">The CEP must be 8 digits!</small>
                                 </dd>
                             </dl>
                             <div id="shipping-rate-options">

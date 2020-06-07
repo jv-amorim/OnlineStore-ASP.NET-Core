@@ -15,12 +15,12 @@ namespace OnlineStore.Libraries.Services.Shipping
         public ShippingRateCalculator(CalcPrecoPrazoWSSoap service) => this.service = service;
 
         /// <summary> Returns the shipping rate and the ETA (Estimated Time of Arrival).  </summary>
-        public async Task<ShippingInformation> CalculateShippingRateAndETA(string originCEP, string destinationCEP, string freightType, List<ShippingPackage> packages)
+        public async Task<ShippingInformation> CalculateShippingRateAndETA(string originCEP, string destinationCep, string freightType, List<ShippingPackage> packages)
         {
             List<ShippingInformation> results = new List<ShippingInformation>();
             foreach (var package in packages)
             {
-                var result = await CalculateShippingRateAndETA(originCEP, destinationCEP, freightType, package);
+                var result = await CalculateShippingRateAndETA(originCEP, destinationCep, freightType, package);
                 if (result != null)
                     results.Add(result);
             }
@@ -39,12 +39,12 @@ namespace OnlineStore.Libraries.Services.Shipping
         }
 
         /// <summary> Returns the shipping rate and the ETA (Estimated Time of Arrival).  </summary>
-        private async Task<ShippingInformation> CalculateShippingRateAndETA(string originCEP, string destinationCEP, string freightType, ShippingPackage package)
+        private async Task<ShippingInformation> CalculateShippingRateAndETA(string originCEP, string destinationCep, string freightType, ShippingPackage package)
         {
             var result = await service.CalcPrecoPrazoAsync(
                 "", "", 
                 freightType, 
-                originCEP, destinationCEP, 
+                originCEP, destinationCep, 
                 package.Weight.ToString(), 1, 
                 package.Length, package.Height, package.Width, package.Diameter, 
                 "N", 0, "N"

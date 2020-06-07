@@ -9,6 +9,12 @@
     z-index: 1;
 }
 
+#cep-validation {
+    margin-top: 5px;
+    color: red;
+    display: none;
+}
+
 #loading-animation {
     display: none;
     width: 85px;
