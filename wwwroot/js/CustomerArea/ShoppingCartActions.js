@@ -25,6 +25,10 @@ function AddEventListenersToChangeProductAmountInCart() {
 
 function AddEventListenerToChangeCartShippingRate() {
     const cartShippingRateInput = document.getElementById('cart-shipping-rate-input');
+
+    if (cartShippingRateInput == null)
+        return;
+        
     cartShippingRateInput.onchange = () => {
         const cartTotalPriceManager = new CartTotalPriceManager();
         cartTotalPriceManager.UpdateCartPrices();
