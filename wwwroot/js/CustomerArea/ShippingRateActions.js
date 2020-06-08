@@ -48,6 +48,7 @@ function CalculateShippingRates(destinationCep) {
 function CalculationErrorBehaviour() {
     document.getElementById('shipping-rate-error').style.display = 'block';
     document.getElementById('shipping-rate-options').style.display = 'none'; 
+    ChangeShippingRateValue(0);
 }
 
 function SuccessfulCalculationBehaviour(response) {

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Models;
@@ -17,20 +16,20 @@ namespace OnlineStore.Controllers
         private readonly string shippingOriginCep = "39404018";
 
         private CartCookieManager cartCookieManager;
-        private DestinationCepCookieManager destinationCepCookieManager;
+        private ShippingInfoCookieManager shippingInfoCookieManager;
         private IProductRepository productRepository;
         private ShippingPackageFactory shippingPackageFactory;
         private ShippingRateCalculator shippingRateCalculator;
 
         public CartController(
             CartCookieManager cartCookieManager, 
-            DestinationCepCookieManager destinationCepCookieManager,
+            ShippingInfoCookieManager shippingInfoCookieManager,
             IProductRepository productRepository, 
             ShippingRateCalculator shippingRateCalculator, 
             ShippingPackageFactory shippingPackageFactory)
         {
             this.cartCookieManager = cartCookieManager;
-            this.destinationCepCookieManager = destinationCepCookieManager;
+            this.shippingInfoCookieManager = shippingInfoCookieManager;
             this.productRepository = productRepository;
             this.shippingRateCalculator = shippingRateCalculator;
             this.shippingPackageFactory = shippingPackageFactory;
@@ -42,9 +41,9 @@ namespace OnlineStore.Controllers
             foreach (var cartItem in cartItems)
                 cartItem.Product = productRepository.GetProduct(cartItem.Id);
 
-            string destinationCep = destinationCepCookieManager.GetCookieData();
-            if (destinationCep != null)
-                ViewData["DestinationCep"] = destinationCep;
+            var shippingInfos = shippingInfoCookieManager.GetCookieData();
+            if (shippingInfos.Count > 0)
+                ViewData["DestinationCep"] = shippingInfos[0].DestinationCep;
             
             return View(cartItems);
         }
@@ -103,7 +102,7 @@ namespace OnlineStore.Controllers
 
             if (shippingInfoPAC == null || shippingInfoSEDEX == null)
             {
-                destinationCepCookieManager.DeleteCookie();
+                shippingInfoCookieManager.DeleteCookie();
                 return BadRequest();
             }
 
@@ -113,7 +112,7 @@ namespace OnlineStore.Controllers
                 shippingInfoSEDEX
             };
 
-            destinationCepCookieManager.SetCookie(destinationCep);
+            shippingInfoCookieManager.SetCookie(shippingInfos);
             
             return Ok(shippingInfos);
         }

@@ -30,6 +30,7 @@ namespace OnlineStore.Libraries.Services.Shipping
 
             ShippingInformation shippingInfo = new ShippingInformation()
             {
+                DestinationCep = destinationCep,
                 FreightType = freightType,
                 Price = results.Sum(r => r.Price),
                 EstimatedTimeOfArrivalInDays = results.Max(r => r.EstimatedTimeOfArrivalInDays)
@@ -55,6 +56,7 @@ namespace OnlineStore.Libraries.Services.Shipping
 
             ShippingInformation shippingInfo = new ShippingInformation()
             {
+                DestinationCep = destinationCep,
                 FreightType = freightType,
                 EstimatedTimeOfArrivalInDays = int.Parse(result.Servicos[0].PrazoEntrega)
             };

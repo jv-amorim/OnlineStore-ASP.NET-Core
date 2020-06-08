@@ -51,7 +51,7 @@ namespace OnlineStore
 
             services.AddScoped<CookieManager>();
             services.AddScoped<CartCookieManager>();
-            services.AddScoped<DestinationCepCookieManager>();
+            services.AddScoped<ShippingInfoCookieManager>();
 
             services.AddSession(options => { });
             services.AddScoped<SessionManager>();
