@@ -49,6 +49,8 @@ class ProductAmountManager {
     }
 
     ChangeProductAmountInCart(operation) {
+        document.getElementById('proceed-button').classList.add('disabled');
+        
         if (operation === '+')
             this.currentAmountValue++;
         else if (operation === '-')
