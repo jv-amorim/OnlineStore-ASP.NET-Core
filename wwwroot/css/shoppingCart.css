@@ -107,13 +107,7 @@
 }
 
 #proceed-button {
-    float: right;
-    width: 30%;
-}
-
-@media (max-width: 768px) {  
-    #proceed-button {
-        float: right;
-        width: 100%;
-    }
+    width: 100%;
+    margin-top: 30px;
+    font-weight: bold;
 }

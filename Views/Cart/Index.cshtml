@@ -10,9 +10,11 @@
 
 @if (Model != null && Model.Count == 0) 
 {
-    <p class="alert alert-primary" style="margin-top: 50px">
-        No products in the cart.
-    </p>
+    <div class="container">
+        <p class="alert alert-primary" style="margin-top: 50px">
+            No products in the cart.
+        </p>
+    </div>
 }
 else
 {
@@ -187,12 +189,12 @@ else
                             </dl>
                         </div>
                     </div>
+                    <div>
+                        <button class="btn btn-primary disabled" id="proceed-button">
+                            PROCEED TO CHECKOUT
+                        </button>
+                    </div>
                 </aside>
-            </div>
-            <div>
-                <button class="btn btn-primary disabled" id="proceed-button">
-                    Proceed to checkout >>
-                </button>
             </div>
         </section>
     </main>
