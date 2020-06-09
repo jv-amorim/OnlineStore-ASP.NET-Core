@@ -95,9 +95,9 @@ namespace OnlineStore.Controllers
                 cartItem.Product = productRepository.GetProduct(cartItem.Id); 
             var packages = shippingPackageFactory.CreateShippingPackages(cartItems);
 
-            var shippingInfoPAC = 
+            ShippingInformation shippingInfoPAC = 
                 await shippingRateCalculator.CalculateShippingRateAndETA(shippingOriginCep, destinationCep, FreightTypes.PAC, packages);
-            var shippingInfoSEDEX = 
+            ShippingInformation shippingInfoSEDEX = 
                 await shippingRateCalculator.CalculateShippingRateAndETA(shippingOriginCep, destinationCep, FreightTypes.SEDEX, packages);
 
             if (shippingInfoPAC == null || shippingInfoSEDEX == null)
@@ -106,15 +106,36 @@ namespace OnlineStore.Controllers
                 return BadRequest();
             }
 
-            List<ShippingInformation> shippingInfos = new List<ShippingInformation>()
-            {
-                shippingInfoPAC,
-                shippingInfoSEDEX
-            };
+            var shippingInfosInCookie = shippingInfoCookieManager.GetCookieData();
+            bool theCookieAlreadyExists = shippingInfosInCookie.Count != 0;
+
+            if (theCookieAlreadyExists)
+                _ = shippingInfosInCookie[0].IsSelected ? 
+                    shippingInfoPAC.IsSelected = true : 
+                    shippingInfoSEDEX.IsSelected = true;
+            else
+                shippingInfoPAC.IsSelected = true;
+            
+            var shippingInfos = new List<ShippingInformation>(){ shippingInfoPAC, shippingInfoSEDEX };
+            shippingInfoCookieManager.SetCookie(shippingInfos);
+
+            return Ok(shippingInfos);
+        }
+
+        public IActionResult ChangeSelectedShippingRate(string freightType)
+        {
+            List<ShippingInformation> shippingInfos = shippingInfoCookieManager.GetCookieData();
+            bool isValidTheFreightType = freightType == FreightTypes.PAC || freightType == FreightTypes.SEDEX;
+
+            if (shippingInfos.Count == 0 || !isValidTheFreightType)
+                return BadRequest();
+
+            foreach (var shippingInfo in shippingInfos)
+                shippingInfo.IsSelected = false;
+            shippingInfos.Find(s => s.FreightType == freightType).IsSelected = true;
 
             shippingInfoCookieManager.SetCookie(shippingInfos);
-            
-            return Ok(shippingInfos);
+            return Ok();
         }
     }
 }

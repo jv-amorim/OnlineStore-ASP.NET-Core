@@ -32,7 +32,7 @@ function CalculateShippingRates(destinationCep) {
     xmlHttpRequest.addEventListener('load', (response) => {
         const isAnErrorResponse = response.originalTarget.status != 200;
         if (isAnErrorResponse) {
-            CalculationErrorBehaviour();
+            ShippingRateErrorBehaviour();
         }
         else {       
             SuccessfulCalculationBehaviour(response.originalTarget.response);
@@ -47,27 +47,27 @@ function CalculateShippingRates(destinationCep) {
     document.getElementById('loading-animation').style.display = 'block';
 }
 
-function CalculationErrorBehaviour() {
+function ShippingRateErrorBehaviour() {
     document.getElementById('shipping-rate-error').style.display = 'block';
     document.getElementById('shipping-rate-options').style.display = 'none'; 
     ChangeShippingRateValue(0);
 }
 
 function SuccessfulCalculationBehaviour(response) {
-    const shippingInfo = JSON.parse(response);
-    AddEventListenersToRadioInputs(shippingInfo);
+    const shippingInfos = JSON.parse(response);
+    AddEventListenersToRadioInputs(shippingInfos);
 
-    document.getElementById('pac-price').innerHTML = '$' + ConvertNumericPriceToStringPrice(shippingInfo[0].price);
-    document.getElementById('sedex-price').innerHTML = '$' + ConvertNumericPriceToStringPrice(shippingInfo[1].price);
-    document.getElementById('pac-eta').innerHTML = shippingInfo[0].estimatedTimeOfArrivalInDays + ' days';
-    document.getElementById('sedex-eta').innerHTML = shippingInfo[1].estimatedTimeOfArrivalInDays + ' days';
+    document.getElementById('pac-price').innerHTML = '$' + ConvertNumericPriceToStringPrice(shippingInfos[0].price);
+    document.getElementById('sedex-price').innerHTML = '$' + ConvertNumericPriceToStringPrice(shippingInfos[1].price);
+    document.getElementById('pac-eta').innerHTML = shippingInfos[0].estimatedTimeOfArrivalInDays + ' days';
+    document.getElementById('sedex-eta').innerHTML = shippingInfos[1].estimatedTimeOfArrivalInDays + ' days';
 
     document.getElementById('shipping-rate-options').style.display = 'block'; 
     document.getElementById('shipping-rate-error').style.display = 'none';
     document.getElementById('proceed-button').classList.remove('disabled');
 }
 
-function AddEventListenersToRadioInputs(shippingInfo) {
+function AddEventListenersToRadioInputs(shippingInfos) {
     const pacRadioInput = document.getElementById('pac-option');
     const sedexRadioInput = document.getElementById('sedex-option');
     const radioInputContainers = document.getElementById('shipping-rate-options').getElementsByTagName('dl');
@@ -75,16 +75,53 @@ function AddEventListenersToRadioInputs(shippingInfo) {
     pacRadioInput.onchange = () => {
         radioInputContainers[0].classList.add('selected-radio-input');
         radioInputContainers[1].classList.remove('selected-radio-input');
-        ChangeShippingRateValue(shippingInfo[0].price);
+
+        ChangeSelectedShippingRate(shippingInfos[0]);
+
+        shippingInfos.forEach(element => element.isSelected = false);
+        shippingInfos[0].isSelected = true;
     };
     sedexRadioInput.onchange = () => {
         radioInputContainers[0].classList.remove('selected-radio-input');
         radioInputContainers[1].classList.add('selected-radio-input');
-        ChangeShippingRateValue(shippingInfo[1].price);
+
+        ChangeSelectedShippingRate(shippingInfos[1]);
+
+        shippingInfos.forEach(element => element.isSelected = false);
+        shippingInfos[1].isSelected = true;
     };
 
-    pacRadioInput.checked = true;
-    pacRadioInput.onchange();
+    if (shippingInfos[0].isSelected === true) {
+        pacRadioInput.checked = true;
+        pacRadioInput.onchange();
+    }
+    else if (shippingInfos[1].isSelected === true) {
+        sedexRadioInput.checked = true;
+        sedexRadioInput.onchange();
+    }
+}
+
+function ChangeSelectedShippingRate(shippingInfo) {
+    if (shippingInfo.isSelected === true) {
+        ChangeShippingRateValue(shippingInfo.price);
+        return;
+    }
+    
+    const xmlHttpRequest = new XMLHttpRequest();
+
+    xmlHttpRequest.addEventListener('load', (response) => {
+        const isAnErrorResponse = response.originalTarget.status != 200;
+        if (isAnErrorResponse) {
+            ShippingRateErrorBehaviour();
+        }
+        else {
+            ChangeShippingRateValue(shippingInfo.price);
+        }
+    }, false);
+
+    const url = `/Cart/ChangeSelectedShippingRate?freightType=${shippingInfo.freightType}`;
+    xmlHttpRequest.open('get', url, true);
+    xmlHttpRequest.send();
 }
 
 function ChangeShippingRateValue(value) {
