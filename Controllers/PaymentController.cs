@@ -22,10 +22,15 @@ namespace OnlineStore.Controllers
         public IActionResult Index()
         {
             List<CartItem> cartItems = cartCookieManager.GetCookieData();
+            var shippingInfos = shippingInfoCookieManager.GetCookieData();
+            
+            if (cartItems.Count == 0 || shippingInfos.Count == 0)
+                return RedirectToAction("Index", "Cart");
+
             foreach (var cartItem in cartItems)
                 cartItem.Product = productRepository.GetProduct(cartItem.Id);
-            
-            // var shippingInfos = shippingInfoCookieManager.GetCookieData();
+
+            ViewData["ShippingInformation"] = shippingInfos.Find(s => s.IsSelected == true);
 
             return View(cartItems);
         }

@@ -1,4 +1,24 @@
-.payment-product-img {
-    width: 90px;
-    height: 90px;
+#payment-container {
+    margin-top: 50px;
+}
+
+#payment-container aside {
+    margin-bottom: 30px;
+}
+
+#order-products-list {
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+#order-products-list .itemside:last-child {
+    padding-bottom: 10px;
+}
+
+.products-item-name {
+    color: inherit;
+}
+
+#total-price-panel {
+    margin-top: 20px;
 }
