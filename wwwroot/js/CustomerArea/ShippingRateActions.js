@@ -8,6 +8,7 @@ function AddEventListenerToCalculateShippingRates() {
 
     shippingRateButton.onclick = () => {
         document.getElementById('proceed-button').classList.add('disabled');
+        document.getElementById('proceed-button').classList.add('tool');
         
         let destinationCep = document.getElementById('cep-input').value;
         destinationCep = destinationCep.replace('.', '').replace('-', '');
@@ -65,6 +66,7 @@ function SuccessfulCalculationBehaviour(response) {
     document.getElementById('shipping-rate-options').style.display = 'block'; 
     document.getElementById('shipping-rate-error').style.display = 'none';
     document.getElementById('proceed-button').classList.remove('disabled');
+    document.getElementById('proceed-button').classList.remove('tool');
 }
 
 function AddEventListenersToRadioInputs(shippingInfos) {
