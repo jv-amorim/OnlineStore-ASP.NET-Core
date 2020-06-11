@@ -5,23 +5,14 @@ using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.Helpers.EmailHelpers;
 using OnlineStore.Libraries.Helpers.LogHelpers;
 using OnlineStore.Libraries.Language;
-using OnlineStore.Libraries.Session;
-using OnlineStore.Libraries.Filters;
 
 namespace OnlineStore.Controllers
 {
     public class HomeController : Controller
     {
-        private ICustomerRepository customerRepository;
         private INewsletterRepository newsletterRepository;
-        private CustomerSession customerSession;
 
-        public HomeController(ICustomerRepository customerRepository, INewsletterRepository newsletterRepository, CustomerSession customerSession)
-        {
-            this.customerRepository = customerRepository;
-            this.newsletterRepository = newsletterRepository;
-            this.customerSession = customerSession;
-        }
+        public HomeController(INewsletterRepository newsletterRepository) => this.newsletterRepository = newsletterRepository;
 
         [HttpGet]
         public IActionResult Index() => View();
@@ -65,46 +56,5 @@ namespace OnlineStore.Controllers
 
             return View();
         }
-
-        [HttpGet]
-        public IActionResult SignUp() => View();
-
-        [HttpPost]
-        public IActionResult SignUp([FromForm] Customer customer)
-        {
-            if (ModelState.IsValid)
-            {
-                customerRepository.Register(customer);
-
-                TempData["MSG_OK"] = Message.MSG_OK_001;
-
-                // TODO - Redirect to other pages, depending on the situation (Login, Panel, Cart, etc.).
-                return RedirectToAction(nameof(SignUp));
-            }
-
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult Login() => View();
-
-        [HttpPost]
-        public IActionResult Login([FromForm] Customer customer)
-        {
-            Customer customerFromDB = customerRepository.Login(customer.Email, customer.Password);
-
-            if (customerFromDB == null)
-            {
-                ViewData["MSG_ERROR"] = Message.MSG_ERROR_006;
-                return View();
-            }
-            
-            customerSession.Login(customerFromDB);
-            return RedirectToAction(nameof(CustomerPanel));
-        }
-
-        [HttpGet]
-        [CustomerAuthorization]
-        public IActionResult CustomerPanel() => new ContentResult() { Content = "Customer Panel." };
     }
 }

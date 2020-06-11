@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using OnlineStore.Models;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.Language;
 using OnlineStore.Libraries.Filters;
@@ -19,7 +18,7 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         
         public IActionResult Index(int? page, string searchParameter)
         {
-            IPagedList<Customer> customers = 
+            IPagedList<OnlineStore.Models.Customer> customers = 
                 customerRepository.GetAllCustomers(page, NumberOfItemsPerPage, searchParameter);
             return View(customers);
         }
@@ -27,7 +26,7 @@ namespace OnlineStore.Areas.Collaborator.Controllers
         [ValidateHttpReferer]
         public IActionResult ActivateOrDeactivateTheCustomerAccount(int id)
         {
-            Customer customer = customerRepository.GetCustomer(id);
+            OnlineStore.Models.Customer customer = customerRepository.GetCustomer(id);
 
             customer.IsTheAccountActive = !customer.IsTheAccountActive;
             customerRepository.Update(customer);

@@ -1,4 +1,5 @@
 @model List<CartItem>
+@inject CustomerSession customerSession
 @{
     ViewData["Title"] = "Online Store - Shopping Cart";
 }
@@ -10,10 +11,13 @@
 
 @if (Model != null && Model.Count == 0) 
 {
-    <div class="container">
+    <div class="container" style="text-align: center;">
         <p class="alert alert-primary" style="margin-top: 50px">
             No products in the cart.
         </p>
+        <a class="btn btn-primary" asp-controller="Home" asp-action="Index">
+            Continue Shopping <i class="fas fa-shopping-cart"></i> 
+        </a>
     </div>
 }
 else
@@ -190,7 +194,17 @@ else
                         </div>
                     </div>
                     <div>
-                        <button class="btn btn-primary disabled" id="proceed-button">
+                        @if (customerSession.GetLoggedInCustomer() == null)
+                        {
+                            // TODO - Redirect to Login view.
+                        }
+                        else
+                        {
+                            // TODO - Redirect to Payment view.
+                        }
+
+                        <button id="proceed-button" class="btn btn-primary disabled tool" 
+                        data-tip="Before going to checkout, you must calculate the shipping rate.">
                             PROCEED TO CHECKOUT <i class="fa fa-check"></i> 
                         </button>
                     </div>
