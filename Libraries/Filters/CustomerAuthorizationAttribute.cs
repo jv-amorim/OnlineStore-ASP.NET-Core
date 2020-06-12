@@ -18,7 +18,7 @@ namespace OnlineStore.Libraries.Filters
             Customer customerFromSession = customerSession.GetLoggedInCustomer();
 
             if (customerFromSession == null)
-                context.Result = new RedirectToActionResult("Login", "Home", null);
+                context.Result = new RedirectToActionResult("Login", "Home", new { area = "Customer" });
         }
     }
 }

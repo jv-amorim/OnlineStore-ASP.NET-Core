@@ -53,7 +53,10 @@ namespace OnlineStore
             services.AddScoped<CartCookieManager>();
             services.AddScoped<ShippingInfoCookieManager>();
 
-            services.AddSession(options => { });
+            services.AddSession(options =>
+            { 
+                options.Cookie.IsEssential = true; 
+            });
             services.AddScoped<SessionManager>();
             services.AddScoped<CustomerSession>();
             services.AddScoped<CollaboratorSession>();

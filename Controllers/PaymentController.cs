@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Models.ShoppingCart;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.Cookie;
+using OnlineStore.Libraries.Filters;
 
 namespace OnlineStore.Controllers
 {
+    [CustomerAuthorization]
     public class PaymentController : Controller
     {
         private CartCookieManager cartCookieManager;

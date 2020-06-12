@@ -19,29 +19,10 @@ namespace OnlineStore.Areas.Customer.Controllers
         }
 
         [HttpGet]
-        public IActionResult SignUp() => View();
-
-        [HttpPost]
-        public IActionResult SignUp([FromForm] Models.Customer customer)
-        {
-            if (ModelState.IsValid)
-            {
-                customerRepository.Register(customer);
-
-                TempData["MSG_OK"] = Message.MSG_OK_001;
-
-                // TODO - Redirect to other pages, depending on the situation (Login, Panel, Cart, etc.).
-                return RedirectToAction(nameof(SignUp));
-            }
-
-            return View();
-        }
-
-        [HttpGet]
         public IActionResult Login() => View();
 
         [HttpPost]
-        public IActionResult Login([FromForm] Models.Customer customer)
+        public IActionResult Login([FromForm] Models.Customer customer, string redirectTo)
         {
             Models.Customer customerFromDB = customerRepository.Login(customer.Email, customer.Password);
 
@@ -50,9 +31,29 @@ namespace OnlineStore.Areas.Customer.Controllers
                 ViewData["MSG_ERROR"] = Message.MSG_ERROR_006;
                 return View();
             }
-            
+
             customerSession.Login(customerFromDB);
+
+            if (redirectTo != null)
+                return LocalRedirectPermanent(redirectTo);
+
             return RedirectToAction(nameof(CustomerPanel));
+        }
+
+        [HttpGet]
+        public IActionResult SignUp() => View();
+
+        [HttpPost]
+        public IActionResult SignUp([FromForm] Models.Customer customer, string redirectTo)
+        {
+            if (ModelState.IsValid)
+            {
+                customerRepository.Register(customer);
+                TempData["MSG_OK"] = Message.MSG_OK_001;
+                return RedirectToAction(nameof(Login), new { redirectTo = redirectTo });
+            }
+
+            return View();
         }
 
         [HttpGet]
