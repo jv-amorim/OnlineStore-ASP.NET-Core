@@ -1,4 +1,5 @@
 @model List<Category>
+@inject CustomerSession customerSession
 @{
     var searchParameter = Context.Request.Query["searchParameter"];
 }
@@ -16,8 +17,8 @@
                 string currentController = ViewContext.RouteData.Values["controller"].ToString();
                 string currentAction = ViewContext.RouteData.Values["action"].ToString();
             
-                bool isHomeTheCurrentPage = currentController == "Home" && currentAction == "Index";
-                string homeActiveStatus = isHomeTheCurrentPage ? "active" : "";
+                bool isIndexTheCurrentPage = currentController == "Home" && currentAction == "Index";
+                string homeActiveStatus = isIndexTheCurrentPage ? "active" : "";
 
                 bool isContactTheCurrentPage = currentController == "Home" && currentAction == "Contact";
                 string contactActiveStatus = isContactTheCurrentPage ? "active" : "";
@@ -60,17 +61,31 @@
         </ul>
 
         <form class="form-inline my-2 my-lg-0" method="get">
-            <input class="form-control mr-sm-2" type="search" name="searchParameter" 
-                value="@searchParameter"  placeholder="Search..." aria-label="Search">
-
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                Search
-            </button>
-
-            <a class="nav-link" style="margin-left: 15px;" asp-area="Customer" asp-controller="Home" asp-action="Login">
-                <i class="fas fa-user-alt"></i>
-                Login
-            </a>
+            @if (isIndexTheCurrentPage || currentController == "Product")
+            {
+                <input class="form-control mr-sm-2" type="search" name="searchParameter" 
+                    value="@searchParameter"  placeholder="Search..." aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                    Search
+                </button>
+            }
+            @{ 
+                Customer loggedInCustomer = customerSession.GetLoggedInCustomer();
+            }
+            @if (loggedInCustomer != null)
+            {
+                <a class="nav-link" style="margin-left: 15px;" asp-area="Customer" asp-controller="Home" asp-action="CustomerPanel">
+                    <i class="fas fa-user-alt"></i>
+                    @loggedInCustomer.Name.Split(" ")[0]
+                </a>
+            }
+            else
+            {
+                <a class="nav-link" style="margin-left: 15px;" asp-area="Customer" asp-controller="Home" asp-action="Login">
+                    <i class="fas fa-user-alt"></i>
+                    Login
+                </a>
+            }
 
             <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index">
                 <i class="fas fa-shopping-cart"></i>

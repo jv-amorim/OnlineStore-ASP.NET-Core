@@ -196,17 +196,20 @@ else
                     <div>
                         @if (customerSession.GetLoggedInCustomer() == null)
                         {
-                            // TODO - Redirect to Login view.
+                            <button id="proceed-button" class="btn btn-primary disabled tool" 
+                            data-tip="Before going to checkout, you must calculate the shipping rate."
+                            onclick="location.href='/Customer/Home/Login?redirectTo=/Payment/Index'">
+                                PROCEED TO CHECKOUT <i class="fa fa-check"></i> 
+                            </button>
                         }
                         else
                         {
-                            // TODO - Redirect to Payment view.
+                            <button id="proceed-button" class="btn btn-primary disabled tool" 
+                            data-tip="Before going to checkout, you must calculate the shipping rate."
+                            onclick="location.href='/Payment/Index'">
+                                PROCEED TO CHECKOUT <i class="fa fa-check"></i> 
+                            </button>
                         }
-
-                        <button id="proceed-button" class="btn btn-primary disabled tool" 
-                        data-tip="Before going to checkout, you must calculate the shipping rate.">
-                            PROCEED TO CHECKOUT <i class="fa fa-check"></i> 
-                        </button>
                     </div>
                 </aside>
             </div>
