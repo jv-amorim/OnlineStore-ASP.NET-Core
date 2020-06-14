@@ -62,6 +62,10 @@ To run this project, follow the steps below:
     
     <!-- The connection string of your SQL Server database. -->
     <Database_Connection_String></Database_Connection_String>
+
+    <!-- The keys of your account on Pagar.me (a Brazilian payments intermediary service, such as PayPal, which facilitates transactions and payments). -->
+    <PagarMe_ApiKey></PagarMe_ApiKey>
+    <PagarMe_EncryptionKey></PagarMe_EncryptionKey>
 </root>
 ```
 In the email account data, your email account must have permission to access less secure apps.
