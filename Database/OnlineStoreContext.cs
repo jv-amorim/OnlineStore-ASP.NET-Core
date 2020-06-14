@@ -8,6 +8,7 @@ namespace OnlineStore.Database
         public OnlineStoreContext(DbContextOptions<OnlineStoreContext> options) : base(options) { }
 
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<NewsletterEmail> NewsletterEmails { get; set; }
         public DbSet<Collaborator> Collaborators { get; set; }
         public DbSet<Category> Categories { get; set; }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Database;
 
 namespace OnlineStore.Migrations
 {
     [DbContext(typeof(OnlineStoreContext))]
-    partial class OnlineStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20200614212907_AddressesTableCreated")]
+    partial class AddressesTableCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,9 +120,6 @@ namespace OnlineStore.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CPF")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -152,8 +151,6 @@ namespace OnlineStore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
 
                     b.ToTable("Customers");
                 });
@@ -242,15 +239,6 @@ namespace OnlineStore.Migrations
                     b.HasOne("OnlineStore.Models.Category", "ParentCategory")
                         .WithMany()
                         .HasForeignKey("ParentCategoryId");
-                });
-
-            modelBuilder.Entity("OnlineStore.Models.Customer", b =>
-                {
-                    b.HasOne("OnlineStore.Models.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("OnlineStore.Models.Image", b =>

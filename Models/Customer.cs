@@ -42,5 +42,10 @@ namespace OnlineStore.Models
 
         [Display(Name = "Is the account active?")]
         public bool IsTheAccountActive { get; set; }
+
+        public int AddressId { get; set; }
+
+        [ForeignKey("AddressId")]
+        public Address Address { get; set; }
     }
 }
