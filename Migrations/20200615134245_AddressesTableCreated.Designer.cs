@@ -10,7 +10,7 @@ using OnlineStore.Database;
 namespace OnlineStore.Migrations
 {
     [DbContext(typeof(OnlineStoreContext))]
-    [Migration("20200614212907_AddressesTableCreated")]
+    [Migration("20200615134245_AddressesTableCreated")]
     partial class AddressesTableCreated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,9 @@ namespace OnlineStore.Migrations
                     b.Property<string>("Complement")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Neighborhood")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -57,6 +60,8 @@ namespace OnlineStore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Addresses");
                 });
@@ -232,6 +237,15 @@ namespace OnlineStore.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("OnlineStore.Models.Address", b =>
+                {
+                    b.HasOne("OnlineStore.Models.Customer", "Customer")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OnlineStore.Models.Category", b =>

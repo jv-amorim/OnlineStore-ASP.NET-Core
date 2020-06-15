@@ -1,4 +1,5 @@
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using OnlineStore.Models;
 using OnlineStore.Database;
 using OnlineStore.Repositories.Interfaces;
@@ -30,11 +31,11 @@ namespace OnlineStore.Repositories
             database.SaveChanges();
         }
 
-        public Customer GetCustomer(int id) => database.Customers.Find(id);
+        public Customer GetCustomer(int id) => database.Customers.Include(c => c.Addresses).SingleOrDefault(c => c.Id == id);
 
         public IPagedList<Customer> GetAllCustomers(int? page, int pageSize, string searchParameter)
         {
-            var customersFromDB = database.Customers.AsQueryable();
+            var customersFromDB = database.Customers.Include(c => c.Addresses).AsQueryable();
             
             if (!string.IsNullOrEmpty(searchParameter))
             {
@@ -51,18 +52,19 @@ namespace OnlineStore.Repositories
         public void Delete(int id)
         {
             Customer item = GetCustomer(id);
-            int addressId = item.AddressId;
+
+            foreach (var address in item.Addresses)
+                addressRepository.Delete(address.Id);
 
             database.Remove(item);
             database.SaveChanges();
-
-            addressRepository.Delete(addressId);
         }
 
         public Customer Login(string email, string password)
         {
             return 
                 database.Customers
+                .Include(c => c.Addresses)
                 .Where(item => item.Email == email && item.Password == password)
                 .FirstOrDefault();
         }

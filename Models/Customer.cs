@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using OnlineStore.Libraries.Language;
@@ -43,9 +44,6 @@ namespace OnlineStore.Models
         [Display(Name = "Is the account active?")]
         public bool IsTheAccountActive { get; set; }
 
-        public int AddressId { get; set; }
-
-        [ForeignKey("AddressId")]
-        public Address Address { get; set; }
+        public ICollection<Address> Addresses { get; set; }
     }
 }

@@ -1,13 +1,19 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using OnlineStore.Libraries.Language;
+using Newtonsoft.Json;
 
 namespace OnlineStore.Models
 {
     public class Address
     {
         public int Id { get; set; }
+        
+        public int CustomerId { get; set; }
+
+        [JsonIgnore]
+        [ForeignKey("CustomerId")]
+        public Customer Customer { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]
         [MinLength(8, ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_002")]
@@ -31,29 +37,5 @@ namespace OnlineStore.Models
 
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]
         public string Number { get; set; }
-
-        [NotMapped]
-        private const string EmptyAddressCep = "AAAAAAAA";
-
-        public static Address InstantiateEmptyAddress()
-        {
-            return new Address()
-            {
-                Cep = EmptyAddressCep,
-                State = "",
-                City = "",
-                Neighborhood = "",
-                AddressLine = "",
-                Complement = "",
-                Number = ""
-            };
-        }
-
-        public static bool IsTheAddressEmpty(Address address)
-        {
-            if (address.Cep == EmptyAddressCep)
-                return true;
-            return false;
-        }
     }
 }

@@ -51,13 +51,16 @@ namespace OnlineStore.Areas.Customer.Controllers
         {
             if (ModelState.IsValid)
             {
-                Address newAddress;
+                customer.CPF = customer.CPF.RemoveMask();
+                customerRepository.Register(customer);
 
                 bool theAddressFormHaveBeenFilled = HttpContext.Request.Form["address-save-status"].ToString() == "true";
+
                 if (theAddressFormHaveBeenFilled)
                 {
-                    newAddress = new Address()
+                    Address newAddress = new Address()
                     {
+                        CustomerId = customer.Id,
                         Cep = HttpContext.Request.Form["cep"].ToString(),
                         State = HttpContext.Request.Form["state"].ToString(),
                         City = HttpContext.Request.Form["city"].ToString(),
@@ -66,16 +69,9 @@ namespace OnlineStore.Areas.Customer.Controllers
                         Complement =  HttpContext.Request.Form["complement"].ToString(),
                         Number =  HttpContext.Request.Form["number"].ToString()
                     };
-                }
-                else
-                {
-                    newAddress = Address.InstantiateEmptyAddress();
-                }
 
-                addressRepository.Register(newAddress);
-                
-                customer.AddressId = newAddress.Id;
-                customerRepository.Register(customer);
+                    addressRepository.Register(newAddress);
+                }
 
                 TempData["MSG_OK"] = Message.MSG_OK_001;
                 return RedirectToAction(nameof(Login), new { redirectTo = redirectTo });

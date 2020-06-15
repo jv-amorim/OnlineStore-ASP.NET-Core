@@ -42,6 +42,9 @@ namespace OnlineStore.Migrations
                     b.Property<string>("Complement")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Neighborhood")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -55,6 +58,8 @@ namespace OnlineStore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Addresses");
                 });
@@ -118,9 +123,6 @@ namespace OnlineStore.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CPF")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -152,8 +154,6 @@ namespace OnlineStore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
 
                     b.ToTable("Customers");
                 });
@@ -237,20 +237,20 @@ namespace OnlineStore.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("OnlineStore.Models.Address", b =>
+                {
+                    b.HasOne("OnlineStore.Models.Customer", "Customer")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("OnlineStore.Models.Category", b =>
                 {
                     b.HasOne("OnlineStore.Models.Category", "ParentCategory")
                         .WithMany()
                         .HasForeignKey("ParentCategoryId");
-                });
-
-            modelBuilder.Entity("OnlineStore.Models.Customer", b =>
-                {
-                    b.HasOne("OnlineStore.Models.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("OnlineStore.Models.Image", b =>
