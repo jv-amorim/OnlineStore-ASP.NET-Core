@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using OnlineStore.Models;
 using OnlineStore.Repositories.Interfaces;
 using OnlineStore.Libraries.Filters;
 using OnlineStore.Libraries.Language;
@@ -10,11 +11,13 @@ namespace OnlineStore.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private ICustomerRepository customerRepository;
+        private IAddressRepository addressRepository;
         private CustomerSession customerSession;
 
-        public HomeController(ICustomerRepository customerRepository, CustomerSession customerSession)
+        public HomeController(ICustomerRepository customerRepository, IAddressRepository addressRepository, CustomerSession customerSession)
         {
             this.customerRepository = customerRepository;
+            this.addressRepository = addressRepository;
             this.customerSession = customerSession;
         }
 
@@ -48,7 +51,32 @@ namespace OnlineStore.Areas.Customer.Controllers
         {
             if (ModelState.IsValid)
             {
+                Address newAddress;
+
+                bool theAddressFormHaveBeenFilled = HttpContext.Request.Form["address-save-status"].ToString() == "true";
+                if (theAddressFormHaveBeenFilled)
+                {
+                    newAddress = new Address()
+                    {
+                        Cep = HttpContext.Request.Form["cep"].ToString(),
+                        State = HttpContext.Request.Form["state"].ToString(),
+                        City = HttpContext.Request.Form["city"].ToString(),
+                        Neighborhood = HttpContext.Request.Form["neighborhood"].ToString(),
+                        AddressLine = HttpContext.Request.Form["address-line"].ToString(),
+                        Complement =  HttpContext.Request.Form["complement"].ToString(),
+                        Number =  HttpContext.Request.Form["number"].ToString()
+                    };
+                }
+                else
+                {
+                    newAddress = Address.InstantiateEmptyAddress();
+                }
+
+                addressRepository.Register(newAddress);
+                
+                customer.AddressId = newAddress.Id;
                 customerRepository.Register(customer);
+
                 TempData["MSG_OK"] = Message.MSG_OK_001;
                 return RedirectToAction(nameof(Login), new { redirectTo = redirectTo });
             }

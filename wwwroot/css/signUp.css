@@ -1,0 +1,23 @@
+.address-header {
+    padding-top: 15px;
+    padding-left: 20px;
+}
+
+aside {
+    margin-bottom: 30px;
+}
+
+.address-button-div {
+    padding-top: 15px;
+    text-align: center;
+}
+
+#address-validation-error {
+    color: red;
+    font-size: 14px;
+    display: none;
+}
+
+#save-address-button {
+    width: 100px;
+}

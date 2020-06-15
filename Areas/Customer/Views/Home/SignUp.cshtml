@@ -8,7 +8,7 @@
     <main role="main">
         <section class="container" style="margin-top: 50px">
             <div class="row">
-                <aside class="col-sm-6">
+                <aside class="col-md-6">
                     <div id="code_register_1">
                         <div class="card">
                             <header class="card-header">
@@ -83,6 +83,60 @@
                                 <a asp-controller="Home" asp-action="Login">Log In</a>
                             </div>
                         </div>
+                    </div>
+                </aside>
+                <aside class="col-md-6">
+                    <div class="card">
+                        <div class="address-header">
+                            <h4 class="card-title mt-2">Address</h4>
+                            <small>You can also register your address later.</small>
+                        </div>
+                        <article class="card-body">
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="cep">CEP *</label>
+                                    <input type="text" id="cep" name="cep" class="form-control cep-input" placeholder="">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="city">City *</label>
+                                    <input type="text" id="city" name="city" class="form-control" placeholder="">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="state">State *</label>
+                                    <input type="text" id="state" name="state" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="address-line">Address *</label>
+                                    <input type="text" id="address-line" name="address-line" class="form-control" placeholder="">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="neighborhood">Neighborhood *</label>
+                                    <input type="text" id="neighborhood" name="neighborhood" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="number">Number *</label>
+                                    <input type="text" id="number" name="number" class="form-control" placeholder="">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="complement">Complement</label>
+                                    <input type="text" id="complement" name="complement" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <small>The fields with * are required.</small>
+                            <div class="form-group address-button-div">
+                                <p id="address-validation-error">
+                                    Make sure all required fields are filled in correctly.
+                                </p>
+                                <button id="save-address-button" type="button" class="btn btn-primary">
+                                    Save
+                                </button>
+                                <input id="address-save-status" name="address-save-status" type="hidden" value="false">
+                            </div>
+                        </article>
                     </div>
                 </aside>
             </div>
