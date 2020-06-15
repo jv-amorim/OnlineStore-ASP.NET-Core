@@ -9,8 +9,13 @@ namespace OnlineStore.Repositories
     public class CustomerRepository : ICustomerRepository
     {
         private OnlineStoreContext database;
+        private IAddressRepository addressRepository;
 
-        public CustomerRepository(OnlineStoreContext database) => this.database = database;
+        public CustomerRepository(OnlineStoreContext database, IAddressRepository addressRepository)
+        {
+            this.database = database;
+            this.addressRepository = addressRepository;
+        }
 
         public void Register(Customer customer)
         {
@@ -46,8 +51,12 @@ namespace OnlineStore.Repositories
         public void Delete(int id)
         {
             Customer item = GetCustomer(id);
+            int addressId = item.AddressId;
+
             database.Remove(item);
             database.SaveChanges();
+
+            addressRepository.Delete(addressId);
         }
 
         public Customer Login(string email, string password)
