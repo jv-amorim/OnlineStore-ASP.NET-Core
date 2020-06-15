@@ -1,4 +1,5 @@
 AddEventListenerToTheSaveAddressButton();
+AddEventListenerToTheCepInputField();
 
 function AddEventListenerToTheSaveAddressButton() {
     const saveAddressButton = document.getElementById('save-address-button');
@@ -52,4 +53,59 @@ function DisableAddressFields() {
     document.getElementById('number').setAttribute('readonly', 'true');
     document.getElementById('complement').setAttribute('readonly', 'true');
     document.getElementById('address-validation-error').style.display = 'none';
+}
+
+function AddEventListenerToTheCepInputField() {
+    const cepField = document.getElementById('cep');
+
+    if (cepField == null)
+        return;
+
+    cepField.onkeyup = () => {
+        const cepFieldValue = cepField.value.replace('.', '').replace('-', '');
+
+        if (cepFieldValue.length < 8)
+            return;
+
+        GetAddressDataFromCep(cepFieldValue);
+    };
+}
+
+function GetAddressDataFromCep(cep) {
+    const xmlHttpRequest = new XMLHttpRequest();
+
+    xmlHttpRequest.addEventListener('load', (response) => {
+        const isSuccessfulResponse = response.originalTarget.status == 200;
+        if (isSuccessfulResponse) {
+            const responseData = JSON.parse(response.originalTarget.response);
+
+            if (responseData.erro == true) {
+                ClearAddressFields();
+                return;
+            }
+
+            SetAddressFieldsWithDataFromResponse(responseData);
+        }
+    }, false);
+
+    const url = `https://viacep.com.br/ws/${cep}/json/`;
+    xmlHttpRequest.open('get', url, true);
+    xmlHttpRequest.send();
+}
+
+function ClearAddressFields() {
+    document.getElementById('city').value = "";
+    document.getElementById('state').value = "";
+    document.getElementById('address-line').value = "";
+    document.getElementById('neighborhood').value = "";
+    document.getElementById('complement').value = "";
+}
+
+function SetAddressFieldsWithDataFromResponse(data) {
+    ClearAddressFields();
+    document.getElementById('city').value = data.localidade;
+    document.getElementById('state').value = data.uf;
+    document.getElementById('address-line').value = data.logradouro;
+    document.getElementById('neighborhood').value = data.bairro;
+    document.getElementById('complement').value = data.complemento;
 }
