@@ -31,5 +31,29 @@ namespace OnlineStore.Models
 
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]
         public string Number { get; set; }
+
+        [NotMapped]
+        private const string EmptyAddressCep = "AAAAAAAA";
+
+        public static Address InstantiateEmptyAddress()
+        {
+            return new Address()
+            {
+                Cep = EmptyAddressCep,
+                State = "",
+                City = "",
+                Neighborhood = "",
+                AddressLine = "",
+                Complement = "",
+                Number = ""
+            };
+        }
+
+        public static bool IsTheAddressEmpty(Address address)
+        {
+            if (address.Cep == EmptyAddressCep)
+                return true;
+            return false;
+        }
     }
 }
