@@ -15,6 +15,7 @@ namespace OnlineStore.Models
         [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
 
+        [Display(Name = "CEP")]
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_001")]
         [MinLength(8, ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_002")]
         [MaxLength(8, ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_ERROR_003")]

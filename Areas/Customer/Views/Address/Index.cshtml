@@ -1,0 +1,59 @@
+@model List<Address>
+@{
+    ViewData["Title"] = "Online Store - Address";
+}
+
+<main role="main">
+    <div class="container" style="margin-top: 50px">
+        @if(TempData["MSG_OK"] != null)
+        {
+            <p class="alert alert-success">@Html.Raw(TempData["MSG_OK"])</p>
+        }
+        <div class="row">
+            @foreach (Address address in Model)
+            {
+                <div class="col-md-3 address-card">
+                   <div class="card">
+                        <article class="card-header">
+                            <h5 class="card-title mt-2">
+                                <small>CEP</small> 
+                                @address.Cep
+                            </h5>
+                        </article>
+                        <article class="card-body">
+                            <p>
+                                <b>City: </b>
+                                @address.City
+                            </p>
+                            <p>
+                                <b>State: </b>
+                                @address.State
+                            </p>
+                            <p>
+                                <b>Address: </b>
+                                @address.AddressLine
+                            </p>
+                            <p>
+                                <b>Neighborhood: </b>
+                                @address.Neighborhood
+                            </p>
+                            <p>
+                                <b>Number: </b>
+                                @address.Number
+                            </p>
+                            <p>
+                                <b>Complement: </b>
+                                @address.Complement
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            }
+            <div class="col-md-12">
+                <div class="text-center">
+                    <a asp-action="Register" class="btn btn-primary">Add new address</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

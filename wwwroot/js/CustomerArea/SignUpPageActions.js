@@ -3,15 +3,16 @@ AddEventListenerToTheCepInputField();
 
 function AddEventListenerToTheSaveAddressButton() {
     const saveAddressButton = document.getElementById('save-address-button');
+    const addressSaveStatus = document.getElementById('address-save-status');
 
-    if (saveAddressButton == null)
+    if (addressSaveStatus == null)
         return;
 
     saveAddressButton.onclick = () => {
         if (ValidateAddressFields()) {
             saveAddressButton.classList.add('disabled');
             saveAddressButton.innerHTML = 'Saved <i class="fas fa-check"></i>';
-            document.getElementById('address-save-status').value = 'true';
+            addressSaveStatus.value = 'true';
             DisableAddressFields();
         }
         else {
