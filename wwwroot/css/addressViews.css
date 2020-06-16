@@ -1,7 +1,26 @@
+.address-title {
+    margin: 20px 0px 20px 0px;
+}
+
 .address-card {
     margin-bottom: 30px;
 }
 
 .address-card .card-body {
     font-size: 12px;
+}
+
+.card-header {
+    position: relative;
+}
+
+.address-card-buttons {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+}
+
+.address-card-buttons a {
+    font-size: small;
+    width: 38px;
 }
