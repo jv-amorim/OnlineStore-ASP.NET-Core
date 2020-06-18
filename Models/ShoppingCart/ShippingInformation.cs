@@ -7,5 +7,6 @@ namespace OnlineStore.Models.ShoppingCart
         public double Price { get; set; }
         public int EstimatedTimeOfArrivalInDays { get; set; }
         public bool IsSelected { get; set; }
+        public int SelectedAddressId { get; set; }
     }
 }
