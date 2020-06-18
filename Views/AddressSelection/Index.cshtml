@@ -1,0 +1,96 @@
+@model List<Address>
+@{
+    ViewData["Title"] = "Online Store - Address Selection";
+}
+
+<main role="main">
+    <div class="container" style="margin-top: 30px">
+        @if(TempData["MSG_OK"] != null)
+        {
+            <p class="alert alert-success">@Html.Raw(TempData["MSG_OK"])</p>
+        }
+        <h1 class="address-title">Shipping Address</h1>
+        <p><i>Only addresses with the CEP equal to the CEP of the shipping rate are available.</i></p>
+        <div class="row">
+            @foreach (Address address in Model)
+            {
+                @if (address.Cep == ViewData["DestinationCep"].ToString())
+                {
+                    <div class="col-md-3 address-card">
+                        <div class="card">
+                            <article class="card-header">
+                                <h5 class="card-title mt-2">
+                                    <small>CEP</small> 
+                                    @address.Cep
+                                </h5>
+                                <div class="address-card-buttons">
+                                    <input type="radio" name="selectedAddress" 
+                                        value="@address.Id" onclick="EnableContinueButton()">
+                                </div>
+                            </article>
+                            <article class="card-body">
+                                <p>
+                                    <b>City: </b>
+                                    @address.City
+                                </p>
+                                <p>
+                                    <b>State: </b>
+                                    @address.State
+                                </p>
+                                <p>
+                                    <b>Address: </b>
+                                    @address.AddressLine
+                                </p>
+                                <p>
+                                    <b>Neighborhood: </b>
+                                    @address.Neighborhood
+                                </p>
+                                <p>
+                                    <b>Number: </b>
+                                    @address.Number
+                                </p>
+                                <p>
+                                    <b>Complement: </b>
+                                    @address.Complement
+                                </p>
+                            </article>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="col-md-12">
+                <div class="text-left">
+                    <a asp-area="Customer" asp-controller="Address" asp-action="Register" 
+                    asp-route-redirectTo="/AddressSelection/Index" class="btn btn-outline-secondary">
+                        Add new address
+                    </a>
+                    <div class="float-right">
+                        <button onclick="SelectAddress()" class="btn disabled btn-primary" id="continue-button">
+                            <b>Continue</b> <i class="fa fa-check"></i> 
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    function EnableContinueButton() {
+        document.getElementById('continue-button').classList.remove('disabled');
+    }
+
+    function SelectAddress() {
+        const addressId = document.querySelector('input[name=selectedAddress]:checked').value;
+
+        const xmlHttpRequest = new XMLHttpRequest();
+
+        xmlHttpRequest.addEventListener('load', () => {
+            location.href = "/Payment/Index";
+        }, false);
+
+        const url = `/AddressSelection/SelectAddress?addressId=${addressId}`;
+        xmlHttpRequest.open('get', url, true);
+        xmlHttpRequest.send();
+    }
+</script>
