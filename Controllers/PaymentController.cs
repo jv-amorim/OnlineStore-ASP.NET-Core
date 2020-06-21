@@ -13,12 +13,18 @@ namespace OnlineStore.Controllers
         private CartCookieManager cartCookieManager;
         private ShippingInfoCookieManager shippingInfoCookieManager;
         private IProductRepository productRepository;
+        private IAddressRepository addressRepository;
 
-        public PaymentController(CartCookieManager cartCookieManager, ShippingInfoCookieManager shippingInfoCookieManager, IProductRepository productRepository)
+        public PaymentController(
+            CartCookieManager cartCookieManager, 
+            ShippingInfoCookieManager shippingInfoCookieManager, 
+            IProductRepository productRepository, 
+            IAddressRepository addressRepository)
         {
             this.cartCookieManager = cartCookieManager;
             this.shippingInfoCookieManager = shippingInfoCookieManager;
             this.productRepository = productRepository;
+            this.addressRepository = addressRepository;
         }
 
         public IActionResult Index()
@@ -35,6 +41,7 @@ namespace OnlineStore.Controllers
                 return RedirectToAction("Index", "Cart");
 
             ViewData["ShippingInformation"] = selectedShippingRate;
+            ViewData["SelectedAddress"] = addressRepository.GetAddress(selectedShippingRate.SelectedAddressId);
 
             foreach (var cartItem in cartItems)
                 cartItem.Product = productRepository.GetProduct(cartItem.Id);

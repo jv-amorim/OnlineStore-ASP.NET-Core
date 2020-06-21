@@ -19,6 +19,11 @@
     color: inherit;
 }
 
+#total-price-dl {
+    margin-top: 5px;
+}
+
 #total-price-panel {
     margin-top: 20px;
+    margin-bottom: 20px;
 }

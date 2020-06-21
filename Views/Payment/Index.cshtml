@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Online Store - Payment";
     ShippingInformation shippingInfo = ViewData["ShippingInformation"] as ShippingInformation;
+    Address selectedAddress = ViewData["SelectedAddress"] as Address;
 }
 
 @if (Model != null && Model.Count == 0) 
@@ -67,14 +68,16 @@ else
                                         </dl>
                                         <dl class="dlist-align">
                                             <dt style="width: 250px;">
-                                                Shipping Rate 
+                                                Shipping Rate
+                                                <br/>
                                                 <small>[@freightType | @shippingInfo.EstimatedTimeOfArrivalInDays days]</small>
                                             </dt>
                                             <dd class="text-right">
                                                 @(shippingInfo.Price.ToString("c"))
                                             </dd>
                                         </dl>
-                                        <dl class="dlist-align">
+                                        <br/>
+                                        <dl class="dlist-align" id="total-price-dl">
                                             <dt>TOTAL</dt>
                                             <dd class="text-right" id="cart-total-price">
                                                 <b>
@@ -82,6 +85,54 @@ else
                                                 </b>
                                             </dd>
                                         </dl>
+                                    </div>
+                                    <div class="box">
+                                        <dl class="dlist-align text-center">
+                                            <b>Shipping Address</b>
+                                        </dl>
+                                        <dl class="dlist-align">
+                                            <dt>CEP</dt>
+                                            <dd class="text-right">
+                                                @(selectedAddress.Cep)
+                                            </dd>
+                                        </dl>
+                                        <dl class="dlist-align">
+                                            <dt>City</dt>
+                                            <dd class="text-right">
+                                                @(selectedAddress.City)
+                                            </dd>
+                                        </dl>
+                                        <dl class="dlist-align">
+                                            <dt>State</dt>
+                                            <dd class="text-right">
+                                                @(selectedAddress.State)
+                                            </dd>
+                                        </dl>
+                                        <dl class="dlist-align">
+                                            <dt>Address</dt>
+                                            <dd class="text-right">
+                                                @(selectedAddress.AddressLine)
+                                            </dd>
+                                        </dl>
+                                        <dl class="dlist-align">
+                                            <dt style="font-size: 14px;">Neighborhood</dt>
+                                            <dd class="text-right">
+                                                @(selectedAddress.Neighborhood)
+                                            </dd>
+                                        </dl>
+                                        <dl class="dlist-align">
+                                            <dt>Number</dt>
+                                            <dd class="text-right">
+                                                @(selectedAddress.Number)
+                                            </dd>
+                                        </dl>
+                                        <dl class="dlist-align">
+                                            <dt>Complement</dt>
+                                            <dd class="text-right">
+                                                @(selectedAddress.Complement)
+                                            </dd>
+                                        </dl>
+                                        <br/>
                                     </div>
                                 </div>
                         </article>
