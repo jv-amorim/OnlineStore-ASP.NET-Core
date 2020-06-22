@@ -1,11 +1,13 @@
-@model List<CartItem>
+@model CreditCard
 @{
     ViewData["Title"] = "Online Store - Payment";
+
+    List<CartItem> cartItems = ViewData["CartItems"] as List<CartItem>;
     ShippingInformation shippingInfo = ViewData["ShippingInformation"] as ShippingInformation;
     Address selectedAddress = ViewData["SelectedAddress"] as Address;
 }
 
-@if (Model != null && Model.Count == 0) 
+@if (cartItems != null && cartItems.Count == 0) 
 {
     <div class="container">
         <p class="alert alert-primary" style="margin-top: 50px">
@@ -27,7 +29,7 @@ else
                             <div class="card-body p-5">
                                 <div id="code_itemside_img2">
                                     <div class="box items-bordered-wrap" id="order-products-list">
-                                        @foreach (var cartItem in Model)
+                                        @foreach (var cartItem in cartItems)
                                         {
                                             <div class="itemside">
                                                 <div class="text-wrap align-self-center">
@@ -54,7 +56,7 @@ else
                                     <div class="box" id="total-price-panel">
                                         @{
                                             decimal subtotalPrice = 0;
-                                            foreach (var cartItem in Model)
+                                            foreach (var cartItem in cartItems)
                                                 subtotalPrice += cartItem.Amount * cartItem.Product.UnitPrice;
 
                                             string freightType = 
@@ -158,18 +160,16 @@ else
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active" id="nav-tab-card">
-                                        <p class="alert alert-success">Some text success or error</p>
-                                        <form role="form">
+                                        <form role="form" method="post">
                                             <div class="form-group">
-                                                <label for="username">Full name (on the card)</label>
-                                                <input type="text" class="form-control" name="username" placeholder=""
-                                                    required="">
+                                                <label asp-for="HolderName">Full name (on the card)</label>
+                                                <input type="text" asp-for="HolderName" class="form-control" placeholder="">
+                                                <span asp-validation-for="HolderName"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="cardNumber">Card number</label>
+                                                <label for="Number">Card number</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="cardNumber"
-                                                        placeholder="">
+                                                    <input type="text" asp-for="Number" class="form-control" placeholder="">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text text-muted">
                                                             <i class="fab fa-cc-visa"></i> &nbsp; <i class="fab fa-cc-amex"></i>
@@ -178,28 +178,28 @@ else
                                                         </span>
                                                     </div>
                                                 </div>
+                                                <span asp-validation-for="Number"></span>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-8">
                                                     <div class="form-group">
-                                                        <label><span class="hidden-xs">Expiration</span> </label>
-                                                        <div class="input-group">
-                                                            <input type="number" class="form-control" placeholder="MM"
-                                                                name="">
-                                                            <input type="number" class="form-control" placeholder="YY"
-                                                                name="">
-                                                        </div>
+                                                        <label asp-for="ExpirationDate">Expiration</label>
+                                                        <input type="text" asp-for="ExpirationDate" class="form-control month-year" placeholder="MM/YY">
+                                                        <span asp-validation-for="ExpirationDate"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
-                                                        <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV
+                                                        <label asp-for="Cvv" 
+                                                        class='tool' data-tip="Three digits code on back side of the card.">
+                                                            CVV
                                                             <i class="fa fa-question-circle"></i></label>
-                                                        <input type="number" class="form-control" required="">
+                                                        <input type="text" asp-for="Cvv" class="form-control">
+                                                        <span asp-validation-for="Cvv"></span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button class="subscribe btn btn-primary btn-block" type="button"> Confirm
+                                            <button class="subscribe btn btn-primary btn-block" type="submit"> Confirm
                                             </button>
                                         </form>
                                     </div>
@@ -214,13 +214,13 @@ else
                                         </p>
                                     </div>
                                     <div class="tab-pane fade" id="nav-tab-bank">
-                                        <p>Bank accaunt details</p>
+                                        <p>Bank account details</p>
                                         <dl class="param">
                                             <dt>BANK: </dt>
                                             <dd> THE WORLD BANK</dd>
                                         </dl>
                                         <dl class="param">
-                                            <dt>Accaunt number: </dt>
+                                            <dt>Account number: </dt>
                                             <dd> 12345678912345</dd>
                                         </dl>
                                         <dl class="param">
